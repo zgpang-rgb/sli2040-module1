@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SLI 2040 · Module 1 — Operating Philosophy &amp; the Three Sections</title>
+<title>iLEARN Editor · Educator Training — Module 1: Create Class</title>
 <style>
 /* ============================================================
-   IMLS · SLI 2040 Module 1 — internal training module
+   iLEARN Editor — Module 1: Create Class — internal training
    Palette: navy / archival ivory / brass. No external assets.
    ============================================================ */
 :root{
@@ -74,7 +74,7 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 .card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
 .card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
 
-/* ---------- Scenario check ---------- */
+/* ---------- Scenario / drill check ---------- */
 .check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--navy-deep);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
 .opts{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
 .opts button{text-align:left;background:var(--ivory);border:1px solid var(--line);padding:12px 14px;font:inherit;font-size:.92rem;line-height:1.45;cursor:pointer;color:var(--ink);border-radius:2px}
@@ -94,39 +94,54 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 .done-note{display:none;margin-top:14px;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;color:var(--moss)}
 .done-note.show{display:block}
 
-/* ---------- Loop diagram ---------- */
-.loop-svg{display:block;margin:10px auto 4px;max-width:460px;width:100%;height:auto}
-.loop-cap{text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:10px;text-transform:uppercase}
+/* ---------- Mock UI: settings panel ---------- */
+.mockui{border:1px solid var(--line);background:var(--paper);padding:20px 22px;margin:22px 0;border-radius:3px}
+.mockui-titlebar{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.mockui-titlebar .dotgroup span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--line);margin-right:4px}
+.mockui-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.mockui-row:last-child{border-bottom:none}
+.mockui-row .lbl{font-size:.94rem;color:var(--ink)}
+.mockui-row .sub{font-size:.78rem;color:var(--ink-soft);margin-top:3px;max-width:46ch}
+.mockui-caption{font-size:.76rem;color:var(--ink-soft);font-style:italic;margin-top:2px}
+.toggle{position:relative;display:inline-block;width:44px;height:24px;flex:0 0 44px}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle .track{position:absolute;inset:0;background:var(--line);border-radius:12px;transition:background .18s;cursor:pointer}
+.toggle .track .knob{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .18s;box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.toggle input:checked + .track{background:var(--brass-dark)}
+.toggle input:checked + .track .knob{transform:translateX(20px)}
+.toggle input:focus-visible + .track{outline:2px solid var(--brass-dark);outline-offset:2px}
 
-/* ---------- Capstone ---------- */
-.stage{margin-bottom:26px}
-.stage-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
-.stage-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--brass-dark);border:1px solid var(--brass);padding:2px 8px;border-radius:2px;white-space:nowrap}
-.stage-head h3{margin:0}
-.stage .guide{font-size:.86rem;color:var(--ink-soft);margin-bottom:8px;max-width:70ch}
-textarea{width:100%;min-height:110px;font-family:var(--sans);font-size:.92rem;line-height:1.55;padding:12px 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;border-radius:2px}
-textarea:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
-select,input[type=text]{font:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px}
-select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
-.btn{display:inline-block;background:var(--navy);color:var(--ivory);border:none;font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px}
-.btn:hover{background:var(--navy-soft)}
-.btn.brass{background:var(--brass-dark)}
-.btn.brass:hover{background:var(--brass)}
-.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
-.btn:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
-.save-flash{font-family:var(--mono);font-size:.72rem;color:var(--moss);margin-left:12px;opacity:0;transition:opacity .3s}
-.save-flash.on{opacity:1}
+/* ---------- Role cards ---------- */
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+.role-card{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px 16px 18px}
+.role-card .rtag{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 8px;border-radius:2px;display:inline-block;margin-bottom:10px}
+.role-card.owner .rtag{background:var(--navy);color:var(--ivory)}
+.role-card.second .rtag{background:var(--brass-dark);color:var(--ivory)}
+.role-card.shared .rtag{background:var(--ivory-dim);color:var(--ink-soft);border:1px solid var(--line)}
+.role-card h4{font-family:var(--serif);font-size:1.02rem;color:var(--navy-deep);margin-bottom:8px}
+.role-card ul{list-style:none;font-size:.84rem;color:var(--ink-soft);line-height:1.55}
+.role-card li{padding-left:14px;position:relative;margin-bottom:4px}
+.role-card li::before{content:"—";position:absolute;left:0;color:var(--brass)}
+
+/* ---------- Notices ---------- */
+.note{background:var(--rust-bg);border:1px solid var(--rust);padding:12px 16px;font-size:.84rem;margin:18px 0;border-radius:2px;color:var(--ink)}
 
 /* ---------- Landing ---------- */
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
-.provisional{background:var(--rust-bg);border:1px solid var(--rust);padding:12px 16px;font-size:.84rem;margin:18px 0;border-radius:2px}
 .pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
 .pager a{text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
 .pager a:hover{border-color:var(--brass)}
 section.unit{display:none;animation:fadein .35s ease}
 section.unit.active{display:block}
 @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.btn{display:inline-block;background:var(--navy);color:var(--ivory);border:none;font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px}
+.btn:hover{background:var(--navy-soft)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.btn:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+input[type=text]{font:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px}
+input[type=text]:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
 
 /* ---------- Responsive ---------- */
 .map-toggle{display:none}
@@ -137,7 +152,7 @@ section.unit.active{display:block}
   nav.map.open .map-body{display:block}
   .map-toggle{display:inline-block;background:none;border:1px solid var(--ink-soft);font:inherit;font-size:.8rem;padding:6px 12px;cursor:pointer;border-radius:2px;margin-bottom:4px}
   main{padding:26px 20px 70px}
-  .land-grid{grid-template-columns:1fr}
+  .land-grid,.role-grid{grid-template-columns:1fr}
   h1{font-size:1.6rem}
 }
 </style>
@@ -146,8 +161,8 @@ section.unit.active{display:block}
 
 <header>
   <div class="hd-inner">
-    <div class="wordmark">SAFTI MI · <b>IMLS</b> — Institute for Military Learning Systems</div>
-    <div class="hd-meta">SLI 2040 · Module 1 · Internal Training · v1.0</div>
+    <div class="wordmark">IMLS · <b>iLEARN EDITOR</b> — Educator Training</div>
+    <div class="hd-meta">Module 1 · Create Class · Internal Training · v1.0</div>
   </div>
   <div class="hd-rule"></div>
 </header>
@@ -163,7 +178,7 @@ section.unit.active{display:block}
     <ol id="mapList"></ol>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
-      <div class="progress-label" id="progLabel">0 / 7 complete</div>
+      <div class="progress-label" id="progLabel">0 / 4 complete</div>
     </div>
     <div class="learner-line" id="learnerLine"></div>
     <div class="storage-note" id="storageNote">Browser storage unavailable — progress will not persist after this session. Run the file locally in Edge/Chrome for saved progress.</div>
@@ -178,70 +193,73 @@ section.unit.active{display:block}
 <script>
 "use strict";
 /* ============================================================
-   CONTENT — single object so the authoritative SLI 2040 source
-   text can be swapped in without touching app logic.
-   Unit 6 prose is PROVISIONAL pending the SLI 2040 source doc.
+   CONTENT
+   Source: M1_iLEARN_Educator_SLP.pptx — "Module 1: Create Class",
+   three named features: Forum & Calendar; Allow Learners to
+   Discover Each Other / Allow Shared Educators Access to
+   Learner's Personal Data; Current Owner, Second Owner &
+   Shared Educators. The source deck names these features but
+   gives no screenshots or step detail (its own video/interaction
+   placeholders are empty) — the mock settings panels, exact
+   toggle language, and scenario detail below are original
+   teaching content built to explain the named features
+   correctly. Confirm exact labels/behaviour against the live
+   iLEARN Editor console before configuring a real class.
    ============================================================ */
-
-const LOOP_STAGES = [
-  {id:"immersion", n:"Stage 1", t:"Problem immersion",
-   guide:"Describe the friction point in the school's own terms. Who feels it, when, and what evidence (not opinion) tells you it is real? What did you observe on the ground rather than hear second-hand?"},
-  {id:"prototype", n:"Stage 2", t:"Smallest useful prototype (MVP)",
-   guide:"What is the smallest artefact that tests your core assumption? Name what you deliberately left out, and why leaving it out is safe for this test."},
-  {id:"trial", n:"Stage 3", t:"Deploy in a controlled trial",
-   guide:"One school, one cohort, one bounded window. Who runs it, what is the comparison condition, and what could confound the result?"},
-  {id:"feedback", n:"Stage 4", t:"Rapid feedback loop",
-   guide:"What signal are you collecting during the trial (not only after it), how often, and who reads it? What threshold would make you stop or change course mid-trial?"},
-  {id:"iterate", n:"Stage 5", t:"Iterate quickly",
-   guide:"Given the feedback you expect, what are the two most likely changes to the prototype? What is your cycle time from signal to changed artefact?"},
-  {id:"scale", n:"Stage 6", t:"Scale only after validation",
-   guide:"State the validation bar the trial must clear before any second school sees this. Which metrics, at what level, judged by whom? What happens to the project if the bar is not met?"}
-];
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Module 1 — The Operating Philosophy", ord:"—",
+{ id:"start", short:"Orientation", title:"Orientation", ord:"—",
   render(){ return `
-  <div class="eyebrow">SLI 2040 · Learning Science — Technology — Innovation</div>
-  <h1>How IMLS turns learning problems into validated practice</h1>
-  <p class="dek">A self-paced module for Learning Science, Learning Technology and Innovation staff. It practises what it preaches: you direct the pace, the scenarios come from real school friction, and your capstone is your own live project.</p>
+  <div class="eyebrow">iLEARN Editor · Create Class</div>
+  <h1>Setting up a class the right way, the first time</h1>
+  <p class="dek">A self-paced walkthrough of the three configuration decisions you make when you create a class — and why getting them right up front saves a support ticket later.</p>
 
-  <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>On the name:</strong> MLS stands for the Military Learning System (MLS) — the ecosystem of training schools, trainers, learning technologies and analytics this institute serves. IMLS is its steward; the framework in this module is how that stewardship is practised.</p>
+  <p>When an educator creates a class in iLEARN Editor, three decisions get made almost immediately: whether the class opens with a forum and a calendar; whether learners can find each other and whether educators sharing the class can see learners' personal data; and who owns the class well enough to administer it. None of these is complicated in isolation — a toggle here, a role picker there — but they interact, and they interact differently depending on the class in front of you. A setting that's obviously right for a large asynchronous cohort is often obviously wrong for a three-day rotating refresher course.</p>
 
-  <p>This module has one aim: that by the end of it you can take a raw request from a school — usually arriving as <em>"build us X"</em> — and route it through the IMLS operating philosophy without supervision. That means knowing which section leads at which moment, what the institute is scanning for and why, how the operating loop closes, and above all how to run the short-cycle loop on a live problem.</p>
+  <p>This module walks through each decision in turn: what the setting actually does, a mock version of the settings panel to get the shape of it under your fingers, and a scenario built from the kind of class you'll actually be setting up — including one, deliberately, where there isn't a clean right answer. The habit worth carrying out of this module isn't a rulebook; it's a question you ask of every setting: <em>who needs this, and for how long?</em></p>
 
-  <p>The suggested path runs top to bottom in the module map, because each unit leans lightly on the one before it. But it is a suggestion. If you already carry the three-section model in your bones, go straight to the short-cycle loop. If you learn best backwards from application, open the capstone first, see what it demands, and return for what you're missing. Your progress is saved in this browser either way.</p>
+  <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>On the mock panels:</strong> the source material for this module names the three features but doesn't include screenshots of the live console. The settings panels here are stylised mock-ups built to teach the concepts correctly — confirm exact labels and behaviour against the real iLEARN Editor when you configure an actual class.</p>
 
   <div class="land-grid">
     <div class="card"><div class="card-tag">What you will practise</div>
-      <p style="margin:0;font-size:.9rem">Six scenario checks drawn from school-floor friction, each with branching feedback — the point is not the right letter but the reasoning behind the move.</p></div>
-    <div class="card"><div class="card-tag">What you will produce</div>
-      <p style="margin:0;font-size:.9rem">A capstone: one of your own live projects walked through every stage of the short-cycle loop, saved here and exportable as a document you can bring to your section lead.</p></div>
+      <p style="margin:0;font-size:.9rem">Three scenario checks built from realistic class setups, plus one quick-decision drill — each with branching feedback that argues the case for the paths you didn't pick.</p></div>
+    <div class="card"><div class="card-tag">What this module does not cover</div>
+      <p style="margin:0;font-size:.9rem">Modules 2–6 of iLEARN Editor (assigning content, managing learners, analytics, review, gradebook) are out of scope here — see the README for what's deferred.</p></div>
   </div>
 
-  <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — used only to label your capstone export):</label><br>
+  <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — shown in the sidebar only):</label><br>
   <input type="text" id="nameIn" placeholder="e.g. ME5 Tan" style="margin-top:6px;width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
   `;}
 },
 
-/* ---------------- UNIT 1 ---------------- */
-{ id:"u1", short:"The Three Sections", title:"The Three Sections", ord:"01",
+/* ---------------- UNIT 1 — FORUM & CALENDAR ---------------- */
+{ id:"u1", short:"Forum & Calendar", title:"Forum & Calendar", ord:"01",
   render(){ return `
-  <div class="eyebrow">Unit 01 · Structure</div>
-  <h1>Architect, materials engineer, construction crew</h1>
-  <p class="dek">Three sections, one building — and why the order of first moves matters more than the org chart.</p>
+  <div class="eyebrow">Feature 01 · Communication</div>
+  <h1>Forum and Calendar</h1>
+  <p class="dek">Two opt-in class spaces — and the cost of switching either one on by default.</p>
 
-  <p>IMLS holds three sections that only make sense together. <strong>Learning Science is the architect.</strong> Before anything is built, someone must decide what the building is for: what has to be learned, by whom, under what conditions, and — critically — what evidence would show the learning happened. The architect's drawings are not decoration; they are the specification every later decision answers to. A Learning Science officer who cannot state the learning problem in one sentence has not finished drawing.</p>
+  <p>Forum and Calendar are both optional additions bundled into class creation, and they toggle independently of each other. <strong>Forum</strong> gives learners a threaded space to talk to one another about the material — questions, case discussion, peer troubleshooting. <strong>Calendar</strong> surfaces the class's own dates — sessions, deadlines, milestones — inside iLEARN itself, rather than leaving learners to track them in a separate timetable or email thread. You can run a class with a calendar and no forum, a forum and no calendar, both, or neither; there's no dependency between them.</p>
 
-  <p><strong>Learning Technology is the materials engineer.</strong> Every design ambition meets the question of what current materials can actually bear. Can AI hold a coaching conversation at the fidelity this course needs? Will a mixed-reality overlay survive a field environment? The materials engineer does not decide what to build — that is the architect's call — but no responsible architect draws without the engineer at the same table, because a beautiful design in impossible materials is a fantasy, and a feasible design nobody asked for is a warehouse.</p>
+  <p>The two settings earn their keep very differently, which is why they're worth thinking about separately even though they sit on the same setup screen. A forum is worth its maintenance cost when the material genuinely benefits from peer cross-talk — cohort exercises, case studies, electives where discussion deepens the learning — and it becomes a liability fast in a high-tempo class with no continuity: an empty forum reads as an abandoned space, and an unmoderated one is where a real issue can sit unnoticed. A calendar is close to free by comparison — it's a read-only reflection of dates you're already tracking, so unless a class genuinely has no dated milestones worth surfacing, most educators default it on.</p>
 
-  <p><strong>The Innovation Lab is the construction crew.</strong> Crews build in real conditions: mud, weather, schedule pressure, and the discovery that the ground is not quite what the survey said. The Lab turns drawings and materials into a standing structure, and — like any good crew — feeds what it learns on site straight back to the architect and engineer. Site conditions change drawings. That feedback is not failure; it is the whole point of building small before building big.</p>
-
-  <p>The relationship is a loop, not a relay. The failure modes are all sequencing failures: a crew that pours concrete before drawings exist, an engineer stress-testing steel for a building whose purpose nobody has stated, an architect who hands over drawings and walks away. Keep the analogy in reach — the scenario below is exactly such a sequencing decision.</p>
+  <div class="mockui" aria-label="Mock settings panel: Class Spaces">
+    <div class="mockui-titlebar"><span class="dotgroup"><span></span><span></span><span></span></span> New Class → Class Spaces</div>
+    <div class="mockui-row">
+      <div><div class="lbl">Forum</div><div class="sub">Learners in this class can post and reply to threads visible to the class.</div></div>
+      <label class="toggle"><input type="checkbox" id="tglForum"><span class="track"><span class="knob"></span></span></label>
+    </div>
+    <div class="mockui-row">
+      <div><div class="lbl">Calendar</div><div class="sub">Class sessions and deadlines appear on learners' iLEARN calendar.</div></div>
+      <label class="toggle"><input type="checkbox" id="tglCalendar" checked><span class="track"><span class="knob"></span></span></label>
+    </div>
+    <p class="mockui-caption">Try the toggles — this panel is for orientation, not graded. The scenario below asks you to reason about a real case.</p>
+  </div>
 
   <div class="card check" id="check-u1">
     <div class="card-tag">Scenario check</div>
-    <p class="scenario">A commander at an officer-training school sends IMLS a one-line request: "Build us a VR package for night navigation — our cadets keep failing the night nav assessment." The request lands with you. What is the institute's first move?</p>
+    <p class="scenario">You're setting up a two-week refresher course for a rotating cohort — trainees pass through in three-day waves with no continuity between waves, and every session already has a fixed date on the training timetable published separately outside iLEARN. What do you configure?</p>
     <div class="opts" role="group" aria-label="Answer options"></div>
     <div class="fb" aria-live="polite"></div>
     <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
@@ -250,85 +268,89 @@ const UNITS = [
   check:{
     best:1,
     opts:[
-      {t:"Innovation Lab starts building a VR night-nav prototype this week — the school asked for VR, and speed is our brand.",
-       fb:"This is the crew pouring concrete without drawings. You will likely build a competent VR product that rehearses the wrong thing — nobody yet knows <em>why</em> cadets fail night nav. Is it terrain association? Confidence under low light? Instrument discipline? A prototype aimed at the wrong failure teaches the school that IMLS ships fast and misses. Speed matters, but it belongs one step later, after the problem is named."},
-      {t:"Learning Science reframes the request as a learning problem first: what specifically fails during night navigation, for which cadets, and what would count as improvement — while Learning Tech scans feasibility in parallel.",
-       fb:"Architect first — this is the move. Note the second half: the materials engineer is at the table <em>from the start</em>, not summoned afterwards. Feasibility scanning runs in parallel with problem definition so that by the time the learning problem is stated, you already know whether VR, a cheaper AR overlay, or no technology at all is the plausible material. The school asked for VR; IMLS answers the failure behind the request."},
-      {t:"Learning Technology evaluates VR headset options and shortlists two vendors so we're ready to move.",
-       fb:"This is the materials engineer stress-testing steel before anyone knows whether the building is a bridge or a barracks. Vendor knowledge is genuinely useful — it belongs to the Watch Area discipline you'll meet in Unit 02 — but as a <em>first move on this request</em> it commits the institute to a solution class before the problem is defined. The trap word in the scenario is 'VR': the school has prescribed its own treatment."},
-      {t:"Reply that IMLS needs a formal written requirement and a staffing paper before any work begins.",
-       fb:"Understandable reflex, wrong philosophy. The SLI operating stance is problem immersion <em>with</em> the school, not a paperwork gate in front of it. A formal requirement written by a frustrated school will simply restate 'build us VR' with more signatures. The institute's value is precisely that it goes to the night nav range, watches the failures, and writes the real requirement together with the school."}
+      {t:"Enable both Forum and Calendar — more communication tools can only help.",
+       fb:"More tools isn't automatically more help here. The forum has almost no shelf life in this class: cohorts rotate every three days, so there's never a group with enough continuity to sustain a thread before the next wave arrives. What you'd actually be enabling is a space that looks abandoned by day four — which reads worse to learners than no forum at all, and is one more thing nobody is watching for a compliance issue to surface in."},
+      {t:"Enable Calendar only, leave Forum off.",
+       fb:"This fits the class as described. Calendar is close to free and gives trainees an in-platform view of dates that already exist on the published timetable — no real downside to switching it on. Forum has no cohort to sustain it: three-day rotating waves are exactly the case where a forum goes stale before anyone benefits from it. If a later version of this course builds in cohort continuity, that's the moment to revisit forum — not before."},
+      {t:"Enable Forum only, leave Calendar off.",
+       fb:"This gets both calls backwards for this class. Skipping the calendar means trainees either don't see session dates inside iLEARN at all, or have to cross-reference two systems — for no real saving, since calendar costs almost nothing to enable. And enabling forum for three-day rotating waves is precisely the scenario where it goes stale fastest: there's no cohort left by the time a thread might get a second reply."},
+      {t:"Enable neither — keep the class minimal.",
+       fb:"Being cautious about forum here is reasonable — but the case for skipping the calendar doesn't hold the way the case for skipping the forum does. Calendar is a low-cost, read-only convenience that puts dates trainees already need in front of them inside the tool they're already using. There's no rotating-cohort problem working against it the way there is against forum, so “minimal” ends up removing something that was nearly free to keep."}
     ]
   }
 },
 
-/* ---------------- UNIT 2 ---------------- */
-{ id:"u2", short:"Watch Areas", title:"Watch Areas", ord:"02",
+/* ---------------- UNIT 2 — DISCOVERY & DATA ACCESS ---------------- */
+{ id:"u2", short:"Discovery & Data Access", title:"Learner Discovery & Shared-Educator Data Access", ord:"02",
   render(){ return `
-  <div class="eyebrow">Unit 02 · Scanning</div>
-  <h1>What IMLS watches, and why watching is a discipline</h1>
-  <p class="dek">A Watch Area is not a shopping list. It is calibrated judgment kept warm, so the institute is never surprised by its own field.</p>
+  <div class="eyebrow">Feature 02 · Visibility &amp; Privacy</div>
+  <h1>Learner discovery and shared-educator data access</h1>
+  <p class="dek">Two separate toggles grouped under one feature — and the one scenario in this module without a clean answer.</p>
 
-  <p>Each section maintains Watch Areas — named territories it scans continuously. For <strong>Learning Science</strong> the watch list is: <em class="term">Workplace Learning</em>, <em class="term">Learning Evaluation</em>, <em class="term">Scenario-based learning</em>, <em class="term">Problem Solving</em>, and <em class="term">Andragogy-based design</em>. For <strong>Learning Technology</strong> it is: <em class="term">AI</em> and <em class="term">Immersive Technology</em> — VR, AR, MR and Digital Twins. These are not arbitrary. Each one sits where the military training mission is most likely to be changed by movement in the outside world: adults learning in the flow of work, evidence of whether training worked, realistic problems replacing abstract drills, and the two technology currents moving fast enough to reshape what is buildable year to year.</p>
+  <p>This feature bundles two settings that both widen who can see something about a learner, which is why they're presented together — but they trade off differently, so it's worth holding them apart in your head. <strong>Allow Learners to Discover Each Other</strong> lets learners in the same class find one another inside iLEARN — mostly a collaboration and social-learning setting, useful when peer contact is part of how the class is meant to work. <strong>Allow Shared Educators Access to Learner's Personal Data</strong> is a different kind of setting entirely: when a class has more than one instructor, this governs whether an educator who isn't the class owner can see learners' personal data — things like prior scores, contact details, or other information beyond what's needed simply to teach a session.</p>
 
-  <p>Why scan rather than simply buy when needed? Because judgment decays. A section that stops watching AI for eighteen months does not merely miss products; it loses the ability to tell a genuine capability shift from a vendor's slideware. Scanning keeps a live internal answer to the question <strong>"what is currently plausible?"</strong> — so that when a school problem arrives, the feasibility half of Unit 01's first move takes hours, not months. The output of watching is not procurement. It is a maintained opinion: what is maturing, what is hype, what we would trial tomorrow if the right problem walked in.</p>
+  <p>Discovery is mostly a convenience call. Data access is a privacy control, and it carries real weight when the learners are minors or the data is otherwise protected — which is exactly the situation the scenario below puts you in.</p>
 
-  <p>Watching also has a rejection function, and this is the part newcomers miss. A well-kept Watch Area lets IMLS say <em>no</em> quickly and credibly — to a commander excited by an article, to a vendor with a polished demo — because the section can locate the offering on a map it already owns. "We've watched this space for two years; that product solves a problem our schools don't have" is a sentence only a scanning institute can say.</p>
+  <div class="mockui" aria-label="Mock settings panel: Visibility & Privacy">
+    <div class="mockui-titlebar"><span class="dotgroup"><span></span><span></span><span></span></span> New Class → Visibility &amp; Privacy</div>
+    <div class="mockui-row">
+      <div><div class="lbl">Allow Learners to Discover Each Other</div><div class="sub">Learners in this class can see and find one another.</div></div>
+      <label class="toggle"><input type="checkbox" id="tglDiscover"><span class="track"><span class="knob"></span></span></label>
+    </div>
+    <div class="mockui-row">
+      <div><div class="lbl">Allow Shared Educators Access to Learner's Personal Data</div><div class="sub">Educators added to this class who are not the Current Owner can view learners' personal data.</div></div>
+      <label class="toggle"><input type="checkbox" id="tglDataAccess"><span class="track"><span class="knob"></span></span></label>
+    </div>
+    <p class="mockui-caption">Try the toggles — this panel is for orientation, not graded. The scenario below asks you to reason about a real case.</p>
+  </div>
 
   <div class="card check" id="check-u2">
-    <div class="card-tag">Scenario check</div>
-    <p class="scenario">A senior commander forwards you an article on digital twins with one line: "This looks impressive — should we buy this capability?" You hold the Immersive Tech watch. What does a good reply actually contain?</p>
+    <div class="card-tag">Scenario check · no single right answer</div>
+    <p class="scenario">Two educators are co-teaching a class of officer cadets, all under 18. One is the primary instructor and Current Owner; the other is a subject-matter specialist added as a Shared Educator for two sessions only. The specialist asks you to enable Shared Educator data access so they can review each cadet's prior assessment scores before their sessions. What do you do?</p>
     <div class="opts" role="group" aria-label="Answer options"></div>
     <div class="fb" aria-live="polite"></div>
-    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+    <div class="done-note">✓ Unit complete — both defensible options recognised.</div>
   </div>
   `;},
   check:{
-    best:2,
+    valid:[0,1],
+    noCleanNote:"There is no single correct configuration here — reasonable administrators land on either of the two options above, depending on your school's stated policy on minors' data (if one exists) and how much administrative overhead the extract route is worth to you. What makes this a judgment call rather than a mistake is that both choices protect the cadets, just in different ways: enabling access trusts the vetting already done when the specialist was added to the class roster; sharing a scoped extract instead minimises exposure by keeping access temporary and limited to exactly what's needed. If your school has no stated data-minimisation policy, that gap is itself worth raising — not something to quietly resolve on your own.",
     opts:[
-      {t:"A comparison table of the top three digital-twin vendors with pricing, so the commander can decide.",
-       fb:"You've answered 'should we buy' with 'here's how to buy' — the watch has collapsed into a procurement desk. A vendor table without a training problem attached invites a purchase decision on impressiveness. The commander deserves your <em>judgment</em>, which is the thing the Watch Area exists to maintain. Vendor knowledge belongs in the reply, but subordinated to it."},
-      {t:"A polite deferral: digital twins are on our watch list and we'll revert when the technology matures.",
-       fb:"Half right, and the half missing is the valuable half. Yes, the technology sits on the watch — but 'we'll revert when it matures' tells the commander nothing and quietly teaches him that the watch produces silence. A living Watch Area can always state its current read <em>today</em>. If your honest read is 'immature for our use cases,' say that, with the reasoning."},
-      {t:"Your current read of the space — what digital twins genuinely do well, where they're still hype, which SAF training problems (if any) they plausibly fit — and what evidence would change that read.",
-       fb:"This is the watch doing its job: a maintained opinion, delivered on demand. Notice the structure — capability, limits, fit against <em>our</em> problems, and the falsifier ('what would change my read'). That last element is what separates judgment from taste, and it keeps the commander inside the evidence discipline the whole institute runs on. If the read is positive, the natural next line is Unit 04: propose a problem-immersion visit, not a purchase."},
-      {t:"Agreement — the article is impressive and IMLS should trial a digital twin to stay current with the technology.",
-       fb:"Trialling 'to stay current' inverts the operating loop: technology has become the problem-finder. The short-cycle loop you'll meet in Unit 04 begins with a school's friction, never with a capability seeking a justification. An institute that trials whatever impresses its commanders will always be busy and rarely be useful. The watch exists precisely so enthusiasm can be met with a calibrated read."}
+      {t:"Enable Shared Educator data access — the specialist needs the scores to prepare, and they're a vetted educator already on the class roster.",
+       fb:"This is a defensible call. The specialist has a genuine pedagogical need, and being added to the class roster is itself a form of vetting your institution has already done. It opens broader access than the specialist's two sessions strictly require, though — which is the case for the other defensible option below."},
+      {t:"Don't enable the setting — instead have the Current Owner extract and share only the specific prior scores the specialist needs.",
+       fb:"This is also defensible. The specialist gets what they actually need to prepare, scoped to exactly that and not left open after their two sessions end — a real privacy benefit given the cadets are minors. The cost is administrative: someone has to compile and hand over that extract, and it doesn't update automatically if the arrangement continues past two sessions."},
+      {t:"Enable data access and also give the specialist an owner-level role, so they're fully set up.",
+       fb:"This over-provisions the request. The specialist asked to review scores for two sessions — that's a data-visibility question, not an administrative one. Adding an owner-level role hands them the ability to modify the class itself, which nothing in the request called for and which now has to be remembered and walked back later."},
+      {t:"Decline the request outright — no one but the Current Owner should ever see learners' personal data.",
+       fb:"This treats a setting that exists for exactly this situation as always forbidden. Shared Educator data access is designed for co-teaching arrangements like this one; a blanket refusal leaves the specialist walking into sessions without the context to teach well, which isn't obviously better for the cadets than a scoped, reasoned decision either way."}
     ]
   }
 },
 
-/* ---------------- UNIT 3 ---------------- */
-{ id:"u3", short:"The Operating Loop", title:"The Operating Loop", ord:"03",
+/* ---------------- UNIT 3 — OWNER ROLES ---------------- */
+{ id:"u3", short:"Owner Roles", title:"Current Owner, Second Owner & Shared Educators", ord:"03",
   render(){ return `
-  <div class="eyebrow">Unit 03 · System</div>
-  <h1>Plan → Run → Measure, and the two engines underneath</h1>
-  <p class="dek">The loop is easy to recite and easy to break. It almost always breaks at the same joint.</p>
+  <div class="eyebrow">Feature 03 · Access &amp; Administration</div>
+  <h1>Current owner, second owner, and shared educators</h1>
+  <p class="dek">Three tiers of access to a class — and the difference between "can see this" and "can run this."</p>
 
-  <svg class="loop-svg" viewBox="0 0 460 180" role="img" aria-label="Operating loop diagram: Plan, Run, Measure in a cycle, powered by the Discovery Engine and the Experimentation Engine">
-    <defs><marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#A9873B"/></marker></defs>
-    <g font-family="Consolas,monospace" font-size="13" text-anchor="middle">
-      <rect x="20" y="40" width="110" height="44" rx="2" fill="#1C3A5E"/><text x="75" y="67" fill="#F4EFE3">PLAN</text>
-      <rect x="175" y="40" width="110" height="44" rx="2" fill="#1C3A5E"/><text x="230" y="67" fill="#F4EFE3">RUN</text>
-      <rect x="330" y="40" width="110" height="44" rx="2" fill="#1C3A5E"/><text x="385" y="67" fill="#F4EFE3">MEASURE</text>
-      <line x1="130" y1="62" x2="168" y2="62" stroke="#A9873B" stroke-width="2" marker-end="url(#arr)"/>
-      <line x1="285" y1="62" x2="323" y2="62" stroke="#A9873B" stroke-width="2" marker-end="url(#arr)"/>
-      <path d="M 385 84 C 385 130, 75 130, 75 90" fill="none" stroke="#A9873B" stroke-width="2" marker-end="url(#arr)"/>
-      <text x="115" y="158" fill="#7E6425" font-size="11">DISCOVERY ENGINE → feeds PLAN</text>
-      <text x="345" y="158" fill="#7E6425" font-size="11">EXPERIMENTATION ENGINE → powers RUN·MEASURE</text>
-    </g>
-  </svg>
-  <div class="loop-cap">The operating loop and its engines</div>
+  <p>A class in iLEARN Editor carries three tiers of access. The <strong>Current Owner</strong> is the instructor who created or now administers the class day to day — full control over its settings, content, and roster, and the ability to hand ownership to someone else. The <strong>Second Owner</strong> is a designated backup with the same administrative reach as the Current Owner, meant specifically for continuity: leave, illness, a course rotation, anything that would otherwise leave a class with nobody able to act on it. A <strong>Shared Educator</strong> is added for a bounded reason — co-teaching a segment, reviewing progress, running one topic — and sees what that reason requires, but does not carry standing administrative authority: a Shared Educator can't, for instance, transfer ownership of the class or delete it.</p>
 
-  <p>The institute's rhythm is <strong>Plan → Run → Measure</strong>, closed back into Plan. Two engines drive it. The <strong>Discovery Engine</strong> feeds Plan: it is the combined intake of Watch Area scanning (Unit 02) and school-floor problem immersion — the machinery by which IMLS knows what problems exist and what responses are currently plausible. The <strong>Experimentation Engine</strong> powers Run and Measure: it is the institute's standing capacity to turn a plan into a structured trial with defined comparisons, defined data capture, and a defined bar for success.</p>
+  <p>The distinction that matters most when you're deciding who gets which role is <strong>standing authority versus scoped participation</strong> — not how senior or trusted someone is in general, but whether the class needs them to be able to act on it indefinitely, or only for the specific thing they're there to do. Exact permission boundaries in the live console are worth confirming against your admin guidance; the reasoning below holds regardless of the exact label the console uses.</p>
 
-  <p>The joint that breaks is between Plan and Measure — and it breaks <em>at Plan time</em>. Measurement cannot be retrofitted. If a trial launches without its validation metrics defined, then when review day arrives the only available evidence is whatever accumulated by accident: attendance figures, satisfaction impressions, an instructor's sense that "the trainees seemed more engaged." None of that can be compared against a bar that was never set. The trial ran; the loop never closed; and the institute is left arguing from anecdote — which is exactly the epistemic position the whole framework exists to escape.</p>
-
-  <p>So the discipline is blunt: <strong>a plan without its measures is not yet a plan.</strong> Before Run begins, Plan must state what will be measured, how, against what comparison, and what result would count as validation or failure. This is why the Trial Implementation Plan (Unit 05) carries validation metrics as a named component rather than an afterthought — the paperwork encodes the philosophy.</p>
+  <div class="role-grid">
+    <div class="role-card owner"><span class="rtag">Standing authority</span><h4>Current Owner</h4>
+      <ul><li>Full control of settings, content, roster</li><li>Can hand off ownership</li><li>The class's day-to-day administrator</li></ul></div>
+    <div class="role-card second"><span class="rtag">Standing authority</span><h4>Second Owner</h4>
+      <ul><li>Same administrative reach as Current Owner</li><li>Exists for continuity, not routine teaching</li><li>Needs to be reachable for as long as the gap lasts</li></ul></div>
+    <div class="role-card shared"><span class="rtag">Scoped participation</span><h4>Shared Educator</h4>
+      <ul><li>Sees/does what their reason for being added requires</li><li>Cannot transfer or delete the class</li><li>Fits a bounded, time-limited role</li></ul></div>
+  </div>
 
   <div class="card check" id="check-u3">
     <div class="card-tag">Scenario check</div>
-    <p class="scenario">A smart-classroom trial ran for a full term at one school. At the review, the evidence on the table is instructor testimony: "lessons felt smoother, trainees seemed more engaged." Nothing else was captured. Where did the operating loop actually break?</p>
+    <p class="scenario">The Current Owner of a class is going on a six-week course and won't have reliable access. The class has one other instructor who co-teaches roughly a third of the sessions throughout, and a guest lecturer booked for a single session next month. What do you configure before the Current Owner leaves?</p>
     <div class="opts" role="group" aria-label="Answer options"></div>
     <div class="fb" aria-live="polite"></div>
     <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
@@ -337,181 +359,55 @@ const UNITS = [
   check:{
     best:0,
     opts:[
-      {t:"At Plan — validation metrics were never defined before the trial launched, so Measure had nothing to execute.",
-       fb:"Correct, and the timing is the insight. By review day the failure is a term old. The trial 'ran fine' in every visible sense, which is what makes this break so common — nothing looks wrong until the moment evidence is demanded. The corrective is structural, not personal: no trial launches without its validation metrics written into the plan, which is exactly what the Trial Implementation Plan's fifth component enforces. Carry this forward to Unit 05."},
-      {t:"At Measure — the team failed to collect data during the term.",
-       fb:"Tempting, but look at what the Measure stage was actually given to work with. Collect <em>what</em>, against <em>what bar</em>? The team could have logged every click and still had nothing decision-grade, because no metric was ever tied to the trial's purpose. Blaming Measure treats a planning failure as an execution failure — and the fix that follows ('collect more data next time') will produce more data and no more decisions."},
-      {t:"The loop didn't break — instructor testimony is qualitative data, and the trial can be judged on it.",
-       fb:"Qualitative evidence is real evidence — the institute's own research tradition triangulates it deliberately. But there is a difference between <em>designed</em> qualitative capture (structured interviews, defined themes, planned at trial start) and testimony assembled after the fact from whoever is in the room. The second cannot be compared, repeated, or defended. The problem isn't that the evidence is qualitative; it's that it was never planned as evidence."},
-      {t:"At Run — a full term was too long for a first trial; shorter cycles would have surfaced the gap earlier.",
-       fb:"There's a genuine point buried here — Unit 04 will argue hard for short cycles, and a tighter feedback loop <em>would</em> have exposed the missing metrics by week three instead of month four. But shortening the trial doesn't create the metrics; it only reveals their absence sooner. The root break is still at Plan. Cycle length is a mitigation for planning failures, not a substitute for planning."}
+      {t:"Promote the co-teaching instructor to Second Owner; leave the guest lecturer as a Shared Educator, added only when their session approaches.",
+       fb:"This matches presence to authority. The co-teaching instructor is around for the whole six-week gap and needs to be able to act on the class throughout it — exactly what Second Owner is for. The guest lecturer's one session doesn't call for standing authority at all; Shared Educator access, granted around when they actually need it, is proportionate."},
+      {t:"Promote the guest lecturer to Second Owner, since owners need broad reach and shouldn't be tied down by regular co-teaching duties.",
+       fb:"The reasoning here targets the wrong criterion. Second Owner exists to cover a continuity gap, so the question is who's actually present for it — and the guest lecturer is booked for a single session next month while the Current Owner is unreachable for six continuous weeks. Whatever “broad reach” is meant to mean, it doesn't fix the fact that the guest lecturer simply isn't there for most of the gap."},
+      {t:"Promote both the co-teaching instructor and the guest lecturer to Second Owner, to be safe.",
+       fb:"This is the same over-provisioning trap from the data-access scenario, applied to ownership instead. Second Owner carries full administrative reach; granting it “to be safe” to someone present for a single session widens standing access with no need behind it, and it's one more grant that has to be remembered and revoked later."},
+      {t:"Leave roles as they are — Shared Educators can already act for the Current Owner if something urgent comes up.",
+       fb:"This misreads what Shared Educator confers. It's scoped participation, not standing authority — nobody holding only that role can act at the class level. If something needs fixing while the Current Owner is unreachable for six weeks, leaving roles as they are means nobody can act on it at all, which is exactly the continuity gap Second Owner exists to close."}
     ]
   }
 },
 
-/* ---------------- UNIT 4 ---------------- */
-{ id:"u4", short:"The Short-Cycle Loop ★", title:"The Short-Cycle Loop", ord:"04",
+/* ---------------- UNIT 4 — RECAP & DRILL ---------------- */
+{ id:"u4", short:"Recap & Drill", title:"Putting the Three Decisions Together", ord:"04",
   render(){ return `
-  <div class="eyebrow">Unit 04 · Core applied skill</div>
-  <h1>Six stages from friction to validated scale</h1>
-  <p class="dek">This is the skill the module exists to teach. Everything before it was preparation; the capstone will make you run it for real.</p>
+  <div class="eyebrow">Recap · Applied check</div>
+  <h1>Putting the three decisions together</h1>
+  <p class="dek">One more scenario — this time touching all three settings at once.</p>
 
-  <svg class="loop-svg" viewBox="0 0 460 240" role="img" aria-label="Short-cycle loop: problem immersion, smallest useful prototype, controlled trial, rapid feedback, iterate, scale after validation">
-    <defs><marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#A9873B"/></marker></defs>
-    <g font-family="Consolas,monospace" font-size="10.5">
-      <ellipse cx="230" cy="120" rx="185" ry="92" fill="none" stroke="#D8CFB8" stroke-width="1"/>
-      <g text-anchor="middle">
-        <circle cx="230" cy="28" r="5" fill="#A9873B"/><text x="230" y="14" fill="#24303C">1 · PROBLEM IMMERSION</text>
-        <circle cx="392" cy="74" r="5" fill="#A9873B"/><text x="392" y="60" fill="#24303C">2 · SMALLEST PROTOTYPE</text>
-        <circle cx="392" cy="166" r="5" fill="#A9873B"/><text x="392" y="190" fill="#24303C">3 · CONTROLLED TRIAL</text>
-        <circle cx="230" cy="212" r="5" fill="#A9873B"/><text x="230" y="234" fill="#24303C">4 · RAPID FEEDBACK</text>
-        <circle cx="68" cy="166" r="5" fill="#A9873B"/><text x="68" y="190" fill="#24303C">5 · ITERATE QUICKLY</text>
-        <circle cx="68" cy="74" r="5" fill="#1C3A5E" stroke="#A9873B" stroke-width="2"/><text x="68" y="60" fill="#24303C">6 · SCALE AFTER VALIDATION</text>
-      </g>
-      <path d="M 100 160 C 130 190, 180 205, 220 209" fill="none" stroke="#A9873B" stroke-width="1.6" marker-end="url(#arr2)" transform="rotate(180 160 184)" opacity="0"/>
-      <text x="230" y="116" text-anchor="middle" fill="#7E6425" font-size="11">4↔5 CYCLE UNTIL THE</text>
-      <text x="230" y="132" text-anchor="middle" fill="#7E6425" font-size="11">VALIDATION BAR IS MET</text>
-    </g>
-  </svg>
-  <div class="loop-cap">The short-cycle loop · stages 4–5 repeat; stage 6 is a gate, not a step</div>
-
-  <p>The loop begins where the institute's value begins: <strong>problem immersion</strong>. Not a briefing about the problem — presence at it. You sit in the lesson, stand on the range, and talk to the trainers who feel the friction daily, until you can state the problem in terms the school recognises as its own and the evidence recognises as real. Immersion ends when you can name the specific failure, its bearer, and its cost.</p>
-
-  <p>Then build the <strong>smallest useful prototype</strong> — the minimum artefact that tests your core assumption about the fix. Small is a discipline, not a budget constraint: everything left out of the MVP is a deliberate bet that it can be left out safely. Deploy that prototype in a <strong>controlled trial</strong> — one school, one cohort, one bounded window, with a comparison condition — and run a <strong>rapid feedback loop</strong> through it: signal collected during the trial, read weekly, with thresholds that would make you change course mid-stream rather than discover failure at the end.</p>
-
-  <p><strong>Iterate quickly</strong> on that signal — stages four and five cycle as many times as the evidence demands — and only then does the sixth stage open: <strong>scale after validation</strong>. Scale is a gate with a bar, not a reward for effort. The validation bar was written back at trial design (Units 03 and 05 both insisted on this); if the trial clears it, scaling is defensible to any audience; if it doesn't, the loop returns you to iteration or, honourably, to a closed project and a documented lesson. The loop's two classic corruptions are worth naming: <em>platform-first</em>, where a purchased solution goes hunting for a problem; and <em>pilot-everywhere</em>, where enthusiasm skips the controlled trial and an unvalidated prototype meets five schools at once — converting one cheap failure into five expensive ones.</p>
+  <p>In practice, you don't make these three decisions in isolation the way this module has, one unit at a time — you set all three in the same class-creation flow. The habit worth carrying out of here is the question that separated the right call from the over-provisioned one in every scenario above: <em>who needs this, and for how long?</em> Spaces (forum, calendar), visibility and privacy (discovery, data access), and access tier (owner, second owner, shared educator) are three different settings, but that one question tests all of them the same way.</p>
 
   <div class="card check" id="check-u4">
-    <div class="card-tag">Scenario check</div>
-    <p class="scenario">A weapons-training school reports a real friction point: trainees pass every simulator checkpoint, then underperform on the live range — the skill isn't transferring. That same week, a vendor demonstrates a full-suite adaptive marksmanship platform, deployable now. Which stage of the short-cycle loop are you in, and what is your next move?</p>
+    <div class="card-tag">Quick-decision drill</div>
+    <p class="scenario">A new class is starting: 40 mid-career officers, an eight-week asynchronous course with no in-person sessions, two co-instructors sharing the teaching load evenly for the full eight weeks, and no learners under 18. Which configuration best fits?</p>
     <div class="opts" role="group" aria-label="Answer options"></div>
     <div class="fb" aria-live="polite"></div>
-    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
-  </div>
-  `;},
-  check:{
-    best:1,
-    opts:[
-      {t:"Stage 3 territory — the vendor platform is effectively a ready prototype, so deploy it in a trial at the school.",
-       fb:"This is <em>platform-first</em> wearing a trial's clothing. A controlled trial tests <em>your</em> hypothesis about <em>this</em> failure — and you don't have one yet. Nobody knows where transfer breaks: grip under recoil? stress response absent in the sim? environmental cues? The vendor's platform embodies the vendor's hypothesis about a generic problem. Trialling it now means spending the school's goodwill and a cohort's training time measuring an answer to a question you never asked. The demo's timing is seductive precisely because it lets you skip the uncomfortable, unglamorous first stage."},
-      {t:"Stage 1 — problem immersion. Go to the school: watch trainees in the simulator and on the live range, interview instructors, and locate precisely where and why transfer breaks before any solution enters the conversation.",
-       fb:"Correct — and notice you are not merely 'at stage 1' by default; the scenario's details demand it. 'Skill isn't transferring' is a symptom class, not a problem statement. Immersion here means side-by-side observation of the same trainees in both environments, hunting the specific discontinuity: sensory? procedural? psychological? Only that finding tells you what the smallest useful prototype even is — it might be a sim modification, a bridging drill on the live range, or evidence that the sim checkpoints themselves are miscalibrated. The vendor demo goes in your Watch Area file, dated, with a note. It is not lost; it is <em>sequenced</em>."},
-      {t:"Stage 5 — the simulator already exists and is underperforming, so iterate on it: tune its scenarios and difficulty curve toward live-range conditions.",
-       fb:"Iteration without diagnosis is guessing faster. Stage 5 iterates on a prototype <em>inside a feedback loop that tells you what to change</em> — here you'd be modifying a fielded system on a hunch about what's wrong with it. Worse, the framing quietly assumes the simulator is the broken component. Immersion might reveal the sim is fine and the gap lies in how instructors bridge the two environments. You cannot iterate your way out of a problem you haven't located."},
-      {t:"Stage 4 — open a rapid feedback loop: survey the trainees and instructors about the transfer gap and analyse the responses.",
-       fb:"Closest wrong answer, so look carefully at the distinction. Stage 4's feedback loop runs <em>through a deployed prototype</em> — it measures how your intervention is behaving. There is no intervention yet. What you're describing is actually part of stage 1 immersion, and even there, surveys are the weakest immersion instrument for a transfer problem: people are famously poor at introspecting on why a motor skill fails under stress. Watch first, ask second, survey third. The stages have an order because each one's output is the next one's input."}
-    ]
-  }
-},
-
-/* ---------------- UNIT 5 ---------------- */
-{ id:"u5", short:"Trial Implementation Plan", title:"Trial Implementation Plan", ord:"05",
-  render(){ return `
-  <div class="eyebrow">Unit 05 · Instrument</div>
-  <h1>Five components that make a trial defensible</h1>
-  <p class="dek">The plan is the short-cycle loop's paperwork — and the paperwork is where the philosophy either holds or quietly leaks.</p>
-
-  <p>Every controlled trial at IMLS travels on a Trial Implementation Plan with five named components. The <strong>trial concept</strong> states the problem (from immersion), the hypothesis, the school and cohort, and the bounded window — one paragraph a commander can read and repeat. <strong>Prototype solution development</strong> specifies the MVP: what it is, what it deliberately omits, and who builds it by when. <strong>User onboarding</strong> covers the people the trial actually depends on — the instructors and trainees who must use the prototype competently enough that the trial measures the idea, not their confusion with it. A prototype trialled on unbriefed users generates noise and calls it a result.</p>
-
-  <p><strong>Execution</strong> lays out the run itself: schedule, roles, the comparison condition, and what happens when normal training friction — postponements, absent instructors, weather — collides with the trial window. And <strong>validation metrics</strong>, the component Units 03 and 04 have been pointing at all along: what is measured, by what instrument, against what comparison, and what numerical or evidential bar separates "scale," "iterate," and "stop." Written before execution, without exception, because after execution it can only be reverse-engineered from whatever happened to be captured.</p>
-
-  <p>The five components have unequal failure costs. A thin concept wastes a meeting; thin onboarding contaminates a trial; missing validation metrics <em>void</em> one. When you review a draft plan — your own or a colleague's — read it backwards: metrics first, then ask whether execution can produce them, whether onboarding protects them, whether the prototype embodies the hypothesis they test, and whether the concept states a problem worth all of it.</p>
-
-  <div class="card check" id="check-u5">
-    <div class="card-tag">Scenario check</div>
-    <p class="scenario">A colleague's draft plan crosses your desk: a sharp trial concept, a well-scoped MVP, a detailed execution schedule. Onboarding is one line — "instructors will be briefed at the start" — and under validation metrics it says "outcomes will be assessed at trial end." The trial launches in two weeks. What single change most protects this trial?</p>
-    <div class="opts" role="group" aria-label="Answer options"></div>
-    <div class="fb" aria-live="polite"></div>
-    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
-  </div>
-  `;},
-  check:{
-    best:2,
-    opts:[
-      {t:"Strengthen onboarding — one briefing is not enough for instructors to use a new prototype competently.",
-       fb:"A real weakness, correctly spotted — thin onboarding will contaminate the signal. But rank the failure costs. With weak onboarding and strong metrics, you get a noisy trial whose noise you can at least detect and partially attribute. With strong onboarding and no defined metrics, you get a clean trial that proves nothing. If you can only force one change before launch, this isn't it — though a good reviewer flags both."},
-      {t:"Delay the launch — two weeks is not enough time to fix a plan with two weak components.",
-       fb:"Delay is a cost, not a fix; the question is what the delay buys. If it buys defined metrics and real onboarding, argue for it — but 'delay' as your review output pushes the decision back to the author without telling them what to repair. And note the asymmetry: defining validation metrics for an already-sharp concept is often a two-day task, not a two-month one. Prescribe the repair; let the schedule follow it."},
-      {t:"Define the validation metrics now, in full — instrument, comparison condition, and the explicit bar separating scale, iterate, and stop — before anything else moves.",
-       fb:"This is the change that protects the trial, and Unit 03 told you why: measurement cannot be retrofitted. 'Outcomes will be assessed at trial end' is the sentence that voids trials — it defers every hard decision (assessed <em>how</em>? against <em>what</em>? cleared at <em>what bar</em>?) to a review day when the answers can no longer shape the data. Defining metrics now also stress-tests the rest of the plan: if execution as scheduled cannot produce the comparison data, better to discover that this week. Then, with metrics fixed, send the onboarding line back too."},
-      {t:"Approve it — concept, prototype and execution are the substantive components; the other two are administrative detail that can firm up during the run.",
-       fb:"This is the leak in the philosophy, stated politely. It ranks the components by how impressive they read rather than by what voids a trial — and it repeats, precisely, the smart-classroom failure from Unit 03: a trial that runs beautifully and arrives at review day with anecdotes. Onboarding and metrics are not the admin around the science; for a controlled trial, they largely <em>are</em> the science."}
-    ]
-  }
-},
-
-/* ---------------- UNIT 6 ---------------- */
-{ id:"u6", short:"SLI 2040 Framing", title:"SLI 2040 Framing", ord:"06",
-  render(){ return `
-  <div class="eyebrow">Unit 06 · Institutional frame</div>
-  <h1>Where this module sits in SLI 2040</h1>
-  <p class="dek">The three sections and the short-cycle loop are not IMLS habits — they are how the institute discharges its lines in a 15-year plan.</p>
-
-  <div class="provisional"><strong>Provisional text.</strong> This unit is drafted from the IMLS Strategy &amp; Plan (Mar 2026). The authoritative SLI 2040 framing document will replace this prose in v1.1 — institutional language will be aligned to it exactly. Treat the initiative structure below as current; treat the connective prose as a working draft.</div>
-
-  <p>SLI 2040 carries five initiatives, and everything this module has taught maps onto them. <strong>Learning Innovations</strong> and <strong>Learning Digital</strong> are where the Innovation Lab's prototypes and the NGLS2.0 digital backbone live — the build lines. <strong>Training Standards</strong> and <strong>Workplace Learning</strong> are where Learning Science's watch areas discharge into practice: learning design and instruction on one side, TIEM-style workplace learning on the other. And <strong>Learning Analytics</strong> is the line that makes the whole structure honest — the TLAA measurement tradition that turns "we trained" into "we can show what changed."</p>
-
-  <p>Two points of ministerial guidance frame the horizon: SAFTI MI's learning mission is an <strong>adult learning</strong> mission — andragogy is the fundamental, not a flavour — and it is a <strong>two-sided</strong> mission: training and learning, run <em>with analytics</em>. That last phrase is why the short-cycle loop ends at a validation gate rather than a launch party, and why every prototype your section proposes carries a measurement obligation from birth. The high-trust, high-touch instructional and mentorship core remains the constant; the loop and the analytics exist to serve it, not to replace it.</p>
-
-  <p>Fidelity to this frame matters for a practical reason. Over a 15-year horizon, staff rotate, projects hand over, and the only thing that keeps a hundred small trials pointed the same direction is a shared operating language used precisely. When your trial plan names its SLI 2040 line and its analytics obligation, a section lead three postings from now can pick it up and know exactly what it was for.</p>
-
-  <div class="card check" id="check-u6">
-    <div class="card-tag">Scenario check</div>
-    <p class="scenario">Your section is drafting the trial concept for the AI Motion Coach — an AI tool giving trainees corrective feedback on physical technique. For the SLI 2040 alignment paragraph: which initiative line does this trial primarily serve, and which line must it report evidence into regardless?</p>
-    <div class="opts" role="group" aria-label="Answer options"></div>
-    <div class="fb" aria-live="polite"></div>
-    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+    <div class="done-note">✓ Module complete.</div>
   </div>
   `;},
   check:{
     best:0,
     opts:[
-      {t:"Primary: Learning Digital / Learning Innovations (it is a prototype on the digital build line). Mandatory secondary: Learning Analytics — the trial must feed validation evidence into the measurement line no matter what it primarily serves.",
-       fb:"Correct on both counts, and the second count is the one that generalises: <strong>every</strong> trial carries the Learning Analytics obligation, whatever its primary line. This is the institutional expression of everything Units 03–05 taught — validation metrics are not just good trial hygiene, they are how a prototype reports into the plan. A trial concept whose alignment paragraph names only its build line has told half its story."},
-      {t:"Primary: Workplace Learning — trainees are learning in the flow of physical training, which is workplace learning by definition.",
-       fb:"The reasoning stretches the category until it covers everything. Workplace Learning in the SLI 2040 structure carries a specific programmatic meaning (the TIEM tradition — learning embedded in operational work contexts), not 'any learning that happens while doing something.' Mapping by vibe rather than by the initiative's actual scope is exactly the fidelity failure the unit warns about: it makes the alignment paragraph decorative. When unsure of a line's scope, the answer is to check the plan, not to interpret generously."},
-      {t:"Primary: Training Standards — the tool corrects technique, and technique is a standard.",
-       fb:"A near-miss that confuses the trial's <em>subject matter</em> with its <em>initiative line</em>. The Motion Coach touches standards (it enforces correct technique), but as a trial it is a prototype on the digital build line — its deliverable is a validated tool, not a revised standard. If the trial's evidence later suggests the technique standards themselves need revision, <em>that finding</em> flows to the Training Standards line. Lines are about what the work produces, not what it mentions."},
-      {t:"Alignment can be settled after the trial validates — a paragraph about initiative lines shouldn't gate a promising prototype.",
-       fb:"This treats the frame as bureaucratic garnish, and the module has argued the opposite throughout. Alignment settled after validation is alignment reverse-engineered — the same retrofitting fallacy as post-hoc metrics, applied at institutional scale. The paragraph costs ten minutes at concept stage and buys the trial its place in a 15-year structure: resourcing logic, reporting path, and a successor's ability to understand it. Prototypes that skip it don't escape the frame; they just enter it unlabelled."}
+      {t:"Forum on, Calendar on, Learner Discovery on, Shared-Educator Data Access on, both co-instructors as Second Owners.",
+       fb:"This fits the class on every axis. Eight weeks of asynchronous cohort continuity is exactly where a forum earns its keep; calendar is near-free and this course has real dates to surface. The learners are adult, mid-career, and not minors, which lowers the stakes of both discovery and data access considerably compared to the cadet scenario. And with two instructors sharing the load evenly for the entire course, both genuinely need standing authority — naming both as Second Owner matches presence to access, the same test that picked the right owner in the six-week-leave scenario."},
+      {t:"Forum off (keep it minimal), Calendar on, Learner Discovery off, Data Access off, one instructor as Second Owner.",
+       fb:"This defaults toward the caution that fit the three-day rotating refresher and the two-session guest lecturer — but this class has neither of those constraints. Eight weeks of continuity supports a forum; adult, non-minor learners lower the stakes on discovery and data access considerably; and naming only one of two co-instructors who share the load evenly reproduces the exact continuity gap the ownership scenario warned against."},
+      {t:"Forum on, Calendar on, Learner Discovery on, Data Access on, only the class creator kept as owner, no Second Owner.",
+       fb:"Two co-instructors sharing the load evenly for the full eight weeks is precisely the pattern that called for Second Owner in the ownership unit — continuity access should match who is actually present and responsible, not default to a single point of failure just because one of them happened to create the class."},
+      {t:"Forum off, Calendar off, Learner Discovery on, Data Access on, both instructors as Second Owner.",
+       fb:"Turning off calendar removes a low-cost, in-platform view of dates that an eight-week asynchronous course — with no in-person sessions to informally remind learners of deadlines — genuinely needs. The visibility and ownership calls here are reasonable; the spaces call doesn't fit the shape of this particular course."}
     ]
   }
-},
-
-/* ---------------- CAPSTONE ---------------- */
-{ id:"cap", short:"Capstone ★", title:"Capstone — Your Project Through the Loop", ord:"07",
-  render(){ return `
-  <div class="eyebrow">Capstone · Applied output</div>
-  <h1>Walk your live project through the short-cycle loop</h1>
-  <p class="dek">Not a quiz — a working document. Pick one of your section's live projects and take it through all six stages. Your entries save automatically and export as a document for your section lead.</p>
-
-  <p>Choose the project. If your own current project isn't listed, name it — the loop doesn't care what the artefact is, only that the problem is real.</p>
-
-  <p style="margin-bottom:4px"><label for="capProject" style="font-size:.88rem;color:var(--ink-soft)">Project:</label></p>
-  <p>
-    <select id="capProject">
-      <option value="">— select —</option>
-      <option>Dynamic Virtual Sandbox</option>
-      <option>AI Motion Coach</option>
-      <option value="__own__">My own project…</option>
-    </select>
-    <input type="text" id="capOwn" placeholder="Name your project" style="display:none;margin-left:8px;width:240px">
-  </p>
-
-  <div id="capStages"></div>
-
-  <p><button class="btn brass" id="capExport">Export capstone (.md)</button>
-     <button class="btn ghost" id="capClear" style="margin-left:8px">Clear capstone</button>
-     <span class="save-flash" id="capFlash">saved</span></p>
-  <p style="font-size:.8rem;color:var(--ink-soft)">The capstone counts as complete when a project is chosen and all six stages have an entry. Entries live in this browser only until exported.</p>
-  `;}
 }
 ];
 
 /* ============================================================
    STORAGE — localStorage with graceful in-memory fallback
    ============================================================ */
-const SKEY="imls_sli2040_m1_v1";
+const SKEY="ilearn_editor_m1_v1";
 let memStore=null, storageOK=true;
 function loadState(){
   try{ const raw=localStorage.getItem(SKEY); return raw?JSON.parse(raw):defaultState(); }
@@ -522,7 +418,7 @@ function saveState(s){
   if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
   memStore=s;
 }
-function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}, cap:{project:"",own:"",stages:{}}}; }
+function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}}; }
 let state=loadState();
 
 /* ============================================================
@@ -556,7 +452,7 @@ function renderMap(){
     ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
     : `<button id="resetAll">reset all progress</button>`;
   const rb=document.getElementById("resetAll");
-  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress and capstone entries?")){ state=defaultState(); saveState(state); renderAll(); } };
+  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress?")){ state=defaultState(); saveState(state); renderAll(); } };
 }
 
 function renderUnit(){
@@ -565,7 +461,6 @@ function renderUnit(){
   mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
   if(u.check) wireCheck(u);
   if(u.id==="start") wireStart();
-  if(u.id==="cap") wireCapstone();
   window.scrollTo({top:0});
   renderMap();
 }
@@ -579,12 +474,13 @@ function pagerHtml(u){
   </div>`;
 }
 
-/* ---------- Scenario checks (branching feedback) ---------- */
+/* ---------- Scenario / drill checks (branching feedback) ---------- */
 function wireCheck(u){
   const box=document.getElementById("check-"+u.id);
   const optsEl=box.querySelector(".opts");
   const fbEl=box.querySelector(".fb");
   const doneEl=box.querySelector(".done-note");
+  const isNoClean=Array.isArray(u.check.valid);
   // Shuffle deterministically per unit so option order isn't a tell (fixed seed by unit id)
   const order=u.check.opts.map((o,idx)=>idx);
   seededShuffle(order, u.id);
@@ -594,10 +490,17 @@ function wireCheck(u){
     b.type="button"; b.innerHTML=escapeHtml(o.t);
     b.addEventListener("click",()=>{
       optsEl.querySelectorAll("button").forEach(x=>x.classList.remove("sel-good","sel-redirect"));
-      const good=origIdx===u.check.best;
+      const good=isNoClean ? u.check.valid.includes(origIdx) : origIdx===u.check.best;
       b.classList.add(good?"sel-good":"sel-redirect");
+      let head, extra="";
+      if(isNoClean){
+        head = good ? "One defensible option" : "Consider the consequence";
+        if(good) extra = `<p style="margin-top:10px">${u.check.noCleanNote}</p>`;
+      } else {
+        head = good ? "This is the move" : "Consider the consequence";
+      }
       fbEl.className="fb show "+(good?"good":"redirect");
-      fbEl.innerHTML=`<div class="fb-head">${good?"This is the move":"Consider the consequence"}</div>${o.fb}`+
+      fbEl.innerHTML=`<div class="fb-head">${head}</div>${o.fb}${extra}`+
         (good?"":`<div class="again"><button type="button">Choose again →</button></div>`);
       const again=fbEl.querySelector(".again button");
       if(again) again.addEventListener("click",()=>{ fbEl.className="fb"; fbEl.innerHTML=""; });
@@ -617,74 +520,6 @@ function wireStart(){
   inp.value=state.name||"";
   document.getElementById("nameSave").addEventListener("click",()=>{
     state.name=inp.value.trim(); saveState(state); renderMap();
-  });
-}
-
-/* ---------- Capstone ---------- */
-function wireCapstone(){
-  const sel=document.getElementById("capProject");
-  const own=document.getElementById("capOwn");
-  const stagesEl=document.getElementById("capStages");
-  const flash=document.getElementById("capFlash");
-  let flashT=null;
-  function flashSave(){ flash.classList.add("on"); clearTimeout(flashT); flashT=setTimeout(()=>flash.classList.remove("on"),1200); }
-
-  // restore project
-  if(state.cap.project==="__own__"){ sel.value="__own__"; own.style.display="inline-block"; own.value=state.cap.own||""; }
-  else sel.value=state.cap.project||"";
-
-  sel.addEventListener("change",()=>{
-    state.cap.project=sel.value;
-    own.style.display=sel.value==="__own__"?"inline-block":"none";
-    saveState(state); flashSave(); checkCapDone();
-  });
-  own.addEventListener("input",()=>{ state.cap.own=own.value; saveState(state); flashSave(); checkCapDone(); });
-
-  LOOP_STAGES.forEach(st=>{
-    const d=document.createElement("div"); d.className="stage card";
-    d.innerHTML=`<div class="stage-head"><span class="stage-num">${st.n}</span><h3>${st.t}</h3></div>
-      <p class="guide">${st.guide}</p>
-      <textarea id="cap-${st.id}" aria-label="${st.t}"></textarea>`;
-    stagesEl.appendChild(d);
-    const ta=d.querySelector("textarea");
-    ta.value=state.cap.stages[st.id]||"";
-    ta.addEventListener("input",()=>{ state.cap.stages[st.id]=ta.value; saveState(state); flashSave(); checkCapDone(); });
-  });
-
-  function projectName(){
-    if(state.cap.project==="__own__") return (state.cap.own||"").trim();
-    return state.cap.project;
-  }
-  function checkCapDone(){
-    const allFilled=LOOP_STAGES.every(st=>(state.cap.stages[st.id]||"").trim().length>0);
-    const has=projectName().length>0;
-    const was=!!state.done["cap"];
-    state.done["cap"]=allFilled&&has;
-    if(state.done["cap"]!==was){ saveState(state); renderMap(); }
-  }
-  checkCapDone();
-
-  document.getElementById("capExport").addEventListener("click",()=>{
-    const pn=projectName()||"(project not named)";
-    const dt=new Date().toISOString().slice(0,10);
-    let md=`# Short-Cycle Loop Capstone — ${pn}\n\n`;
-    md+=`IMLS · SLI 2040 Module 1 · ${dt}${state.name?` · Learner: ${state.name}`:""}\n\n`;
-    LOOP_STAGES.forEach(st=>{
-      md+=`## ${st.n} — ${st.t}\n\n${(state.cap.stages[st.id]||"_(no entry)_").trim()}\n\n`;
-    });
-    md+=`---\n_Generated from the IMLS SLI 2040 Module 1 learning module (v1.0). Validation bar in Stage 6 gates any scaling decision._\n`;
-    const blob=new Blob([md],{type:"text/markdown"});
-    const a=document.createElement("a");
-    a.href=URL.createObjectURL(blob);
-    a.download=`capstone_${pn.replace(/[^a-z0-9]+/gi,"_").toLowerCase()}_${dt}.md`;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-  });
-
-  document.getElementById("capClear").addEventListener("click",()=>{
-    if(!confirm("Clear all capstone entries?")) return;
-    state.cap={project:"",own:"",stages:{}}; state.done["cap"]=false;
-    saveState(state); renderUnit();
   });
 }
 
