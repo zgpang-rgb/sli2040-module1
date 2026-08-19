@@ -23,9 +23,9 @@
   --mono:Consolas,"SF Mono","Courier New",monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
-body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65}
+body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65;overflow-x:hidden}
 
 /* ---------- Header band ---------- */
 header{background:var(--navy-deep);color:var(--ivory);padding:0}
@@ -160,6 +160,7 @@ input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
   .land-grid{grid-template-columns:1fr}
   h1{font-size:1.6rem}
   .wheel-wrap{flex-direction:column}
+  .wheel-defs{min-width:0}
 }
 </style>
 </head>
@@ -232,7 +233,7 @@ const UNITS = [
   <p>The suggested path runs Part 1 → 2 → 3 because later units lean on habits the earlier ones build — reading a table for what it actually says before reaching for an action. But every unit stands alone; jump to whatever your class needs today. Progress is saved in this browser.</p>
 
   <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — shown next to your saved progress only):</label><br>
-  <input type="text" id="nameIn" placeholder="e.g. Ms. Tan" style="margin-top:6px;width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
+  <input type="text" id="nameIn" placeholder="e.g. Ms. Tan" style="margin-top:6px;width:100%;max-width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
   `;}
 },
 
