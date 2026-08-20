@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iLEARN Educator · Module 2 — Assign Content</title>
+<style>
+/* ============================================================
+   IMLS · iLEARN Educator Module 2 — internal training module
+   Palette: navy / archival ivory / brass. No external assets.
+   ============================================================ */
+:root{
+  --navy-deep:#10233C; --navy:#1C3A5E; --navy-soft:#2B4E77;
+  --ivory:#F4EFE3; --paper:#FCF9F0; --ivory-dim:#EAE3D2; --line:#D8CFB8;
+  --brass:#A9873B; --brass-dark:#7E6425; --brass-pale:#D9C795;
+  --ink:#24303C; --ink-soft:#5A6470;
+  --moss:#40634C; --moss-bg:#EDF2EA;
+  --rust:#94502E; --rust-bg:#F6EDE4;
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --sans:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65}
+
+/* ---------- Header band ---------- */
+header{background:var(--navy-deep);color:var(--ivory);padding:0}
+.hd-inner{max-width:1180px;margin:0 auto;padding:20px 28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.wordmark{font-family:var(--serif);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase}
+.wordmark b{color:var(--brass-pale);font-weight:600}
+.hd-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:#9FB0C4;text-transform:uppercase}
+.hd-rule{height:3px;background:linear-gradient(90deg,var(--brass) 0 180px,rgba(169,135,59,.25) 180px)}
+
+/* ---------- Shell ---------- */
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:288px 1fr;gap:0;min-height:calc(100vh - 90px)}
+nav.map{background:var(--ivory-dim);border-right:1px solid var(--line);padding:26px 20px 40px}
+main{padding:34px 40px 90px;max-width:820px}
+
+/* ---------- Module map (sidebar) ---------- */
+.map h2{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.map .hint{font-size:.78rem;color:var(--ink-soft);margin-bottom:16px;line-height:1.45}
+.map ol{list-style:none}
+.map li{margin-bottom:2px}
+.map a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:3px;font-size:.86rem;line-height:1.35;border-left:2px solid transparent}
+.map a:hover{background:var(--paper)}
+.map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
+.dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
+.dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
+.dot.done{border-color:var(--brass-dark);background:var(--brass)}
+.map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.progress-wrap{margin:22px 0 4px}
+.progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
+.progress-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:6px;letter-spacing:.08em}
+.learner-line{margin-top:20px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
+.learner-line button{background:none;border:none;color:var(--brass-dark);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
+.storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
+
+/* ---------- Content typography ---------- */
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
+.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
+p{margin-bottom:14px;max-width:68ch}
+p strong{color:var(--navy-deep)}
+em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bottom:1px}
+ul.feat{margin:0 0 16px 0;max-width:68ch}
+ul.feat li{margin:0 0 8px 20px;font-size:.96rem}
+
+/* ---------- Blueprint card (signature: brass corner ticks) ---------- */
+.card{position:relative;background:var(--paper);border:1px solid var(--line);padding:26px 28px;margin:26px 0}
+.card::before,.card::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
+.card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
+
+/* ---------- Scenario check ---------- */
+.check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--navy-deep);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.opts button{text-align:left;background:var(--ivory);border:1px solid var(--line);padding:12px 14px;font:inherit;font-size:.92rem;line-height:1.45;cursor:pointer;color:var(--ink);border-radius:2px}
+.opts button:hover{border-color:var(--brass);background:var(--paper)}
+.opts button.sel-good{border-color:var(--moss);background:var(--moss-bg)}
+.opts button.sel-redirect{border-color:var(--rust);background:var(--rust-bg)}
+.opts button:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.fb{display:none;margin-top:14px;padding:16px 18px;border-radius:2px;font-size:.93rem;line-height:1.55}
+.fb.show{display:block}
+.fb.good{background:var(--moss-bg);border-left:3px solid var(--moss)}
+.fb.redirect{background:var(--rust-bg);border-left:3px solid var(--rust)}
+.fb .fb-head{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.fb.good .fb-head{color:var(--moss)}
+.fb.redirect .fb-head{color:var(--rust)}
+.fb .again{margin-top:10px;font-size:.84rem}
+.fb .again button{background:none;border:none;text-decoration:underline;color:var(--brass-dark);cursor:pointer;font-size:.84rem;padding:0}
+.done-note{display:none;margin-top:14px;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;color:var(--moss)}
+.done-note.show{display:block}
+.judgment-flag{margin-top:10px;padding:10px 14px;background:var(--ivory-dim);border-left:3px solid var(--navy-soft);font-size:.85rem;color:var(--ink-soft);border-radius:2px}
+
+/* ---------- Feature diagram ---------- */
+.loop-svg{display:block;margin:10px auto 4px;max-width:460px;width:100%;height:auto}
+.loop-cap{text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:10px;text-transform:uppercase}
+
+/* ---------- Capstone ---------- */
+.stage{margin-bottom:26px}
+.stage-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.stage-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--brass-dark);border:1px solid var(--brass);padding:2px 8px;border-radius:2px;white-space:nowrap}
+.stage-head h3{margin:0}
+.stage .guide{font-size:.86rem;color:var(--ink-soft);margin-bottom:8px;max-width:70ch}
+textarea{width:100%;min-height:90px;font-family:var(--sans);font-size:.92rem;line-height:1.55;padding:12px 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;border-radius:2px}
+textarea:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+select,input[type=text]{font:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px}
+select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+.btn{display:inline-block;background:var(--navy);color:var(--ivory);border:none;font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px}
+.btn:hover{background:var(--navy-soft)}
+.btn.brass{background:var(--brass-dark)}
+.btn.brass:hover{background:var(--brass)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.btn:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.save-flash{font-family:var(--mono);font-size:.72rem;color:var(--moss);margin-left:12px;opacity:0;transition:opacity .3s}
+.save-flash.on{opacity:1}
+
+/* ---------- Landing ---------- */
+.land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.land-grid .card{margin:0}
+.provisional{background:var(--rust-bg);border:1px solid var(--rust);padding:12px 16px;font-size:.84rem;margin:18px 0;border-radius:2px}
+.pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
+.pager a{text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.pager a:hover{border-color:var(--brass)}
+section.unit{display:none;animation:fadein .35s ease}
+section.unit.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Responsive ---------- */
+.map-toggle{display:none}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  nav.map{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+  nav.map .map-body{display:none}
+  nav.map.open .map-body{display:block}
+  .map-toggle{display:inline-block;background:none;border:1px solid var(--ink-soft);font:inherit;font-size:.8rem;padding:6px 12px;cursor:pointer;border-radius:2px;margin-bottom:4px}
+  main{padding:26px 20px 70px}
+  .land-grid{grid-template-columns:1fr}
+  h1{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-inner">
+    <div class="wordmark">SAFTI MI · <b>IMLS</b> — Institute for Military Learning Systems</div>
+    <div class="hd-meta">iLEARN Educator · Module 2 · Internal Training · v1.0</div>
+  </div>
+  <div class="hd-rule"></div>
+</header>
+
+<div class="shell">
+
+<!-- ================= SIDEBAR / MODULE MAP ================= -->
+<nav class="map" id="mapNav" aria-label="Module map">
+  <button class="map-toggle" id="mapToggle" aria-expanded="false">Module map ▾</button>
+  <div class="map-body">
+    <h2>Module map</h2>
+    <p class="hint">Suggested order below — but every unit is open. Enter anywhere; the map remembers where you've been.</p>
+    <ol id="mapList"></ol>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-label" id="progLabel">0 / 8 complete</div>
+    </div>
+    <div class="learner-line" id="learnerLine"></div>
+    <div class="storage-note" id="storageNote">Browser storage unavailable — progress will not persist after this session. Run the file locally in Edge/Chrome for saved progress.</div>
+  </div>
+</nav>
+
+<!-- ================= MAIN ================= -->
+<main id="main"></main>
+
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   CONTENT — single object so the source SLP text can be
+   swapped in or extended without touching app logic.
+   ============================================================ */
+
+const CONFIG_STAGES = [
+  {id:"content", n:"Step 1", t:"Content & assignment type",
+   guide:"Is the content Pre-Packaged or My Own Content? Is the assignment Learning, Exam, or Practice Set? Will it deploy in bulk (Curator-packaged) or as a single module — and if bulk, what has the Curator already fixed for you?"},
+  {id:"dates", n:"Step 2", t:"Active From & Due Date",
+   guide:"Active From: Immediately, or a Fixed Date? Due Date: Fixed Date, Duration, or No Due Date? State what you're accepting — once a learner starts, Active From can't change, and at the deadline every learner card moves to Sustain regardless of progress."},
+  {id:"targeting", n:"Step 3", t:"Assign To & Previous Progress",
+   guide:"Who receives this: All Learners in the Class, Selected Learners, or Elective? And for Previous Progress — Copy from Previous Period or Ignore Previous Periods — and why, given what you know about this cohort's history?"},
+  {id:"refresh", n:"Step 4", t:"Refresh Knowledge",
+   guide:"Required, Optional, or Not Available? Note your reasoning — this is a judgment call about how much prior mastery you're willing to assume."},
+  {id:"ordering", n:"Step 5", t:"Ordering & deployment control",
+   guide:"Which sequencing control applies to your deployment mode — Card Order, Assign Order, Lock the Order of the Modules, or ASAP — and who actually sets it, you or the Curator?"},
+  {id:"interface", n:"Step 6", t:"Interface controls",
+   guide:"Hide Coach Panel? Hide Self-Assessment Tile? Any New Content Policy setting to apply? State the toggle decisions and why."},
+  {id:"examset", n:"Step 7", t:"Exam / Questionnaire / Practice Set settings",
+   guide:"If this is an Exam: Objectives with Content subsetting, General and Advanced Exam Settings, Questionnaire Mode on or off. If Practice Set: the Tag Structure Name your Curator built. If Learning only, write N/A and say why none of this applies."}
+];
+
+const UNITS = [
+/* ---------------- LANDING ---------------- */
+{ id:"start", short:"Orientation", title:"Module 2 — Assign Content", ord:"—",
+  render(){ return `
+  <div class="eyebrow">iLEARN Educator · Module 2</div>
+  <h1>Configuring the Assign Content screen</h1>
+  <p class="dek">A self-paced module for Educator staff who assign Learning, Exam, and Practice Set content in iLEARN. It practises what it teaches: you set the pace, the scenarios come from real assignment decisions, and your capstone is a real assignment you configure end to end.</p>
+
+  <p>Every assignment an Educator creates in iLEARN runs through the same screen, and every field on it is a decision with a consequence a learner will feel: what content they see, when they can start, what happens if they miss the deadline, whether their prior progress counts, and in what order modules unlock. This module walks through those decisions in the groups iLEARN itself uses — Content &amp; Assignment Type; Active From &amp; Due Date; Refresh Knowledge, Previous Progress &amp; Assign To; Ordering; Interface controls; and the Exam/Questionnaire/Practice Set settings that only apply once you've chosen an assignment type.</p>
+
+  <p>The suggested path runs top to bottom in the module map, because later units assume you've seen the earlier vocabulary (Curator vs. Educator, bulk vs. single deployment). But every unit is open on its own. If you already know the platform, skip straight to the capstone and configure a live assignment; come back for whichever unit the exercise exposes a gap in. Your progress is saved in this browser either way.</p>
+
+  <div class="land-grid">
+    <div class="card"><div class="card-tag">What you will practise</div>
+      <p style="margin:0;font-size:.9rem">Seven scenario checks drawn from real assignment situations, each with branching feedback — the point is not the right button but the consequence of each setting.</p></div>
+    <div class="card"><div class="card-tag">What you will produce</div>
+      <p style="margin:0;font-size:.9rem">A capstone: one real assignment you need to set up, walked through every configuration decision, saved here and exportable as a worksheet for your Curator or your own records.</p></div>
+  </div>
+
+  <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — used only to label your capstone export):</label><br>
+  <input type="text" id="nameIn" placeholder="e.g. ME5 Tan" style="margin-top:6px;width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
+  `;}
+},
+
+/* ---------------- UNIT 1 ---------------- */
+{ id:"u1", short:"Content & Assignment Type", title:"Content & Assignment Type", ord:"01",
+  render(){ return `
+  <div class="eyebrow">Unit 01 · Foundation</div>
+  <h1>What you're assigning, and how it gets there</h1>
+  <p class="dek">Every other setting on this screen only makes sense once these two choices are made.</p>
+
+  <p>The first fork is <strong>Content Type</strong>: <em class="term">Pre-Packaged Content</em>, built and deployed by a Curator, or <em class="term">My Own Content</em>, which you assemble yourself. The second fork is <strong>Assignment Type</strong>: <em class="term">Learning</em>, <em class="term">Exam</em> (which also covers Questionnaire), or <em class="term">Practice Set</em>. These two forks together decide which of the later units even apply to you — Exam-only settings like Objectives with Content don't exist for a Learning assignment, and Practice Set needs a Tag Structure that a Learning assignment never touches.</p>
+
+  <p>There is a third distinction sitting underneath both forks: whether the content package is deployed in <strong>bulk</strong> or as a <strong>single module</strong>. This matters because several downstream controls — Card Order, Assign Order vs. ASAP, and more — only work in one deployment mode or the other, and in bulk deployment several of those controls belong to the <strong>Curator</strong>, not to you. Knowing which mode you're in before you touch the rest of the screen saves you from configuring a setting that silently does nothing.</p>
+
+  <div class="card check" id="check-u1">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">A Curator has packaged and bulk-deployed a standard onboarding course to your class. You open Assign Content to set it up for your learners. What should you check first?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:1,
+    opts:[
+      {t:"Start setting Card Order for the modules, since sequencing is the first thing learners notice.",
+       fb:"Card Order only works for single module deployment. In a bulk-deployed package, the Curator already fixed the card order through the pencil tool before packaging — so any time you spend on it here is spent on a control that has no effect. This is exactly the trap the unit warns about: touching a setting before confirming which deployment mode you're in."},
+      {t:"Confirm the deployment mode (bulk vs. single) and what the Curator has already fixed, before touching sequencing or Curator-owned settings.",
+       fb:"This is the right first move. Bulk deployment means Card Order and several other controls are the Curator's decisions, already baked into the package — your job is to configure what's actually yours to configure (dates, targeting, refresh knowledge) rather than chase settings that are locked upstream. Confirming the mode first turns the rest of the screen from guesswork into a short, correct list."},
+      {t:"Assume it's My Own Content and start building the assignment from scratch.",
+       fb:"The scenario already tells you this is Pre-Packaged Content from a Curator — assuming otherwise means rebuilding work that already exists. My Own Content is the right fork only when no Curator package covers your need; defaulting to it out of habit wastes the very division of labour bulk deployment exists to provide."},
+      {t:"Set the Assignment Type to Practice Set, since that's the most flexible option for a new course.",
+       fb:"Assignment Type isn't a flexibility dial — it has to match what the content actually is. An onboarding course delivered as structured lessons is a Learning assignment; forcing it into Practice Set (which depends on a Tag Structure Name the Curator would need to have built for this specific purpose) will likely leave required fields unset or meaningless for this content."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 2 ---------------- */
+{ id:"u2", short:"Active From & Due Date", title:"Active From & Due Date", ord:"02",
+  render(){ return `
+  <div class="eyebrow">Unit 02 · Timing</div>
+  <h1>Two dates, and a consequence each one locks in</h1>
+  <p class="dek">These fields look like calendar widgets. They are actually commitments — one of them can't be undone once a learner starts.</p>
+
+  <p><strong>Active From</strong> has two states: <em class="term">Immediately</em>, available to every learner in the class the moment you assign it, or a <em class="term">Fixed Date</em>, available only from that date and time. The commitment: once a learner has started the module, the availability date can no longer be changed. Set this deliberately — it is not a field you casually revisit.</p>
+
+  <p><strong>Due Date</strong> has three states: a <em class="term">Fixed Date</em> to complete by, a <em class="term">Duration</em> (e.g. 100 days from assignment), or <em class="term">No Due Date</em> at all. The consequence that catches people out: when a deadline is reached, <strong>every</strong> learner card moves to the "Sustain" column — regardless of current progress, even a learner sitting at zero. After that, learners can't make further progress, though they can still re-attempt content they'd already completed. A due date isn't a soft nudge; it's a hard gate that moves the whole class at once.</p>
+
+  <div class="card check" id="check-u2">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">You're assigning a mandatory safety Exam to a class where three learners are on extended field leave and won't return before the unit's usual two-week deadline. Everyone else is available now. What's the best Due Date approach?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:2,
+    opts:[
+      {t:"Set a Fixed Date two weeks out for the whole class — the three on leave can re-attempt later anyway.",
+       fb:"Re-attempt only covers content already <em>completed</em> — it doesn't undo the Sustain-column move for learners who never got to attempt it at all. The three on leave will be swept to Sustain at zero progress alongside everyone who simply didn't try, with no way to distinguish 'on leave' from 'non-compliant' later. A single class-wide deadline erases exactly the distinction you need to keep."},
+      {t:"Set No Due Date for everyone, so nobody is ever moved to Sustain.",
+       fb:"This solves the leave problem by removing the deadline for the entire class, including the learners who are available now and for whom a mandatory safety exam probably should have a real deadline. No Due Date is the right tool when a deadline genuinely doesn't apply — using it as a workaround for three learners' schedules weakens the assignment for everyone else."},
+      {t:"Use Assign To (Unit 03) to separate the three on-leave learners into their own assignment with a Duration or later Fixed Date, and keep the standard Fixed Date for the rest of the class.",
+       fb:"This is the combination that actually respects both facts: the class has a real deadline, and three learners have a real scheduling constraint. It reaches into Unit 03's Assign To — Selected Learners — because Due Date alone can't express 'different deadlines for different people' within one assignment. Recognising when a problem needs a second control, not just a different value on the first one, is the skill this scenario is testing."},
+      {t:"Set a Duration of 100 days for the whole class so there's plenty of buffer for the three on leave.",
+       fb:"A 100-day buffer for a two-week mandatory safety exam quietly changes the assignment for the entire class, not just the three affected learners — and it still doesn't guarantee the leave learners return within it. Widening a deadline for everyone to solve three people's scheduling is a blunt fix for a targeting problem."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 3 ---------------- */
+{ id:"u3", short:"Targeting, Progress & Refresh ★", title:"Assign To, Previous Progress & Refresh Knowledge", ord:"03",
+  render(){ return `
+  <div class="eyebrow">Unit 03 · Judgment call</div>
+  <h1>Who gets it, what their history counts for</h1>
+  <p class="dek">This unit's scenario has no clean answer — the right setting depends on a read of the cohort that the screen itself can't give you.</p>
+
+  <p><strong>Assign To</strong> has three modes: <em class="term">All Learners in the Class</em>; <em class="term">Selected Learners</em>, useful for targeting additional content at specific learners such as those who are weaker on a topic; and <em class="term">Elective</em>, where the module becomes available for any learner in the class to self-assign. <strong>Previous Progress</strong> then decides what a learner's history is worth going in: <em class="term">Copy from Previous Period</em> gives credit for objectives already completed in an earlier period (the SLP's example: setting it for two years recognises progress from that window), or <em class="term">Ignore Previous Periods</em>, which discards prior progress entirely and starts everyone fresh.</p>
+
+  <p><strong>Refresh Knowledge</strong> sits alongside these as a third dial — <em class="term">Required</em>, <em class="term">Optional</em>, or <em class="term">Not Available</em> — governing how much you insist a learner revisit prior material before proceeding. None of these three settings has a universally correct value; each is a bet about how comparable this cohort's prior exposure actually is to what the new assignment assumes.</p>
+
+  <div class="card check" id="check-u3">
+    <div class="card-tag">Scenario check — no clean answer</div>
+    <p class="scenario">You're reassigning a competency module to a class where roughly half the learners completed an earlier version of it eighteen months ago under a different syllabus, and half are new to the material entirely. Previous Progress: Copy from Previous Period, or Ignore Previous Periods?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="judgment-flag">Both options below are defensible. This scenario is deliberately built so that neither is simply "the answer" — the right call depends on how much the old syllabus actually maps onto the new one, which is a judgment about your content, not something iLEARN's settings screen can tell you.</div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:-1,
+    opts:[
+      {t:"Copy from Previous Period — the returning learners already did comparable work and shouldn't have to repeat it.",
+       fb:"Defensible: it respects the returning learners' time and avoids the resentment of re-doing objectives they've genuinely mastered. The risk it accepts is real, though — if the old syllabus diverges from the new one even partly, 'credit' can mean crediting the wrong knowledge, and you won't easily see which learners are coasting on a stale credential versus current competence. This is a reasonable choice if you've actually compared the two syllabi and the overlap is substantial."},
+      {t:"Ignore Previous Periods — treat everyone as new, since the syllabus changed and eighteen months is a long gap.",
+       fb:"Equally defensible: it guarantees every learner is assessed against the current standard, with no ambiguity about whether old credit still applies. The cost it accepts is real too — returning learners redo material they may genuinely have retained, and if this happens repeatedly across modules, it teaches capable people that returning to iLEARN means starting over, which is its own morale cost. This is the safer choice when you haven't verified the old and new syllabi actually align."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 4 ---------------- */
+{ id:"u4", short:"Ordering & Deployment", title:"Ordering & Deployment Control", ord:"04",
+  render(){ return `
+  <div class="eyebrow">Unit 04 · Sequencing</div>
+  <h1>Four controls, and only some of them are yours</h1>
+  <p class="dek">The same intent — "show modules one at a time" — is achieved by different controls depending on whether the package is single or bulk, and set by different people.</p>
+
+  <p><strong>Card Order</strong> determines the placement of each card within an assignment grouping, but it only works for single module deployment; for bulk deployment, the <strong>Curator</strong> sets Card Order (via the pencil tool) before the content package is ever deployed to you. <strong>Assignment Group</strong> is the simpler cousin — assignments are grouped by a selected group name, independent of deployment mode.</p>
+
+  <p>For strict sequencing, iLEARN gives three related controls that are easy to confuse: <strong>Assign Order</strong> shows modules one at a time, unlocking the next only after the previous is complete, with the release order set by an assigned sequence number — and it only works for single module deployment. <strong>ASAP</strong> does the same one-at-a-time unlocking, but the release order is set by the <strong>Curator</strong>, and it only works for bulk module deployment. <strong>Lock the Order of the Modules</strong> is different in kind: all modules are visible, but only one is accessible at a time while the others are greyed out, with card order (again Curator-set) determining which unlocks next — also for single module deployment. Match the control to both your deployment mode and who's actually meant to hold that decision.</p>
+
+  <div class="card check" id="check-u4">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">You're deploying a single (not bulk) three-part module and want learners to complete Part 1 before Part 2 becomes available, with Part 3 only unlocking after Part 2. You want to set the release sequence yourself. Which control?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:0,
+    opts:[
+      {t:"Assign Order — set the sequence number on each part; it shows one module at a time and unlocks the next only on completion, and it works for single module deployment.",
+       fb:"This matches every requirement in the scenario: single deployment (not bulk), one-at-a-time unlocking, and — critically — the sequence number is something you set, not the Curator. The other three controls each fail one of these conditions."},
+      {t:"ASAP — it also unlocks modules one at a time on completion.",
+       fb:"ASAP does produce one-at-a-time unlocking, but it only works for bulk module deployment, and the release order is set by the Curator, not you. This scenario is explicitly single deployment with you wanting control of the sequence — ASAP fails on both counts even though its unlocking behaviour looks identical to Assign Order's."},
+      {t:"Lock the Order of the Modules — learners can see all three parts but only access one at a time.",
+       fb:"Close, but it changes what learners see: Lock the Order shows all modules with the inaccessible ones greyed out, rather than revealing them one at a time. That's a legitimate design choice in other situations, but it isn't what was asked for here, and its card order is still Curator-set — not the self-directed sequence number the scenario calls for."},
+      {t:"Card Order, set through the pencil tool.",
+       fb:"The pencil tool for Card Order is the Curator's bulk-deployment workflow — it doesn't apply here at all, since this is single deployment and you are the Educator, not the Curator. Reaching for it here is a sign the deployment mode wasn't checked first, exactly the trap Unit 01 flagged."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 5 ---------------- */
+{ id:"u5", short:"Interface Controls", title:"Interface Controls", ord:"05",
+  render(){ return `
+  <div class="eyebrow">Unit 05 · Appearance</div>
+  <h1>What the learner's screen shows besides the content</h1>
+  <p class="dek">Three toggles that don't change the content itself, only the furniture around it.</p>
+
+  <p><strong>Hide Coach Panel</strong> removes the coach panel from the learner's assignment interface. <strong>Hide Self-Assessment Tile</strong> does the same for the self-assessment tile. <strong>New Content Policy</strong> is a further setting affecting how new content is presented within the assignment interface. None of the three change what the learner learns; all three change what competes for their attention on screen, or what optional self-reflection and coaching touchpoints are visible to them while they work.</p>
+
+  <p>Because these are appearance toggles rather than content decisions, the right call is almost always about the learner's context rather than the content itself: a dense, self-paced Exam assignment may benefit from a cleaner interface with distractions hidden; a Learning assignment built around reflective practice may specifically want the self-assessment tile visible, not hidden.</p>
+
+  <div class="card check" id="check-u5">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">You're assigning a timed Exam where the coach panel and self-assessment tile would only add visual clutter to what should be a focused, independent assessment. What's the reasonable interface setting?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:1,
+    opts:[
+      {t:"Leave both visible — more information on screen is always better for learners.",
+       fb:"The scenario specifically describes clutter working against a focused, timed assessment. 'More is better' isn't the operating principle for these toggles — they exist precisely because some assignments benefit from a quieter interface. Leaving both on here works against the assignment's own purpose."},
+      {t:"Hide Coach Panel and Hide Self-Assessment Tile — both are stated distractions for this timed, independent assessment.",
+       fb:"This matches the assignment's actual purpose: a focused, timed Exam where coaching prompts and self-assessment reflection aren't part of the task. Hiding both removes exactly the clutter the scenario names, without touching the exam content or its scoring."},
+      {t:"Hide Coach Panel only, and leave the Self-Assessment Tile visible so learners can reflect on their answers as they go.",
+       fb:"Self-assessment mid-exam works against the same focus the scenario is asking for — it invites the learner to second-guess and reflect during a timed assessment rather than after it. If reflection matters for this content, it belongs in a follow-up Learning assignment, not layered into the timed Exam itself."},
+      {t:"Adjust New Content Policy instead, since that's the more advanced setting.",
+       fb:"New Content Policy governs how new content is introduced within the assignment — it isn't the control for the coach panel or self-assessment tile clutter the scenario describes. Reaching for the more advanced-sounding setting instead of the one that actually matches the stated problem doesn't solve it."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 6 ---------------- */
+{ id:"u6", short:"Exam & Questionnaire", title:"Exam & Questionnaire Settings", ord:"06",
+  render(){ return `
+  <div class="eyebrow">Unit 06 · Assessment</div>
+  <h1>When it's scored, and when it's just asked</h1>
+  <p class="dek">The same screen configures a graded Exam and an ungraded Questionnaire — the difference is one setting, not two different tools.</p>
+
+  <p><strong>Objectives with Content</strong> lets you specify which probes learners actually see, useful when a content package holds a large question pool — the SLP's example is a 1,000-question package configured so only 100 are presented for a given exam. <strong>General Exam Settings</strong> and <strong>Advanced Exam Settings</strong> hold the further configuration options for an Exam assignment. <strong>Questionnaire Mode</strong> is the setting that changes what kind of assignment this is entirely: when enabled, probes without learning resources attached are shown to learners, and — because those questions have no right or wrong answer — learners receive no score on completion.</p>
+
+  <p>The practical rule: if you're building something with a correct answer to check against, it's an Exam, and Objectives with Content plus the General/Advanced settings are where you shape it. If you're gathering opinion, feedback, or self-report with nothing to grade, Questionnaire Mode is the setting that turns the same assignment type into an ungraded instrument.</p>
+
+  <div class="card check" id="check-u6">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">You need to survey learners' confidence level on five topics after a course — there's no right or wrong answer, and you don't want anyone worrying about a grade. How do you configure the assignment?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:2,
+    opts:[
+      {t:"Build it as an Exam and use Objectives with Content to limit it to five probes.",
+       fb:"Objectives with Content controls how many probes from a pool are shown — it doesn't remove scoring. Left as a plain Exam, these five confidence questions would still be treated as gradable, which contradicts the stated goal of no grade and no worrying."},
+      {t:"Build it as an Exam and rely on General Exam Settings to disable scoring.",
+       fb:"This assumes General Exam Settings can turn off scoring entirely, but the SLP identifies a dedicated setting for exactly this situation — Questionnaire Mode — rather than treating 'no score' as one more Exam option among many. Reaching for the general settings first, when a purpose-built mode exists, adds a step without changing the outcome."},
+      {t:"Enable Questionnaire Mode so the five probes are presented without learning resources and without a score.",
+       fb:"This is what Questionnaire Mode is for: probes without right-or-wrong answers, shown to learners, with no score on completion. It matches every condition in the scenario — no correct answer to check, no grade attached — without repurposing Exam settings that assume scoring is the point."},
+      {t:"Build it as a Practice Set so learners can attempt it as many times as they like.",
+       fb:"Practice Set solves a repetition problem, not a scoring problem — and it depends on a Tag Structure Name the Curator would need to build for this purpose, which is unrelated to a simple confidence survey. It also doesn't address the core requirement: no right or wrong answer, no grade."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 7 ---------------- */
+{ id:"u7", short:"Practice Set & Tags", title:"Practice Set & Tag Structure", ord:"07",
+  render(){ return `
+  <div class="eyebrow">Unit 07 · Dependency</div>
+  <h1>The one setting you can't configure alone</h1>
+  <p class="dek">Practice Set is the assignment type most dependent on someone else's prior work.</p>
+
+  <p>To successfully set up a Practice Set assignment, iLEARN requires a <strong>Tag Structure Name</strong>. That tag structure isn't something you build in the Assign Content screen — it's created by the <strong>Curator</strong>, before the content package is even deployed. In other words, if a Curator hasn't already built the tag structure for the content you want to turn into a Practice Set, the assignment can't be completed from your side no matter how the rest of the screen is configured. (The SLP notes a downloadable PDF with full tag-structure setup detail for Curators, which sits outside this Educator-facing module.)</p>
+
+  <p>This makes Practice Set the clearest example of the Curator/Educator division running through the whole screen: some settings are yours to make in the moment (dates, targeting, refresh knowledge), and some are structural decisions someone else has to make first. Recognising which kind of setting you're looking at — and knowing when the fix is "change a value" versus "go ask the Curator" — is itself part of the skill.</p>
+
+  <div class="card check" id="check-u7">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">You try to assign a Practice Set from a content package, but the Tag Structure Name field won't populate with any options. What's actually going on, and what do you do?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:1,
+    opts:[
+      {t:"Keep re-trying the field — it's likely a temporary display glitch.",
+       fb:"An empty Tag Structure Name field isn't described anywhere in the SLP as a display bug — it's a dependency gap. Retrying doesn't create a tag structure that was never built for this content package; the fix has to happen upstream, not by refreshing your own screen."},
+      {t:"Recognise that the tag structure for this content hasn't been created by the Curator yet, and follow up with the Curator before proceeding — Practice Set can't be configured without it.",
+       fb:"Correct. Tag Structure Name is explicitly a Curator-built prerequisite, created before the content package is deployed. An empty field is the screen telling you this dependency hasn't been satisfied yet — the right move is to raise it with the Curator, not to keep working the Educator-side settings around it."},
+      {t:"Switch the assignment type to Learning instead, since Practice Set clearly isn't working.",
+       fb:"This abandons the actual instructional intent (repeatable, tag-organised practice) to route around a missing dependency, rather than getting the dependency fixed. It may be a reasonable temporary workaround if the deadline is urgent, but as a first response it treats a Curator gap as if it were a design decision of yours to make."},
+      {t:"Build your own tag structure directly in the Assign Content screen.",
+       fb:"The SLP places tag structure creation with the Curator, before deployment — not as an Educator-side control on this screen at all. There's no field here for building one from scratch; the field only lets you select a structure that already exists."}
+    ]
+  }
+},
+
+/* ---------------- CAPSTONE ---------------- */
+{ id:"cap", short:"Capstone ★", title:"Capstone — Configure a Real Assignment", ord:"08",
+  render(){ return `
+  <div class="eyebrow">Capstone · Applied output</div>
+  <h1>Walk a real assignment through every setting</h1>
+  <p class="dek">Not a quiz — a working worksheet. Pick an assignment you actually need to set up in iLEARN and work through every configuration decision. Your entries save automatically and export as a document you can bring to your Curator or keep as a job aid.</p>
+
+  <p>Name the assignment. If a step doesn't apply to your assignment type — for example, Exam settings for a pure Learning assignment — write N/A and a one-line reason why, rather than skipping it. Reasoning through "this doesn't apply, because…" is still the skill this module is teaching.</p>
+
+  <p style="margin-bottom:4px"><label for="capProject" style="font-size:.88rem;color:var(--ink-soft)">Assignment:</label></p>
+  <p>
+    <select id="capProject">
+      <option value="">— select —</option>
+      <option>Standard onboarding course (Learning)</option>
+      <option>Mandatory safety Exam</option>
+      <option>Post-course confidence Questionnaire</option>
+      <option>Skills Practice Set</option>
+      <option value="__own__">My own assignment…</option>
+    </select>
+    <input type="text" id="capOwn" placeholder="Name your assignment" style="display:none;margin-left:8px;width:240px">
+  </p>
+
+  <div id="capStages"></div>
+
+  <p><button class="btn brass" id="capExport">Export capstone (.md)</button>
+     <button class="btn ghost" id="capClear" style="margin-left:8px">Clear capstone</button>
+     <span class="save-flash" id="capFlash">saved</span></p>
+  <p style="font-size:.8rem;color:var(--ink-soft)">The capstone counts as complete when an assignment is named and all seven steps have an entry (N/A with a reason counts). Entries live in this browser only until exported.</p>
+  `;}
+}
+];
+
+/* ============================================================
+   STORAGE — localStorage with graceful in-memory fallback
+   ============================================================ */
+const SKEY="imls_ilearn_m2_v1";
+let memStore=null, storageOK=true;
+function loadState(){
+  try{ const raw=localStorage.getItem(SKEY); return raw?JSON.parse(raw):defaultState(); }
+  catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block";
+    if(!memStore) memStore=defaultState(); return memStore; }
+}
+function saveState(s){
+  if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
+  memStore=s;
+}
+function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}, cap:{project:"",own:"",stages:{}}}; }
+let state=loadState();
+
+/* ============================================================
+   RENDERING & NAVIGATION (hash router)
+   ============================================================ */
+const mainEl=document.getElementById("main");
+const mapList=document.getElementById("mapList");
+
+function unitById(id){ return UNITS.find(u=>u.id===id); }
+function currentId(){ const h=location.hash.replace("#",""); return unitById(h)?h:"start"; }
+
+function renderMap(){
+  mapList.innerHTML="";
+  UNITS.forEach(u=>{
+    const li=document.createElement("li");
+    const a=document.createElement("a");
+    a.href="#"+u.id;
+    if(u.id===currentId()) a.setAttribute("aria-current","page");
+    const dot=document.createElement("span");
+    dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
+    const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
+    const lab=document.createElement("span"); lab.textContent=u.short;
+    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+  });
+  const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
+  const total=UNITS.length-1;
+  document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
+  document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete";
+  const ll=document.getElementById("learnerLine");
+  ll.innerHTML = state.name
+    ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
+    : `<button id="resetAll">reset all progress</button>`;
+  const rb=document.getElementById("resetAll");
+  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress and capstone entries?")){ state=defaultState(); saveState(state); renderAll(); } };
+}
+
+function renderUnit(){
+  const u=unitById(currentId());
+  state.visited[u.id]=true; saveState(state);
+  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
+  if(u.check) wireCheck(u);
+  if(u.id==="start") wireStart();
+  if(u.id==="cap") wireCapstone();
+  window.scrollTo({top:0});
+  renderMap();
+}
+
+function pagerHtml(u){
+  const i=UNITS.indexOf(u);
+  const prev=i>0?UNITS[i-1]:null, next=i<UNITS.length-1?UNITS[i+1]:null;
+  return `<div class="pager">
+    <span>${prev?`<a href="#${prev.id}">← ${prev.short}</a>`:""}</span>
+    <span>${next?`<a href="#${next.id}">${next.short} →</a>`:""}</span>
+  </div>`;
+}
+
+/* ---------- Scenario checks (branching feedback) ---------- */
+function wireCheck(u){
+  const box=document.getElementById("check-"+u.id);
+  const optsEl=box.querySelector(".opts");
+  const fbEl=box.querySelector(".fb");
+  const doneEl=box.querySelector(".done-note");
+  const noCleanAnswer=u.check.best===-1;
+  // Shuffle deterministically per unit so option order isn't a tell (fixed seed by unit id)
+  const order=u.check.opts.map((o,idx)=>idx);
+  seededShuffle(order, u.id);
+  order.forEach(origIdx=>{
+    const o=u.check.opts[origIdx];
+    const b=document.createElement("button");
+    b.type="button"; b.innerHTML=escapeHtml(o.t);
+    b.addEventListener("click",()=>{
+      optsEl.querySelectorAll("button").forEach(x=>x.classList.remove("sel-good","sel-redirect"));
+      const good=noCleanAnswer?true:(origIdx===u.check.best);
+      b.classList.add(good?"sel-good":"sel-redirect");
+      fbEl.className="fb show "+(good?"good":"redirect");
+      const head=noCleanAnswer?"One defensible path":(good?"This is the move":"Consider the consequence");
+      fbEl.innerHTML=`<div class="fb-head">${head}</div>${o.fb}`+
+        (good?"":`<div class="again"><button type="button">Choose again →</button></div>`)+
+        (noCleanAnswer?`<div class="again"><button type="button">See the other side →</button></div>`:"");
+      fbEl.querySelectorAll(".again button").forEach(btn=>btn.addEventListener("click",()=>{ fbEl.className="fb"; fbEl.innerHTML=""; }));
+      state.answers[u.id]=origIdx;
+      state.done[u.id]=true; doneEl.classList.add("show");
+      saveState(state); renderMap();
+      fbEl.scrollIntoView({behavior:"smooth",block:"nearest"});
+    });
+    optsEl.appendChild(b);
+  });
+  if(state.done[u.id]) doneEl.classList.add("show");
+}
+
+/* ---------- Landing ---------- */
+function wireStart(){
+  const inp=document.getElementById("nameIn");
+  inp.value=state.name||"";
+  document.getElementById("nameSave").addEventListener("click",()=>{
+    state.name=inp.value.trim(); saveState(state); renderMap();
+  });
+}
+
+/* ---------- Capstone ---------- */
+function wireCapstone(){
+  const sel=document.getElementById("capProject");
+  const own=document.getElementById("capOwn");
+  const stagesEl=document.getElementById("capStages");
+  const flash=document.getElementById("capFlash");
+  let flashT=null;
+  function flashSave(){ flash.classList.add("on"); clearTimeout(flashT); flashT=setTimeout(()=>flash.classList.remove("on"),1200); }
+
+  // restore assignment
+  if(state.cap.project==="__own__"){ sel.value="__own__"; own.style.display="inline-block"; own.value=state.cap.own||""; }
+  else sel.value=state.cap.project||"";
+
+  sel.addEventListener("change",()=>{
+    state.cap.project=sel.value;
+    own.style.display=sel.value==="__own__"?"inline-block":"none";
+    saveState(state); flashSave(); checkCapDone();
+  });
+  own.addEventListener("input",()=>{ state.cap.own=own.value; saveState(state); flashSave(); checkCapDone(); });
+
+  CONFIG_STAGES.forEach(st=>{
+    const d=document.createElement("div"); d.className="stage card";
+    d.innerHTML=`<div class="stage-head"><span class="stage-num">${st.n}</span><h3>${st.t}</h3></div>
+      <p class="guide">${st.guide}</p>
+      <textarea id="cap-${st.id}" aria-label="${st.t}"></textarea>`;
+    stagesEl.appendChild(d);
+    const ta=d.querySelector("textarea");
+    ta.value=state.cap.stages[st.id]||"";
+    ta.addEventListener("input",()=>{ state.cap.stages[st.id]=ta.value; saveState(state); flashSave(); checkCapDone(); });
+  });
+
+  function projectName(){
+    if(state.cap.project==="__own__") return (state.cap.own||"").trim();
+    return state.cap.project;
+  }
+  function checkCapDone(){
+    const allFilled=CONFIG_STAGES.every(st=>(state.cap.stages[st.id]||"").trim().length>0);
+    const has=projectName().length>0;
+    const was=!!state.done["cap"];
+    state.done["cap"]=allFilled&&has;
+    if(state.done["cap"]!==was){ saveState(state); renderMap(); }
+  }
+  checkCapDone();
+
+  document.getElementById("capExport").addEventListener("click",()=>{
+    const pn=projectName()||"(assignment not named)";
+    const dt=new Date().toISOString().slice(0,10);
+    let md=`# Assign Content Capstone — ${pn}\n\n`;
+    md+=`IMLS · iLEARN Educator Module 2 · ${dt}${state.name?` · Learner: ${state.name}`:""}\n\n`;
+    CONFIG_STAGES.forEach(st=>{
+      md+=`## ${st.n} — ${st.t}\n\n${(state.cap.stages[st.id]||"_(no entry)_").trim()}\n\n`;
+    });
+    md+=`---\n_Generated from the IMLS iLEARN Educator Module 2 learning module (v1.0). Use this worksheet as a checklist when configuring the assignment in iLEARN, or to hand off open items to your Curator._\n`;
+    const blob=new Blob([md],{type:"text/markdown"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=`assign_content_capstone_${pn.replace(/[^a-z0-9]+/gi,"_").toLowerCase()}_${dt}.md`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  });
+
+  document.getElementById("capClear").addEventListener("click",()=>{
+    if(!confirm("Clear all capstone entries?")) return;
+    state.cap={project:"",own:"",stages:{}}; state.done["cap"]=false;
+    saveState(state); renderUnit();
+  });
+}
+
+/* ---------- utils ---------- */
+function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function seededShuffle(arr,seedStr){
+  let seed=0; for(const c of seedStr) seed=(seed*31+c.charCodeAt(0))>>>0;
+  for(let i=arr.length-1;i>0;i--){
+    seed=(seed*1103515245+12345)>>>0;
+    const j=seed%(i+1); [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+/* ---------- boot ---------- */
+document.getElementById("mapToggle").addEventListener("click",e=>{
+  const nav=document.getElementById("mapNav");
+  nav.classList.toggle("open");
+  e.target.setAttribute("aria-expanded",nav.classList.contains("open"));
+});
+window.addEventListener("hashchange",renderUnit);
+function renderAll(){ renderMap(); renderUnit(); }
+renderAll();
+</script>
+</body>
+</html>
