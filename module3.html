@@ -115,8 +115,8 @@ figure.doc-fig figcaption{font-family:var(--mono);font-size:.7rem;letter-spacing
 /* ---------- Landing ---------- */
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
-.pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
-.pager a{text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-block;text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px;max-width:100%}
 .pager a:hover{border-color:var(--brass)}
 section.unit{display:none;animation:fadein .35s ease}
 section.unit.active{display:block}
