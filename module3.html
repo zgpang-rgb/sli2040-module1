@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLI 2040 · Module 3 — Add &amp; Manage Learners (iLEARN Educator)</title>
+<style>
+/* ============================================================
+   IMLS · SLI 2040 Module 3 — internal training module
+   Palette: navy / archival ivory / brass. No external assets.
+   Shares its design system with Module 1 (index.html).
+   ============================================================ */
+:root{
+  --navy-deep:#10233C; --navy:#1C3A5E; --navy-soft:#2B4E77;
+  --ivory:#F4EFE3; --paper:#FCF9F0; --ivory-dim:#EAE3D2; --line:#D8CFB8;
+  --brass:#A9873B; --brass-dark:#7E6425; --brass-pale:#D9C795;
+  --ink:#24303C; --ink-soft:#5A6470;
+  --moss:#40634C; --moss-bg:#EDF2EA;
+  --rust:#94502E; --rust-bg:#F6EDE4;
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --sans:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65}
+
+/* ---------- Header band ---------- */
+header{background:var(--navy-deep);color:var(--ivory);padding:0}
+.hd-inner{max-width:1180px;margin:0 auto;padding:20px 28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.wordmark{font-family:var(--serif);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase}
+.wordmark b{color:var(--brass-pale);font-weight:600}
+.hd-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:#9FB0C4;text-transform:uppercase}
+.hd-rule{height:3px;background:linear-gradient(90deg,var(--brass) 0 180px,rgba(169,135,59,.25) 180px)}
+
+/* ---------- Shell ---------- */
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:288px 1fr;gap:0;min-height:calc(100vh - 90px)}
+nav.map{background:var(--ivory-dim);border-right:1px solid var(--line);padding:26px 20px 40px}
+main{padding:34px 40px 90px;max-width:820px}
+
+/* ---------- Module map (sidebar) ---------- */
+.map h2{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.map .hint{font-size:.78rem;color:var(--ink-soft);margin-bottom:16px;line-height:1.45}
+.map ol{list-style:none}
+.map li{margin-bottom:2px}
+.map a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:3px;font-size:.86rem;line-height:1.35;border-left:2px solid transparent}
+.map a:hover{background:var(--paper)}
+.map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
+.dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
+.dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
+.dot.done{border-color:var(--brass-dark);background:var(--brass)}
+.map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.progress-wrap{margin:22px 0 4px}
+.progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
+.progress-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:6px;letter-spacing:.08em}
+.learner-line{margin-top:20px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
+.learner-line button{background:none;border:none;color:var(--brass-dark);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
+.storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
+.module-switch{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.78rem}
+.module-switch a{color:var(--navy);text-decoration:none;border-bottom:1px dotted var(--brass)}
+.module-switch a:hover{color:var(--brass-dark)}
+
+/* ---------- Content typography ---------- */
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
+.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
+p{margin-bottom:14px;max-width:68ch}
+p strong{color:var(--navy-deep)}
+em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bottom:1px}
+
+/* ---------- Blueprint card (signature: brass corner ticks) ---------- */
+.card{position:relative;background:var(--paper);border:1px solid var(--line);padding:26px 28px;margin:26px 0}
+.card::before,.card::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
+.card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
+
+/* ---------- Scenario check ---------- */
+.check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--navy-deep);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.opts button{text-align:left;background:var(--ivory);border:1px solid var(--line);padding:12px 14px;font:inherit;font-size:.92rem;line-height:1.45;cursor:pointer;color:var(--ink);border-radius:2px}
+.opts button:hover{border-color:var(--brass);background:var(--paper)}
+.opts button.sel-good{border-color:var(--moss);background:var(--moss-bg)}
+.opts button.sel-redirect{border-color:var(--rust);background:var(--rust-bg)}
+.opts button:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.fb{display:none;margin-top:14px;padding:16px 18px;border-radius:2px;font-size:.93rem;line-height:1.55}
+.fb.show{display:block}
+.fb.good{background:var(--moss-bg);border-left:3px solid var(--moss)}
+.fb.redirect{background:var(--rust-bg);border-left:3px solid var(--rust)}
+.fb .fb-head{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.fb.good .fb-head{color:var(--moss)}
+.fb.redirect .fb-head{color:var(--rust)}
+.fb .again{margin-top:10px;font-size:.84rem}
+.fb .again button{background:none;border:none;text-decoration:underline;color:var(--brass-dark);cursor:pointer;font-size:.84rem;padding:0}
+.done-note{display:none;margin-top:14px;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;color:var(--moss)}
+.done-note.show{display:block}
+.fb.judgment{background:var(--ivory-dim);border-left:3px solid var(--navy-soft)}
+.fb.judgment .fb-head{color:var(--navy)}
+
+/* ---------- Figures (PDF diagram excerpts) ---------- */
+figure.doc-fig{margin:22px 0;text-align:center}
+figure.doc-fig img{display:block;max-width:100%;height:auto;margin:0 auto;border:1px solid var(--line);background:#fff}
+figure.doc-fig figcaption{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--ink-soft);margin-top:9px;text-transform:uppercase}
+
+/* ---------- Quick-reference table ---------- */
+.qref{width:100%;border-collapse:collapse;margin:18px 0;font-size:.88rem}
+.qref th,.qref td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.qref th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dark);border-bottom:2px solid var(--brass-pale)}
+.qref td.do{color:var(--moss)}
+.qref td.dont{color:var(--rust)}
+
+/* ---------- Landing ---------- */
+.land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.land-grid .card{margin:0}
+.pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
+.pager a{text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.pager a:hover{border-color:var(--brass)}
+section.unit{display:none;animation:fadein .35s ease}
+section.unit.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Responsive ---------- */
+.map-toggle{display:none}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  nav.map{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+  nav.map .map-body{display:none}
+  nav.map.open .map-body{display:block}
+  .map-toggle{display:inline-block;background:none;border:1px solid var(--ink-soft);font:inherit;font-size:.8rem;padding:6px 12px;cursor:pointer;border-radius:2px;margin-bottom:4px}
+  main{padding:26px 20px 70px}
+  .land-grid{grid-template-columns:1fr}
+  h1{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-inner">
+    <div class="wordmark">SAFTI MI · <b>IMLS</b> — Institute for Military Learning Systems</div>
+    <div class="hd-meta">SLI 2040 · Module 3 · Internal Training · v1.0</div>
+  </div>
+  <div class="hd-rule"></div>
+</header>
+
+<div class="shell">
+
+<!-- ================= SIDEBAR / MODULE MAP ================= -->
+<nav class="map" id="mapNav" aria-label="Module map">
+  <button class="map-toggle" id="mapToggle" aria-expanded="false">Module map ▾</button>
+  <div class="map-body">
+    <h2>Module map</h2>
+    <p class="hint">Suggested order below — but every unit is open. Enter anywhere; the map remembers where you've been.</p>
+    <ol id="mapList"></ol>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-label" id="progLabel">0 / 4 complete</div>
+    </div>
+    <div class="learner-line" id="learnerLine"></div>
+    <div class="storage-note" id="storageNote">Browser storage unavailable — progress will not persist after this session. Run the file locally in Edge/Chrome for saved progress.</div>
+    <div class="module-switch">Also in this series: <a href="index.html">Module 1 — Operating Philosophy</a></div>
+  </div>
+</nav>
+
+<!-- ================= MAIN ================= -->
+<main id="main"></main>
+
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   CONTENT — sourced from the iLEARN Educator "Module 3: Add &
+   Manage Learners" slide pack (M3_iLEARN_Educator_SLP.pdf).
+   This SLI 2040 module teaches that LMS feature, not a
+   coaching-stance curriculum — see README for why.
+   ============================================================ */
+
+const UNITS = [
+/* ---------------- LANDING ---------------- */
+{ id:"start", short:"Orientation", title:"Module 3 — Add & Manage Learners", ord:"—",
+  render(){ return `
+  <div class="eyebrow">SLI 2040 · iLEARN Educator</div>
+  <h1>Add & Manage Learners in iLEARN Educator</h1>
+  <p class="dek">A self-paced module for Educator staff who run classes in iLEARN — Learning Science, Learning Technology, Learning System and Learning Educator sections alike. It covers exactly one feature area, in depth: getting learners into a class, reading their status, and retiring or removing them correctly.</p>
+
+  <p>iLEARN Educator's own course structure runs six modules — Create Class, Assign Content, <strong>Add &amp; Manage Learners</strong>, Analytics Dashboard, Review, and Gradebook &amp; Competency Wheel. This SLI 2040 module covers the third of those: once a class exists and content is assigned, how do learners actually get in, how do you know whether they're engaging, and what happens when a class or a learner is done.</p>
+
+  <div class="land-grid">
+    <div class="card"><div class="card-tag">What you will practise</div>
+      <p style="margin:0;font-size:.9rem">Three scenario checks built from realistic class-management moments — choosing an add method, reading a Learners panel, and deciding retire vs. delete — each with feedback that explains what the other choices would have cost you.</p></div>
+    <div class="card"><div class="card-tag">What this module does not cover</div>
+      <p style="margin:0;font-size:.9rem">Creating a class, assigning content, the Analytics Dashboard, Review, or the Gradebook & Competency Wheel — those are their own iLEARN Educator modules, not built here.</p></div>
+  </div>
+
+  <div class="card">
+    <div class="card-tag">Where this sits</div>
+    <figure class="doc-fig" style="margin:0">
+      <img src="assets/module-map.png" alt="iLEARN Educator module sequence: Create Class, Assign Content, Add and Manage Learners, Analytics Dashboard, Review, Gradebook and Competency Wheel" loading="lazy">
+      <figcaption>iLEARN Educator — Module 3 in the six-module sequence</figcaption>
+    </figure>
+  </div>
+
+  <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — shown only in this browser):</label><br>
+  <input type="text" id="nameIn" placeholder="e.g. ME5 Tan" style="margin-top:6px;width:260px;font:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px"> <button class="btn ghost" id="nameSave" style="margin-left:8px;display:inline-block;background:transparent;color:var(--navy);border:1px solid var(--navy);font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px">Save</button></p>
+  `;}
+},
+
+/* ---------------- UNIT 1 ---------------- */
+{ id:"u1", short:"Methods of Adding Learners", title:"Methods of Adding Learners", ord:"01",
+  render(){ return `
+  <div class="eyebrow">Unit 01 · Getting learners in</div>
+  <h1>Individually, or by bulk upload</h1>
+  <p class="dek">Two doors into the same class. Both end at the Learners tab; picking the right one is about the size and shape of your intake, not preference.</p>
+
+  <p>Open a class and click the <strong>Learners</strong> tab. From there, iLEARN Educator gives you two ways to bring people in. <strong>Individually adding learners</strong> — the "+" icon on a brand-new class, or <strong>ADD LEARNER</strong> once the roster exists — opens a single-entry form: you search or key in one person, confirm, done. It is the right tool when you're adding one or two names, correcting an intake after the fact, or handling a late arrival who missed the original roster.</p>
+
+  <p><strong>Bulk adding learners</strong> — the upload icon next to it, or <strong>ADD LEARNERS WITH CSV</strong> — takes a prepared spreadsheet and enrols an entire cohort in one pass. This is the tool for a fresh course intake: twenty, forty, two hundred names at once. The trade-off is preparation: a bulk upload is only as good as the CSV feeding it, so a malformed file (wrong ID format, missing required columns) fails the whole batch rather than one row. Individually adding one learner needs no preparation at all, but doing that forty times is forty times the chance to mistype an ID, and forty times the clicks.</p>
+
+  <figure class="doc-fig">
+    <img src="assets/add-learners.png" alt="IML Development Branch class screen with the individual-add plus icon and the bulk-upload icon both circled in red" loading="lazy">
+    <figcaption>Individually adding learners (+) vs. bulk adding learners (upload icon) — Learners tab</figcaption>
+  </figure>
+
+  <div class="card check" id="check-u1">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">A new course run starts Monday: 34 trainees, all on a roster your unit S1 already exported as a spreadsheet with the required ID and rank columns. Two more trainees were added to the course at the last minute and aren't on that file. How do you get everyone into the class with the least risk of error?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:1,
+    opts:[
+      {t:"Individually add all 36 trainees through ADD LEARNER, one at a time, so you can double-check each entry as you go.",
+       fb:"Checking each entry sounds safer, but 36 manual entries is 36 separate chances to fat-finger an ID or rank field — and the CSV your S1 already built exists precisely to avoid that. You'd be trading a fast, prepared path for a slow one that is <em>more</em> error-prone at this volume, not less. Individual add is the right tool for the two late arrivals; it isn't the right tool for the 34 you already have clean data for."},
+      {t:"Bulk upload the 34-trainee CSV with ADD LEARNERS WITH CSV, then individually add the two late arrivals with ADD LEARNER.",
+       fb:"This is the move: use each tool for what it's built for. The bulk upload takes the prepared file in one pass — one point of failure to check (does the CSV validate?) instead of 34. The two late names, which have no file to bulk-load, go in cleanly through individual add without holding up the other 34 or forcing you to hand-edit the spreadsheet under time pressure before Monday."},
+      {t:"Wait until the two late trainees are added to the spreadsheet, then bulk upload all 36 together.",
+       fb:"Reasonable instinct, wrong trade against the clock. If the S1 turnaround on an updated export is uncertain and the course starts Monday, you're gating 34 already-ready learners on two stragglers for no operational reason. Nothing stops you from bulk-uploading the 34 now and individually adding the 2 the moment their details land — same end state, no unnecessary wait."},
+      {t:"Bulk upload the CSV twice — once as-is, and again after manually appending the two late trainees to the file — to keep everything in one method.",
+       fb:"Uploading the same 34 records twice risks duplicate or conflicting entries for no benefit, and hand-editing a CSV under time pressure to shoehorn two rows in is exactly the kind of manual step bulk upload was meant to remove. 'One method for consistency' isn't a real requirement here — the two tools are meant to be combined, not treated as mutually exclusive."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 2 ---------------- */
+{ id:"u2", short:"Learner Status", title:"Learner Status", ord:"02",
+  render(){ return `
+  <div class="eyebrow">Unit 02 · Reading engagement</div>
+  <h1>Healthy, Inactive, Invited</h1>
+  <p class="dek">Three words on a dashboard tile — and the only signal you get, at a glance, of whether a class is actually running or quietly stalled.</p>
+
+  <p>Every class's Learners panel carries three live counters. <strong>Healthy</strong> means the learner has been active in iLEARN and has attempted the course within the last 30 days — the system's working definition of "currently engaged," not a judgement about the person. <strong>Inactive</strong> means that 30-day window has lapsed with no attempt recorded; the account exists and was presumably reachable at some point, but iLEARN isn't seeing activity now. <strong>Invited</strong> means the person has been added to the class but hasn't yet accepted or logged in at all — they are, in effect, still standing at the door.</p>
+
+  <p>The counters matter because they're the earliest warning an Educator gets. A class that looks fine on paper — content assigned, roster full — can still be failing quietly if the Inactive count is climbing. Reading the panel is a five-second habit worth building: Healthy tells you the course is landing, Invited tells you who still needs a nudge to start, and Inactive tells you who started drifting and by implication, when to intervene before a review period turns "inactive" into "never completed."</p>
+
+  <figure class="doc-fig">
+    <img src="assets/learner-status-dashboard.png" alt="Class dashboard for Senior SAF Instructor Course 2 showing Learners: 5 Healthy, 23 Inactive, 0 Invited" loading="lazy">
+    <figcaption>The Learners tile — Healthy / Inactive / Invited counts at a glance</figcaption>
+  </figure>
+  <figure class="doc-fig">
+    <img src="assets/learner-status-ring.png" alt="Ring diagram of the three learner status categories: Healthy, Inactive, Invited, with the Healthy definition shown: active in iLEARN and attempted the course within 30 days" loading="lazy">
+    <figcaption>Healthy · Inactive · Invited — the 30-day activity definition</figcaption>
+  </figure>
+
+  <div class="card check" id="check-u2">
+    <div class="card-tag">Scenario check</div>
+    <p class="scenario">You open a class two weeks before its review date. The Learners tile reads: <strong>5 Healthy · 23 Inactive · 0 Invited</strong>. Everyone accepted their invitation weeks ago. What does this panel tell you to do next?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:2,
+    opts:[
+      {t:"Nothing yet — Invited is 0, so onboarding is complete and the class is on track.",
+       fb:"Invited being 0 only tells you nobody is stuck at the door; it says nothing about whether they're actually working through the course. Here, 23 of 28 learners have gone quiet within 30 days — reading that as \"on track\" ignores the number doing the most talking on this tile."},
+      {t:"Individually add the 23 inactive learners again, since re-adding might reset their status to Healthy.",
+       fb:"This confuses a status label with an action. Healthy/Inactive is computed from activity, not from re-enrolment — adding someone who is already in the class again doesn't create new activity and won't move the counter. It also risks a confusing duplicate entry for no benefit. The counters are diagnostic, not something you edit directly."},
+      {t:"Treat the 23 Inactive as an early-warning signal: with two weeks to review, follow up now — reminders, a check on whether content access is working, or direct outreach — while there's still time to change the number.",
+       fb:"This is what the panel is for. 23 of 28 gone quiet, with a review date approaching, is exactly the situation the Healthy/Inactive/Invited split exists to surface early. Acting now — while two weeks remain — is the difference between a recoverable dip and a review-day report full of incompletes with no runway left to fix it."},
+      {t:"Wait for the Analytics Dashboard (Module 4) to confirm the problem before doing anything, since Learner Status is only a summary tile.",
+       fb:"The Analytics Dashboard goes deeper, but waiting for it here trades your two weeks of runway for confirmation you don't need. The Learners tile is a summary by design — its job is exactly to flag \"look here\" fast, so you can act inside the window that's left, not to be double-checked before acting."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 3 ---------------- */
+{ id:"u3", short:"Retire vs. Delete", title:"Retire vs. Delete", ord:"03",
+  render(){ return `
+  <div class="eyebrow">Unit 03 · Core applied skill</div>
+  <h1>Retire vs. remove — for learners and for classes</h1>
+  <p class="dek">Two ways to close something out. One keeps the door unlocked; the other doesn't. The whole skill is knowing, in the moment, which you actually mean.</p>
+
+  <p>Both a learner within a class and a whole class carry the same pair of end-states. <strong>Retiring</strong> a learner — via <strong>Retire/unretire learners</strong> on the class's Learners panel — keeps their record and progress intact and tracked in iLEARN; they can still view course content under Past Tasks, and if they're later <strong>unretired</strong>, they resume exactly where they left off. Nothing is thrown away; the action is fully reversible. <strong>Removing (deleting)</strong> a learner takes them out of the class outright. <strong>Retiring a class</strong> works the same way at the class level: a retired class still shows on the Educator home page and its learners can still reach the content under Past Tasks. <strong>Deleting</strong> a class does not offer that safety net.</p>
+
+  <figure class="doc-fig">
+    <img src="assets/retire-delete-panel.png" alt="Class panel with Send invitation e-mails and Retire/unretire learners actions highlighted" loading="lazy">
+    <figcaption>Retire/unretire learners — the reversible action, alongside Send invitation e-mails</figcaption>
+  </figure>
+  <figure class="doc-fig">
+    <img src="assets/retire-class-ring.png" alt="Diagram: Retire Class keeps content visible under Past Tasks and on the Educator page; Delete Class does not" loading="lazy">
+    <figcaption>Retire Class vs. Delete Class</figcaption>
+  </figure>
+  <figure class="doc-fig">
+    <img src="assets/retire-learners-ring.png" alt="Diagram: Retire Learners preserves progress and Past Tasks access, reversible via unretire; Delete Learners does not" loading="lazy">
+    <figcaption>Retire Learners vs. Delete Learners</figcaption>
+  </figure>
+
+  <p>The practical rule falls out of that one difference: <strong>retire is reversible, delete is not.</strong> Whenever you're not 100% certain a class or a learner is truly finished with iLEARN for good, retiring costs you nothing — the record sits quietly, still visible, still resumable — while deleting forecloses that option permanently. Delete is for genuine mistakes (a learner added to the wrong class entirely, a duplicate class created by accident), not for the ordinary business of a course ending.</p>
+
+  <div class="card check" id="check-u3">
+    <div class="card-tag">Scenario check — no clean answer</div>
+    <p class="scenario">A course run just ended. Your unit is planning to run the same course again, but the next intake's date hasn't been confirmed — it could be six weeks away, or it could slip to next quarter if postings shift. Your dashboard is getting cluttered with ended classes, and your section lead has mentioned wanting a tidier Educator home page. What do you do with this class?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete — reasoning locked in. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    best:0,
+    judgment:true,
+    opts:[
+      {t:"Retire the class. It keeps completion records and Past Tasks access intact for this cohort, and if the next intake needs a fresh class shell anyway, retiring costs nothing while you wait for the date to firm up.",
+       fb:"This is the defensible default precisely because the date is uncertain — but be honest about what it doesn't solve. Retiring does not tidy the home page; the class still shows there, just marked retired. If your section lead's real complaint is dashboard clutter rather than data safety, retire alone won't satisfy it, and you may be back here explaining the same trade-off in six weeks. The right answer depends on which problem you're actually being asked to solve — record safety, or a cleaner screen — and this scenario doesn't hand you that for free."},
+      {t:"Delete the class now. A cluttered dashboard is a real operational cost, and if the course runs again you'll simply create a new class shell — this run's data has already been captured wherever it needed to be (gradebook, records).",
+       fb:"Also defensible, and worth taking seriously rather than dismissing. If your section genuinely exports or files completion data elsewhere as standard practice, and the next intake will need fresh subgroup/roster setup regardless, deleting isn't reckless — it's optimising for the stated pressure (a tidier page) over a safety net you may not need. The risk you're accepting is real, though: if that assumption about \"already captured elsewhere\" turns out wrong, there's no unretire to fall back on. Whether that's an acceptable bet is a judgment call about your unit's actual record-keeping, not something this scenario can settle for you."},
+      {t:"Do nothing until the next intake date is confirmed, since acting on incomplete information either way is premature.",
+       fb:"Deferring doesn't cost you data safety, but it does nothing about the concrete complaint already on the table — a section lead who's flagged a cluttered dashboard now. \"Wait for certainty\" quietly picks the status quo while looking neutral, and the status quo is the thing someone already asked you to change. If you're going to hold off, that should be a stated decision to your lead, not a default."},
+      {t:"Ask your section lead to decide, since this is really a records-retention policy question above your pay grade.",
+       fb:"Escalating a genuine policy gap is sometimes right — but check first whether that's actually what's happening here. This isn't ambiguous about mechanism (retire is reversible, delete isn't); it's ambiguous about which operational priority wins on this particular class, which is exactly the kind of call an Educator staff member is expected to make daily. Routing every retire-or-delete decision upward would bury your lead in traffic the tool was designed to let you handle yourself."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 4 ---------------- */
+{ id:"u4", short:"Quick Reference", title:"Quick Reference", ord:"04",
+  render(){ return `
+  <div class="eyebrow">Unit 04 · Summary</div>
+  <h1>Do / don't, at a glance</h1>
+  <p class="dek">Not a new topic — a condensed version of Units 01–03 for when you're mid-task and just need the rule, not the reasoning.</p>
+
+  <table class="qref">
+    <tr><th>Situation</th><th>Do</th><th>Don't</th></tr>
+    <tr><td>Enrolling a whole fresh intake</td><td class="do">Bulk upload with a prepared, validated CSV</td><td class="dont">Individually add each learner one by one</td></tr>
+    <tr><td>Adding one or two late arrivals</td><td class="do">Individually add via ADD LEARNER</td><td class="dont">Hand-edit and re-upload the whole CSV for two rows</td></tr>
+    <tr><td>Checking if a class is actually progressing</td><td class="do">Read the Learners tile — Healthy / Inactive / Invited — regularly, not just at review</td><td class="dont">Assume a full roster and assigned content mean engagement</td></tr>
+    <tr><td>Inactive count is climbing before a review date</td><td class="do">Follow up while runway remains</td><td class="dont">Wait for the Analytics Dashboard to "confirm" what the tile already shows</td></tr>
+    <tr><td>Class or learner might come back (any doubt)</td><td class="do">Retire — reversible via unretire, keeps Past Tasks access</td><td class="dont">Delete "to be safe" or "to tidy up" when uncertain</td></tr>
+    <tr><td>Genuine mistake (wrong class, accidental duplicate)</td><td class="do">Delete — that's what it's for</td><td class="dont">Retire a record you actually need gone</td></tr>
+  </table>
+
+  <p>That's the whole feature area: two ways in, one panel to read, two ways out — one of them reversible. The judgment sits almost entirely in Unit 03's territory, where "reversible" and "tidy" pull in different directions and the source material itself doesn't hand you a single correct answer. Everything else here is closer to a lookup table than a decision.</p>
+  `;}
+}
+];
+
+/* ============================================================
+   STORAGE — localStorage with graceful in-memory fallback
+   ============================================================ */
+const SKEY="imls_sli2040_m3_v1";
+let memStore=null, storageOK=true;
+function loadState(){
+  try{ const raw=localStorage.getItem(SKEY); return raw?JSON.parse(raw):defaultState(); }
+  catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block";
+    if(!memStore) memStore=defaultState(); return memStore; }
+}
+function saveState(s){
+  if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
+  memStore=s;
+}
+function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}}; }
+let state=loadState();
+
+/* ============================================================
+   RENDERING & NAVIGATION (hash router)
+   ============================================================ */
+const mainEl=document.getElementById("main");
+const mapList=document.getElementById("mapList");
+
+function unitById(id){ return UNITS.find(u=>u.id===id); }
+function currentId(){ const h=location.hash.replace("#",""); return unitById(h)?h:"start"; }
+
+function renderMap(){
+  mapList.innerHTML="";
+  UNITS.forEach(u=>{
+    const li=document.createElement("li");
+    const a=document.createElement("a");
+    a.href="#"+u.id;
+    if(u.id===currentId()) a.setAttribute("aria-current","page");
+    const dot=document.createElement("span");
+    dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
+    const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
+    const lab=document.createElement("span"); lab.textContent=u.short;
+    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+  });
+  const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
+  const total=UNITS.length-1;
+  document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
+  document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete";
+  const ll=document.getElementById("learnerLine");
+  ll.innerHTML = state.name
+    ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
+    : `<button id="resetAll">reset all progress</button>`;
+  const rb=document.getElementById("resetAll");
+  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress?")){ state=defaultState(); saveState(state); renderAll(); } };
+}
+
+function renderUnit(){
+  const u=unitById(currentId());
+  state.visited[u.id]=true;
+  if(!u.check && u.id!=="start") state.done[u.id]=true;
+  saveState(state);
+  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
+  if(u.check) wireCheck(u);
+  if(u.id==="start") wireStart();
+  window.scrollTo({top:0});
+  renderMap();
+}
+
+function pagerHtml(u){
+  const i=UNITS.indexOf(u);
+  const prev=i>0?UNITS[i-1]:null, next=i<UNITS.length-1?UNITS[i+1]:null;
+  return `<div class="pager">
+    <span>${prev?`<a href="#${prev.id}">← ${prev.short}</a>`:""}</span>
+    <span>${next?`<a href="#${next.id}">${next.short} →</a>`:""}</span>
+  </div>`;
+}
+
+/* ---------- Scenario checks (branching feedback) ---------- */
+function wireCheck(u){
+  const box=document.getElementById("check-"+u.id);
+  const optsEl=box.querySelector(".opts");
+  const fbEl=box.querySelector(".fb");
+  const doneEl=box.querySelector(".done-note");
+  // Shuffle deterministically per unit so option order isn't a tell (fixed seed by unit id)
+  const order=u.check.opts.map((o,idx)=>idx);
+  seededShuffle(order, u.id);
+  order.forEach(origIdx=>{
+    const o=u.check.opts[origIdx];
+    const b=document.createElement("button");
+    b.type="button"; b.innerHTML=escapeHtml(o.t);
+    b.addEventListener("click",()=>{
+      optsEl.querySelectorAll("button").forEach(x=>x.classList.remove("sel-good","sel-redirect"));
+      const good=origIdx===u.check.best;
+      b.classList.add(good?"sel-good":"sel-redirect");
+      const judgment=!!u.check.judgment;
+      fbEl.className="fb show "+(judgment?"judgment":(good?"good":"redirect"));
+      const head=judgment?"Worth weighing":(good?"This is the move":"Consider the consequence");
+      fbEl.innerHTML=`<div class="fb-head">${head}</div>${o.fb}`+
+        (good?"":`<div class="again"><button type="button">Choose again →</button></div>`);
+      const again=fbEl.querySelector(".again button");
+      if(again) again.addEventListener("click",()=>{ fbEl.className="fb"; fbEl.innerHTML=""; });
+      state.answers[u.id]=origIdx;
+      if(good){ state.done[u.id]=true; doneEl.classList.add("show"); }
+      saveState(state); renderMap();
+      fbEl.scrollIntoView({behavior:"smooth",block:"nearest"});
+    });
+    optsEl.appendChild(b);
+  });
+  if(state.done[u.id]) doneEl.classList.add("show");
+}
+
+/* ---------- Landing ---------- */
+function wireStart(){
+  const inp=document.getElementById("nameIn");
+  inp.value=state.name||"";
+  document.getElementById("nameSave").addEventListener("click",()=>{
+    state.name=inp.value.trim(); saveState(state); renderMap();
+  });
+}
+
+/* ---------- utils ---------- */
+function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function seededShuffle(arr,seedStr){
+  let seed=0; for(const c of seedStr) seed=(seed*31+c.charCodeAt(0))>>>0;
+  for(let i=arr.length-1;i>0;i--){
+    seed=(seed*1103515245+12345)>>>0;
+    const j=seed%(i+1); [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+/* ---------- boot ---------- */
+document.getElementById("mapToggle").addEventListener("click",e=>{
+  const nav=document.getElementById("mapNav");
+  nav.classList.toggle("open");
+  e.target.setAttribute("aria-expanded",nav.classList.contains("open"));
+});
+window.addEventListener("hashchange",renderUnit);
+function renderAll(){ renderMap(); renderUnit(); }
+renderAll();
+</script>
+</body>
+</html>
