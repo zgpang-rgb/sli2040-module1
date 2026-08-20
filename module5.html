@@ -651,10 +651,15 @@ function wireCapstone(){
     });
     md+=`---\n_Generated from the IMLS SLI 2040 Module 5 learning module (v1.0).\n`;
     const filename=`review_log_${dt}.md`;
-    const dl = (typeof claude!=="undefined" && claude.use) ? await claude.use("downloads") : null;
+    const inHostedViewer = typeof claude!=="undefined" && !!claude.use;
+    const dl = inHostedViewer ? await claude.use("downloads") : null;
     if(dl){
       try{ await dl.save({filename, data: md}); flashSave(); }
       catch(e){ if(e && e.code!=="declined") alert("Couldn't save the file: "+(e&&e.message||"unknown error")); }
+      return;
+    }
+    if(inHostedViewer){
+      alert("File export isn't available in this shared view. Your Review Log entries are still saved in this browser — open the module in your own browser (not the shared preview) to export a copy.");
       return;
     }
     const blob=new Blob([md],{type:"text/markdown"});
