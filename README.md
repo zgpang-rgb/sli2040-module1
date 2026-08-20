@@ -36,18 +36,24 @@ at any time):
 3. **Learner Discovery & Shared-Educator Data Access** — the two visibility/privacy toggles, plus a scenario with **no single right answer** (a co-teaching, minors-in-class data-access judgment call) — the feedback explicitly says so, rather than forcing a lookup-table answer.
 4. **Current Owner, Second Owner & Shared Educators** — the three-tier ownership/access model, a scenario check, and a closing quick-decision drill that combines all three features in one setup.
 
-Content is sourced from the uploaded `M1_iLEARN_Editor_SLP.pptx` deck,
-which names the three Create Class features but has no screenshots or
-step-level detail (its own video/interaction slides are empty
-placeholders). The mock settings panels, exact wording, and all scenario
-detail in this module are original teaching content written to explain
-the named features correctly — **confirm exact labels and behaviour
+Content is sourced from the uploaded `M1_iLEARN_Educator_SLP` pptx and
+PDF, which name the three Create Class features. The PDF export
+includes real console screenshots and two authoritative feature
+definitions (Allow Learners to Discover Each Other; Current Owner) —
+those are embedded and quoted directly in the relevant units. Any
+learner/educator names visible in the original screenshots were
+replaced with fictitious placeholders before embedding, since the
+originals looked like real production data, not test fixtures. The
+deck's own video/interaction slides don't cover Second Owner, Shared
+Educators, or the Data Access definitions in full, so the clickable
+mock toggle panels, those definitions, and all scenario detail remain
+original teaching content — **confirm exact labels and behaviour
 against the live iLEARN Editor console** before configuring a real
 class.
 
 ## What's explicitly deferred
 
-- **Real screenshots or a screen recording of the live iLEARN Editor console** — the mock UI panels here are stylised, not pixel-accurate, because none were available in the source material. If screenshots/video become available, the mock panels should be swapped for the real thing.
+- **Full-fidelity screenshots for Second Owner, Shared Educators, and the Data Access definition** — the source PDF's interactive slides only captured their default (first) panel state, so those three definitions are still original teaching content rather than quoted source text. The Forum & Calendar and Discovery/Owner-fields figures are real screenshots; the clickable mock toggle panels remain stylised recreations for practice.
 - **Modules 2–6 of iLEARN Editor** (Assign Content, Add & Manage Learners, Analytics Dashboard, Review, Gradebook & Competency Wheel) — out of scope for this module.
 - **Assessment / certification** — this is a practice module with formative feedback, not a scored or certifying assessment.
 - **SCORM/LMS packaging** — this runs as a standalone static page, not published into iSpring/SCORM tooling.
