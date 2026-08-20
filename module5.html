@@ -10,15 +10,30 @@
    Palette: navy / archival ivory / brass. No external assets.
    ============================================================ */
 :root{
-  --navy-deep:#10233C; --navy:#1C3A5E; --navy-soft:#2B4E77;
-  --ivory:#F4EFE3; --paper:#FCF9F0; --ivory-dim:#EAE3D2; --line:#D8CFB8;
-  --brass:#A9873B; --brass-dark:#7E6425; --brass-pale:#D9C795;
-  --ink:#24303C; --ink-soft:#5A6470;
+  /* Fixed brand chrome — same in both themes (header bar, brass-on-cream chips) */
+  --navy-deep:#10233C; --on-navy:#F4EFE3; --brass-dark:#7E6425; --fixed-ink:#24303C;
+  --brass:#A9873B; --brass-pale:#D9C795;
   --moss:#40634C; --moss-bg:#EDF2EA;
   --rust:#94502E; --rust-bg:#F6EDE4;
+  /* Themed surface/text tokens — light values here, dark overrides below */
+  --navy:#1C3A5E; --navy-soft:#2B4E77; --heading:#10233C; --brass-text:#7E6425;
+  --ivory:#F4EFE3; --paper:#FCF9F0; --ivory-dim:#EAE3D2; --line:#D8CFB8;
+  --ink:#24303C; --ink-soft:#5A6470;
   --serif:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
   --sans:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   --mono:Consolas,"SF Mono","Courier New",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --navy:#4C7AAE; --navy-soft:#5F8EC2; --heading:#D7E2F0; --brass-text:#D9BB6E;
+    --ivory:#10151D; --paper:#171E28; --ivory-dim:#131923; --line:#2A3542;
+    --ink:#E7E2D3; --ink-soft:#93A0AC;
+  }
+}
+:root[data-theme="dark"]{
+  --navy:#4C7AAE; --navy-soft:#5F8EC2; --heading:#D7E2F0; --brass-text:#D9BB6E;
+  --ivory:#10151D; --paper:#171E28; --ivory-dim:#131923; --line:#2A3542;
+  --ink:#E7E2D3; --ink-soft:#93A0AC;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -26,7 +41,7 @@ html{scroll-behavior:smooth}
 body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65}
 
 /* ---------- Header band ---------- */
-header{background:var(--navy-deep);color:var(--ivory);padding:0}
+header{background:var(--navy-deep);color:var(--on-navy);padding:0}
 .hd-inner{max-width:1180px;margin:0 auto;padding:20px 28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .wordmark{font-family:var(--serif);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase}
 .wordmark b{color:var(--brass-pale);font-weight:600}
@@ -48,23 +63,23 @@ main{padding:34px 40px 90px;max-width:820px}
 .map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
 .dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
 .dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
-.dot.done{border-color:var(--brass-dark);background:var(--brass)}
+.dot.done{border-color:var(--brass-text);background:var(--brass)}
 .map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
 .progress-wrap{margin:22px 0 4px}
 .progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
 .progress-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:6px;letter-spacing:.08em}
 .learner-line{margin-top:20px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
-.learner-line button{background:none;border:none;color:var(--brass-dark);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
+.learner-line button{background:none;border:none;color:var(--brass-text);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
 .storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
 
 /* ---------- Content typography ---------- */
-.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
-h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-text);margin-bottom:8px}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--heading);text-wrap:balance;margin-bottom:6px}
 .dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:68ch}
-p strong{color:var(--navy-deep)}
+p strong{color:var(--heading)}
 em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bottom:1px}
 
 /* ---------- Blueprint card (signature: brass corner ticks) ---------- */
@@ -72,19 +87,21 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 .card::before,.card::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
 .card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
 .card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
-.card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
+.card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-text);margin-bottom:12px}
 
 /* ---------- Scenario check ---------- */
-.check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--navy-deep);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
+.check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--heading);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
 .opts{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
 .opts button{text-align:left;background:var(--ivory);border:1px solid var(--line);padding:12px 14px;font:inherit;font-size:.92rem;line-height:1.45;cursor:pointer;color:var(--ink);border-radius:2px}
 .opts button:hover{border-color:var(--brass);background:var(--paper)}
+.opts button.sel-good,.opts button.sel-redirect,.opts button.sel-nca{color:var(--fixed-ink)}
 .opts button.sel-good{border-color:var(--moss);background:var(--moss-bg)}
 .opts button.sel-redirect{border-color:var(--rust);background:var(--rust-bg)}
 .opts button.sel-nca{border-color:var(--brass-dark);background:var(--brass-pale)}
-.opts button:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.opts button:focus-visible{outline:2px solid var(--brass-text);outline-offset:2px}
 .fb{display:none;margin-top:14px;padding:16px 18px;border-radius:2px;font-size:.93rem;line-height:1.55}
 .fb.show{display:block}
+.fb.good,.fb.redirect,.fb.nca{color:var(--fixed-ink)}
 .fb.good{background:var(--moss-bg);border-left:3px solid var(--moss)}
 .fb.redirect{background:var(--rust-bg);border-left:3px solid var(--rust)}
 .fb.nca{background:#FBF4DE;border-left:3px solid var(--brass-dark)}
@@ -96,19 +113,19 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 .fb .again button{background:none;border:none;text-decoration:underline;color:var(--brass-dark);cursor:pointer;font-size:.84rem;padding:0}
 .done-note{display:none;margin-top:14px;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;color:var(--moss)}
 .done-note.show{display:block}
-.no-clean{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass-dark);border:1px solid var(--brass);display:inline-block;padding:3px 9px;border-radius:2px;margin-bottom:14px}
+.no-clean{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass-text);border:1px solid var(--brass);display:inline-block;padding:3px 9px;border-radius:2px;margin-bottom:14px}
 
 /* ---------- Module map diagram (six-module strip) ---------- */
 .strip{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 24px}
 .strip .m{flex:1 1 140px;background:var(--paper);border:1px solid var(--line);padding:10px 12px;font-size:.8rem;line-height:1.4}
-.strip .m .mnum{font-family:var(--mono);font-size:.66rem;color:var(--brass-dark);letter-spacing:.1em;text-transform:uppercase}
-.strip .m.here{border-color:var(--brass);background:var(--brass-pale);box-shadow:0 0 0 1px var(--brass) inset}
+.strip .m .mnum{font-family:var(--mono);font-size:.66rem;color:var(--brass-text);letter-spacing:.1em;text-transform:uppercase}
+.strip .m.here{border-color:var(--brass);background:var(--brass-pale);color:var(--fixed-ink);box-shadow:0 0 0 1px var(--brass) inset}
 .strip .m.here .mnum{color:var(--navy-deep)}
 
 /* ---------- Requirement pair (rubric/feedback) ---------- */
 .reqpair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
 .reqcard{background:var(--paper);border:1px solid var(--line);padding:16px 18px;border-radius:2px}
-.reqcard h4{font-family:var(--serif);color:var(--navy-deep);font-size:1.02rem;margin-bottom:8px}
+.reqcard h4{font-family:var(--serif);color:var(--heading);font-size:1.02rem;margin-bottom:8px}
 .reqcard .req{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;display:flex;justify-content:space-between;padding:5px 0;border-top:1px dashed var(--line)}
 .reqcard .req:first-of-type{border-top:none}
 .req .yes{color:var(--moss)}
@@ -118,19 +135,19 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 /* ---------- Capstone ---------- */
 .stage{margin-bottom:26px}
 .stage-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
-.stage-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--brass-dark);border:1px solid var(--brass);padding:2px 8px;border-radius:2px;white-space:nowrap}
+.stage-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--brass-text);border:1px solid var(--brass);padding:2px 8px;border-radius:2px;white-space:nowrap}
 .stage-head h3{margin:0}
 .stage .guide{font-size:.86rem;color:var(--ink-soft);margin-bottom:8px;max-width:70ch}
 textarea{width:100%;min-height:110px;font-family:var(--sans);font-size:.92rem;line-height:1.55;padding:12px 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;border-radius:2px}
 textarea:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
 select,input[type=text]{font:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px}
 select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
-.btn{display:inline-block;background:var(--navy);color:var(--ivory);border:none;font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px}
+.btn{display:inline-block;background:var(--navy);color:var(--on-navy);border:none;font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px}
 .btn:hover{background:var(--navy-soft)}
 .btn.brass{background:var(--brass-dark)}
 .btn.brass:hover{background:var(--brass)}
 .btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
-.btn:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.btn:focus-visible{outline:2px solid var(--brass-text);outline-offset:2px}
 .save-flash{font-family:var(--mono);font-size:.72rem;color:var(--moss);margin-left:12px;opacity:0;transition:opacity .3s}
 .save-flash.on{opacity:1}
 
@@ -625,7 +642,7 @@ function wireCapstone(){
   }
   checkCapDone();
 
-  document.getElementById("capExport").addEventListener("click",()=>{
+  document.getElementById("capExport").addEventListener("click",async ()=>{
     const dt=new Date().toISOString().slice(0,10);
     let md=`# Review Log — Module 5\n\n`;
     md+=`IMLS · SLI 2040 Module 5 (iLEARN Editor: Review) · ${dt}${state.name?` · Learner: ${state.name}`:""}\n\n`;
@@ -633,10 +650,17 @@ function wireCapstone(){
       md+=`## ${st.n} — ${st.t}\n\n${(state.cap.stages[st.id]||"_(no entry)_").trim()}\n\n`;
     });
     md+=`---\n_Generated from the IMLS SLI 2040 Module 5 learning module (v1.0).\n`;
+    const filename=`review_log_${dt}.md`;
+    const dl = (typeof claude!=="undefined" && claude.use) ? await claude.use("downloads") : null;
+    if(dl){
+      try{ await dl.save({filename, data: md}); flashSave(); }
+      catch(e){ if(e && e.code!=="declined") alert("Couldn't save the file: "+(e&&e.message||"unknown error")); }
+      return;
+    }
     const blob=new Blob([md],{type:"text/markdown"});
     const a=document.createElement("a");
     a.href=URL.createObjectURL(blob);
-    a.download=`review_log_${dt}.md`;
+    a.download=filename;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(()=>URL.revokeObjectURL(a.href),2000);
   });
