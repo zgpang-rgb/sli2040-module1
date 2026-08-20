@@ -129,7 +129,9 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
 .pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
-.pager a{text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.pager span{flex:1 1 0;min-width:0;display:flex}
+.pager span:last-child{justify-content:flex-end}
+.pager a{display:inline-block;text-decoration:none;color:var(--navy);font-size:.88rem;line-height:1.35;border:1px solid var(--line);padding:10px 16px;border-radius:2px;max-width:100%}
 .pager a:hover{border-color:var(--brass)}
 section.unit{display:none;animation:fadein .35s ease}
 section.unit.active{display:block}
