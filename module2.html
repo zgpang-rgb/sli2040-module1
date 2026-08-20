@@ -531,9 +531,11 @@ let scormAPI=null, scormInited=false, scormLastStatus=null;
 function findScormAPI(){
   let w=window, tries=0;
   while(w && tries<8){
-    if(w.API) return w.API;
-    if(w===w.parent) break;
-    w=w.parent; tries++;
+    try{ if(w.API) return w.API; }catch(e){ break; }
+    let parent;
+    try{ parent=w.parent; }catch(e){ break; }
+    if(w===parent) break;
+    w=parent; tries++;
   }
   try{ if(window.opener && window.opener.API) return window.opener.API; }catch(e){}
   return null;
