@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>iLEARN Educator · Module 2 — Assign Content</title>
+<script>
+/* SCORM host bootstrap — set before lms.js loads. Harmless when opened standalone
+   (file:// or any non-LMS context); lms.js and the SCORM wrapper below both no-op
+   without a real LMS API object present. */
+window.launchMode = "normal";
+</script>
+<script src="lms.js"></script>
 <style>
 /* ============================================================
    IMLS · iLEARN Educator Module 2 — internal training module
@@ -504,11 +511,67 @@ function loadState(){
     if(!memStore) memStore=defaultState(); return memStore; }
 }
 function saveState(s){
-  if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
-  memStore=s;
+  if(storageOK){
+    try{ localStorage.setItem(SKEY,JSON.stringify(s)); }
+    catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; memStore=s; }
+  } else {
+    memStore=s;
+  }
+  scormReport(s);
 }
 function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}, cap:{project:"",own:"",stages:{}}}; }
 let state=loadState();
+
+/* ============================================================
+   SCORM 1.2 — own minimal wrapper, independent of lms.js's
+   internal behavior. No-ops silently outside an LMS host, so
+   standalone (file://) use is unaffected.
+   ============================================================ */
+let scormAPI=null, scormInited=false, scormLastStatus=null;
+function findScormAPI(){
+  let w=window, tries=0;
+  while(w && tries<8){
+    if(w.API) return w.API;
+    if(w===w.parent) break;
+    w=w.parent; tries++;
+  }
+  try{ if(window.opener && window.opener.API) return window.opener.API; }catch(e){}
+  return null;
+}
+function scormInit(){
+  scormAPI=findScormAPI();
+  if(!scormAPI) return;
+  try{
+    if(scormAPI.LMSInitialize("")==="true"){
+      scormInited=true;
+      const raw=scormAPI.LMSGetValue("cmi.core.lesson_status");
+      if(!raw||raw==="not attempted") scormSetValue("cmi.core.lesson_status","incomplete");
+    }
+  }catch(e){}
+}
+function scormSetValue(key,val){
+  if(!scormInited) return;
+  try{ scormAPI.LMSSetValue(key,val); }catch(e){}
+}
+function scormCommit(){
+  if(!scormInited) return;
+  try{ scormAPI.LMSCommit(""); }catch(e){}
+}
+function scormReport(s){
+  if(!scormInited) return;
+  const doneCount=UNITS.filter(u=>u.id!=="start"&&s.done[u.id]).length;
+  const total=UNITS.length-1;
+  const status=doneCount>=total?"completed":"incomplete";
+  if(status!==scormLastStatus){ scormSetValue("cmi.core.lesson_status",status); scormLastStatus=status; }
+  scormSetValue("cmi.core.score.raw",Math.round(doneCount/total*100)+"");
+  scormCommit();
+}
+function scormFinish(){
+  if(!scormInited) return;
+  try{ scormAPI.LMSCommit(""); scormAPI.LMSFinish(""); }catch(e){}
+}
+scormInit();
+window.addEventListener("beforeunload",scormFinish);
 
 /* ============================================================
    RENDERING & NAVIGATION (hash router)
