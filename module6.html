@@ -133,6 +133,9 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 /* ---------- Landing ---------- */
 .module-time{font-family:var(--mono);font-size:.8rem;letter-spacing:.03em;color:var(--ink-soft);margin:20px 0;padding:12px 16px;border:1px solid var(--line);border-radius:2px;background:var(--ivory-dim)}
 .module-time .est-total{color:var(--brass-dark);font-weight:600}
+.outcomes{list-style:none;margin:14px 0 22px;padding:0}
+.outcomes li{position:relative;padding-left:26px;margin-bottom:10px;line-height:1.55}
+.outcomes li::before{content:"✓";position:absolute;left:0;color:var(--brass-dark);font-weight:700}
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
 .pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
@@ -245,7 +248,15 @@ const UNITS = [
 
   <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>Scope note:</strong> iLEARN Educator has six modules end to end — Create Class, Assign Content, Add &amp; Manage Learners, Analytics Dashboard, Review, and this one, Gradebook &amp; Competency Wheel. This training covers <strong>Module 6 only</strong>: the gradebook's competency wheel, and the four features that drive it — adding goals, tagging competencies to assignments, visibility options, and manual entry of grades.</p>
 
-  <p>By the end of this module you should be able to take a class that needs its grading set up, pick the Competency Framework that actually matches its structure, decide when a grade needs to be entered by hand versus rolled up automatically from a tagged assignment, set a visibility policy you can defend, and read a learner's Competency Wheel well enough to know what it's telling you to do next.</p>
+  <div class="card-tag">Learning outcomes</div>
+  <p style="margin-bottom:6px">By the end of this module, you will be able to:</p>
+  <ul class="outcomes">
+    <li>Pick the Competency Framework that actually matches a class's real structure, instead of the nearest-sounding name.</li>
+    <li>Decide when a grade needs manual entry versus rolling up automatically from a tagged assignment.</li>
+    <li>Set — and defend — a visibility policy (Hidden, Visible, or Visible After) for a competency branch.</li>
+    <li>Read a learner's Competency Wheel well enough to know what it's telling you to do next.</li>
+    <li>Walk one of your own classes through the full grading setup end to end: framework, visibility, grading method, and wheel.</li>
+  </ul>
 
   <p>The suggested path runs top to bottom in the module map, because the units build on each other — frameworks first, since everything else attaches to one. But every unit is open from the start. If you already run frameworks daily, skip to the Competency Wheel unit or straight to the capstone and work backwards from what it asks.</p>
 
