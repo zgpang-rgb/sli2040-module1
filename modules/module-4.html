@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iLEARN Analytics Dashboard</title>
+<style>
+/* ============================================================
+   IMLS · iLEARN Educator Module 4 — internal training module
+   Palette: navy / archival ivory / brass. No external assets.
+   ============================================================ */
+:root{
+  --navy-deep:#10233C; --navy:#1C3A5E; --navy-soft:#2B4E77;
+  --ivory:#F4EFE3; --paper:#FCF9F0; --ivory-dim:#EAE3D2; --line:#D8CFB8;
+  --brass:#A9873B; --brass-dark:#7E6425; --brass-pale:#D9C795;
+  --ink:#24303C; --ink-soft:#5A6470;
+  --moss:#40634C; --moss-bg:#EDF2EA;
+  --rust:#94502E; --rust-bg:#F6EDE4;
+  --amber:#B8860B; --amber-bg:#FBF3DF;
+  --red-seg:#C97E7E; --orange-seg:#E0B45C; --lgreen-seg:#9FCBA0; --dgreen-seg:#5C9B62;
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --sans:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65;overflow-x:hidden}
+
+/* ---------- Header band ---------- */
+header{background:var(--navy-deep);color:var(--ivory);padding:0}
+.hd-inner{max-width:1180px;margin:0 auto;padding:20px 28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.wordmark{font-family:var(--serif);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase}
+.wordmark b{color:var(--brass-pale);font-weight:600}
+.hd-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:#9FB0C4;text-transform:uppercase}
+.hd-rule{height:3px;background:linear-gradient(90deg,var(--brass) 0 180px,rgba(169,135,59,.25) 180px)}
+
+/* ---------- Shell ---------- */
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:288px 1fr;gap:0;min-height:calc(100vh - 90px)}
+.shell>*{min-width:0}
+nav.map{background:var(--ivory-dim);border-right:1px solid var(--line);padding:26px 20px 40px}
+main{padding:34px 40px 90px;max-width:860px}
+
+/* ---------- Module map (sidebar) ---------- */
+.map h2{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.map .hint{font-size:.78rem;color:var(--ink-soft);margin-bottom:16px;line-height:1.45}
+.map ol{list-style:none}
+.map li{margin-bottom:2px}
+.map li.part-head{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-dark);margin:16px 0 4px;padding:0 10px}
+.map li.part-head:first-child{margin-top:2px}
+.map a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:3px;font-size:.86rem;line-height:1.35;border-left:2px solid transparent}
+.map a:hover{background:var(--paper)}
+.map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
+.dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
+.dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
+.dot.done{border-color:var(--brass-dark);background:var(--brass)}
+.map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.progress-wrap{margin:22px 0 4px}
+.progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
+.progress-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:6px;letter-spacing:.08em}
+.learner-line{margin-top:20px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
+.learner-line button{background:none;border:none;color:var(--brass-dark);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
+.storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
+
+/* ---------- Content typography ---------- */
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
+.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
+p{margin-bottom:14px;max-width:70ch}
+p strong{color:var(--navy-deep)}
+em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bottom:1px}
+
+/* ---------- Blueprint card (signature: brass corner ticks) ---------- */
+.card{position:relative;background:var(--paper);border:1px solid var(--line);padding:26px 28px;margin:26px 0}
+.card::before,.card::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
+.card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
+
+/* ---------- Dashboard mock ---------- */
+.dash{background:var(--paper);border:1px solid var(--line);border-radius:3px;margin:18px 0;overflow:hidden}
+.dash-head{padding:14px 18px;border-bottom:1px solid var(--line);background:var(--ivory-dim)}
+.dash-title{font-family:var(--serif);font-size:1.02rem;color:var(--navy-deep);font-weight:600}
+.dash-sub{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dark);margin-top:2px}
+.dash-body{padding:14px 18px;overflow-x:auto}
+table.dash-table{width:100%;border-collapse:collapse;font-size:.86rem;white-space:nowrap}
+table.dash-table th{text-align:left;font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft);font-weight:600;padding:8px 12px;border-bottom:1px solid var(--line)}
+table.dash-table td{padding:9px 12px;border-bottom:1px solid var(--ivory-dim);color:var(--ink)}
+table.dash-table tr:last-child td{border-bottom:none}
+table.dash-table td.flag-low{color:var(--rust);font-weight:600}
+table.dash-table td.flag-good{color:var(--moss);font-weight:600}
+table.dash-table td.flag-watch{color:var(--amber);font-weight:600}
+.dash-note{font-size:.78rem;color:var(--ink-soft);padding:10px 18px 14px;font-style:italic}
+
+/* stacked competency bar */
+.stackbar{display:flex;height:26px;border-radius:2px;overflow:hidden;margin:10px 0;border:1px solid var(--line)}
+.stackbar span{display:block;height:100%}
+.stackbar .seg-ui{background:var(--red-seg)}
+.stackbar .seg-ci{background:var(--orange-seg)}
+.stackbar .seg-uc{background:var(--lgreen-seg)}
+.stackbar .seg-cc{background:var(--dgreen-seg)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.78rem;color:var(--ink-soft);margin:8px 0 4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:2px;display:inline-block}
+
+/* metacognition wheel labels reuse loop-svg */
+.wheel-wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.wheel-defs{flex:1;min-width:260px;font-size:.86rem}
+.wheel-defs .qd{margin-bottom:12px;padding-left:12px;border-left:3px solid var(--brass-pale)}
+.wheel-defs .qd b{color:var(--navy-deep);display:block;font-family:var(--serif);font-size:.98rem;margin-bottom:2px}
+.wheel-defs .qd q{display:block;font-style:italic;color:var(--ink-soft);margin-bottom:2px}
+
+/* ---------- Scenario check ---------- */
+.check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--navy-deep);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.opts button{text-align:left;background:var(--ivory);border:1px solid var(--line);padding:12px 14px;font:inherit;font-size:.92rem;line-height:1.45;cursor:pointer;color:var(--ink);border-radius:2px}
+.opts button:hover{border-color:var(--brass);background:var(--paper)}
+.opts button.sel-good{border-color:var(--moss);background:var(--moss-bg)}
+.opts button.sel-redirect{border-color:var(--rust);background:var(--rust-bg)}
+.opts button:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.fb{display:none;margin-top:14px;padding:16px 18px;border-radius:2px;font-size:.93rem;line-height:1.55}
+.fb.show{display:block}
+.fb.good{background:var(--moss-bg);border-left:3px solid var(--moss)}
+.fb.redirect{background:var(--rust-bg);border-left:3px solid var(--rust)}
+.fb .fb-head{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.fb.good .fb-head{color:var(--moss)}
+.fb.redirect .fb-head{color:var(--rust)}
+.fb .again{margin-top:10px;font-size:.84rem}
+.fb .again button{background:none;border:none;text-decoration:underline;color:var(--brass-dark);cursor:pointer;font-size:.84rem;padding:0}
+.done-note{display:none;margin-top:14px;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;color:var(--moss)}
+.done-note.show{display:block}
+.ambig-flag{background:var(--amber-bg);border:1px solid var(--amber);border-radius:2px;padding:10px 14px;font-size:.82rem;color:#6B5010;margin-bottom:16px}
+
+/* ---------- Landing ---------- */
+.land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.land-grid .card{margin:0}
+.pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
+.pager a{display:inline-block;text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.pager a:hover{border-color:var(--brass)}
+section.unit{display:none;animation:fadein .35s ease}
+section.unit.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+input[type=text]{font:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px}
+input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+.btn{display:inline-block;background:var(--navy);color:var(--ivory);border:none;font:inherit;font-size:.9rem;letter-spacing:.04em;padding:11px 22px;cursor:pointer;border-radius:2px}
+.btn:hover{background:var(--navy-soft)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.btn:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+
+/* ---------- Responsive ---------- */
+.map-toggle{display:none}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  nav.map{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+  nav.map .map-body{display:none}
+  nav.map.open .map-body{display:block}
+  .map-toggle{display:inline-block;background:none;border:1px solid var(--ink-soft);font:inherit;font-size:.8rem;padding:6px 12px;cursor:pointer;border-radius:2px;margin-bottom:4px}
+  main{padding:26px 20px 70px}
+  .land-grid{grid-template-columns:1fr}
+  h1{font-size:1.6rem}
+  .wheel-wrap{flex-direction:column}
+  .wheel-defs{min-width:0}
+}
+</style>
+</head>
+<body>
+<div class="hub-crumb" style="background:var(--navy-deep,#10233C);color:var(--ivory,#F4EFE3);padding:8px 20px;font-family:var(--mono,Consolas,monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--brass-dark,#7E6425)">
+  <a href="../index.html" style="color:var(--brass-pale,#D9C795);text-decoration:none">&larr; Back to Hub</a>
+</div>
+<header>
+  <div class="hd-inner">
+    <div class="wordmark">SAFTI MI · <b>IMLS</b> — Institute for Military Learning Systems</div>
+    <div class="hd-meta">iLEARN Educator · Module 4 · Internal Training · v1.0</div>
+  </div>
+  <div class="hd-rule"></div>
+</header>
+
+<div class="shell">
+
+<!-- ================= SIDEBAR / MODULE MAP ================= -->
+<nav class="map" id="mapNav" aria-label="Module map">
+  <button class="map-toggle" id="mapToggle" aria-expanded="false">Module map ▾</button>
+  <div class="map-body">
+    <h2>Module map</h2>
+    <p class="hint">Suggested order below — but every unit is open. Enter anywhere; the map remembers where you've been.</p>
+    <ol id="mapList"></ol>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-label" id="progLabel">0 / 8 complete</div>
+    </div>
+    <div class="learner-line" id="learnerLine"></div>
+    <div class="storage-note" id="storageNote">Browser storage unavailable — progress will not persist after this session. Run the file locally in Edge/Chrome for saved progress.</div>
+  </div>
+</nav>
+
+<!-- ================= MAIN ================= -->
+<main id="main"></main>
+
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   CONTENT — sourced from M4_iLEARN_Educator_SLP.pptx (iLEARN
+   Educator Analytics Dashboard walkthrough). Example data in the
+   dashboard mocks below is illustrative, not the deck's real
+   learner records (a real learner name in the source screenshots
+   has been genericized throughout).
+   ============================================================ */
+
+const UNITS = [
+/* ---------------- LANDING ---------------- */
+{ id:"start", short:"Orientation", title:"Module 4 — Analytics Dashboard", ord:"—",
+  render(){ return `
+  <div class="eyebrow">iLEARN Educator · Module 4 · Analytics Dashboard</div>
+  <h1>Read the dashboard, then decide what to do about it</h1>
+  <p class="dek">A self-paced module for Educator staff across Learning Science, Learning Technology, Learning System and Learning Educator sections who run classes in iLEARN Educator.</p>
+
+  <p>Module 4 gives educators three things: a way to see whether learners are actually moving through assigned content, a way to see how they're performing once they get there, and — the part that actually matters — a basis for deciding what to do next. Those are the deck's own three parts, and they're this module's three parts too:</p>
+
+  <div class="land-grid">
+    <div class="card"><div class="card-tag">Part 1</div>
+      <p style="margin:0;font-size:.9rem"><strong>Monitor completion</strong> — module-level and learner-level views of who has started, finished, and how long it took.</p></div>
+    <div class="card"><div class="card-tag">Part 2</div>
+      <p style="margin:0;font-size:.9rem"><strong>Monitor performance, competencies &amp; feedback</strong> — exam scores, the metacognition wheel, class-wide competency, and learner survey responses.</p></div>
+  </div>
+  <div class="land-grid">
+    <div class="card"><div class="card-tag">Part 3</div>
+      <p style="margin:0;font-size:.9rem"><strong>Make instructional decisions</strong> — turning the objective-level and question-level tables into an actual next move.</p></div>
+    <div class="card"><div class="card-tag">How this module checks you</div>
+      <p style="margin:0;font-size:.9rem">Each unit shows a mock dashboard view built from the deck's real field names, then asks you to either read it correctly or decide the right action from it. One check has no single right answer — the dashboard genuinely can't settle it alone, and you'll be told so.</p></div>
+  </div>
+
+  <p>The suggested path runs Part 1 → 2 → 3 because later units lean on habits the earlier ones build — reading a table for what it actually says before reaching for an action. But every unit stands alone; jump to whatever your class needs today. Progress is saved in this browser.</p>
+
+  <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — shown next to your saved progress only):</label><br>
+  <input type="text" id="nameIn" placeholder="e.g. Ms. Tan" style="margin-top:6px;width:100%;max-width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
+  `;}
+},
+
+/* ---------------- UNIT 1 ---------------- */
+{ id:"u1", part:"Part 1 · Monitor completion", short:"Module Status", title:"See Status of Modules Assigned", ord:"01",
+  render(){ return `
+  <div class="eyebrow">Unit 01 · As a class</div>
+  <h1>Completion, or the lack of it</h1>
+  <p class="dek">The first question any educator needs answered: is the class actually moving through what was assigned?</p>
+
+  <p>"See Status of Modules Assigned" is the class-wide view of completion. For each module you'll see how many learners have finished it and the average time those learners took to get through it. Used together, those two numbers tell two different stories: a low completed-learner count against a normal completion time usually means people haven't started or are behind schedule, not that the content is a problem for the people who did engage. A high completed-learner count against an unusually long completion time tells the opposite story — nobody is stuck, but the content may be taking longer than it should.</p>
+
+  <p>The deck's own example use case is the one worth remembering: educators use this view to decide whether reminders are needed to boost engagement, or whether lengthy content should be broken into smaller, more manageable sections. Those are two different fixes for two different symptoms, and the table's job is to tell you which symptom you're actually looking at before you pick one.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">See Status of Modules Assigned</div><div class="dash-sub">as a class</div></div>
+    <div class="dash-body"><table class="dash-table">
+      <tr><th>Module</th><th>Assignment Type</th><th>Completed Learners</th><th>Avg Time Taken to Complete</th></tr>
+      <tr><td>Module 1 — Orientation</td><td>Learn</td><td class="flag-good">9 / 10</td><td>00:11:00</td></tr>
+      <tr><td>Module 2 — Safety Brief</td><td>Learn</td><td class="flag-low">3 / 10</td><td>00:09:40</td></tr>
+      <tr><td>Module 3 — Field Procedures</td><td>Learn</td><td class="flag-good">10 / 10</td><td class="flag-watch">00:52:10</td></tr>
+    </table></div>
+    <div class="dash-note">Illustrative data, built to the deck's real field names.</div>
+  </div>
+
+  <div class="card check" id="check-u1">
+    <div class="card-tag">Read-the-dashboard check</div>
+    <p class="scenario">Looking at the table above: which module needs your attention first, and why?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"Module 2 — only 3 of 10 learners have completed it, and the ones who did finish took a normal amount of time. That's a completion problem, not a pacing problem, so the fix is a reminder, not a redesign.",
+       fb:"Right diagnosis. Because the completion time for Module 2 is unremarkable once learners actually get to it, the content itself isn't the obstacle — engagement is. That's precisely the deck's 'reminders to boost engagement' use case. Module 3's long completion time is worth a note for later, but it isn't blocking anyone the way Module 2 is, so it waits."},
+      {t:"Module 3 — its average completion time is far longer than the other two, so break it into smaller sections right away.",
+       fb:"This reacts to the more dramatic number rather than the more urgent one. Nobody is stuck on Module 3 — all ten learners finished it. A long average time is a genuine signal to watch and possibly restructure later, but it doesn't carry the same cost as three learners not finishing Module 2 at all. Treating the loudest number as the most urgent one is a common misread of this view."},
+      {t:"Module 1 — it's first in the sequence, so any friction there compounds through the rest of the class.",
+       fb:"A reasonable instinct about sequencing, but it isn't what the data in front of you says. Module 1 shows 9/10 completed in a normal timeframe — it's healthy. The table exists so you don't have to guess based on where a module sits in the order; read what it actually shows before acting on where a module sits."},
+      {t:"Nothing needs attention yet — completion numbers usually catch up before the deadline on their own.",
+       fb:"3 of 10 completed, this deep into an assignment window, with the completing learners moving at a normal pace, is exactly the pattern this view is built to catch before the deadline arrives — not after. Waiting for the number to fix itself is the outcome the reminder feature exists to prevent."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 2 ---------------- */
+{ id:"u2", short:"Learner Status", title:"See Learner's Assignments Status", ord:"02",
+  render(){ return `
+  <div class="eyebrow">Unit 02 · By learner</div>
+  <h1>From "who's behind" to "who needs a call"</h1>
+  <p class="dek">The class view tells you a module is behind. The learner view tells you who, specifically, and gives you a reason.</p>
+
+  <p>Switching from the class view to the learner-level view for a given module surfaces two fields the class rollup can't show: each learner's average number of attempts per probe, and their last access date. Attempts tell you whether someone is working through content and struggling, or has barely touched it. Last access tells you whether "hasn't finished" means "actively working on it slowly" or "hasn't opened it in two weeks." Those are different problems needing different outreach — one a nudge, the other a conversation.</p>
+
+  <p>This view is where a class-wide completion gap, like the one Module 2 showed in Unit 01, gets resolved into individual action. Not every learner behind on a module needs the same response.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">See Learner's Assignments Status — Module 2</div><div class="dash-sub">by learner</div></div>
+    <div class="dash-body"><table class="dash-table">
+      <tr><th>Learner</th><th>Avg Attempt Per Probe</th><th>Last Access Date</th></tr>
+      <tr><td>Learner A</td><td>1</td><td class="flag-good">2 days ago</td></tr>
+      <tr><td>Learner B</td><td class="flag-watch">4</td><td class="flag-low">14 days ago</td></tr>
+      <tr><td>Learner C</td><td>1</td><td class="flag-good">1 day ago</td></tr>
+    </table></div>
+    <div class="dash-note">Illustrative data — the three learners here are the three not-yet-completed from Module 2 in Unit 01.</div>
+  </div>
+
+  <div class="card check" id="check-u2">
+    <div class="card-tag">Decide-the-action check</div>
+    <p class="scenario">Given this breakdown for Module 2, what's the right next move for Learner B specifically?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"Reach out to Learner B directly — repeated attempts combined with a two-week gap since last access point to someone who's stuck or has disengaged, and a class-wide reminder won't fix either.",
+       fb:"This matches what the two fields together are telling you. Learner A and C look like people mid-task who'll finish soon on their own — recent access, low attempts. Learner B looks different on both counts, and that difference is the whole reason this view exists separately from the class rollup: it lets you scope your response to the one learner who actually needs it."},
+      {t:"Send the same class-wide reminder you'd send everyone else in Module 2.",
+       fb:"A class-wide reminder is the right tool for Module 2's overall completion gap from Unit 01 — but Learner B's own numbers show something a broadcast message won't reach: four attempts and no access in two weeks isn't 'forgot to log in,' it's more likely stuck on content or otherwise disengaged. Treating every learner behind a module the same way is exactly what the learner-level view is meant to prevent."},
+      {t:"Do nothing for now — Learner B will show up as completed in the class view eventually.",
+       fb:"This is the risk the learner-level view exists to catch before it becomes a bigger gap. Four attempts with no recent access isn't a learner quietly working through the material at their own pace; it's a learner who may need help before they'll ever show up in that class rollup as completed."},
+      {t:"Extend the deadline for the whole class, since one learner is clearly behind.",
+       fb:"This over-corrects at the class level for a problem that the data shows is scoped to one learner. Learner A and C are on track; extending the deadline for everyone delays them to accommodate a case that individual outreach to Learner B would resolve more precisely and without cost to the rest of the class."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 3 ---------------- */
+{ id:"u3", part:"Part 2 · Monitor performance, competencies & feedback", short:"Exam Performance", title:"Know Exam Performance", ord:"03",
+  render(){ return `
+  <div class="eyebrow">Unit 03 · As a class</div>
+  <h1>Average score is the least interesting number on this screen</h1>
+  <p class="dek">Exam Level and Learner Level views exist for the same reason the completion views split in two: an average can hide exactly the thing you need to see.</p>
+
+  <p>"Know Exam Performance" gives you total completed learners, average time taken, average score, and — the field most educators skip past — the highest and lowest score in the class. The deck's own framing is precise: this view helps identify exams or modules with the lowest averages, <em class="term">or the widest score gaps</em>. Those are two separate red flags. An exam can have a perfectly respectable average and still be hiding a learner who scored far below everyone else — a pattern the average alone will never surface.</p>
+
+  <p>When a wide spread shows up at the class level, the next step is the same move as Unit 02: drop into the by-learner view for that exam before drawing any conclusion about the exam itself.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">Know Exam Performance</div><div class="dash-sub">as a class</div></div>
+    <div class="dash-body"><table class="dash-table">
+      <tr><th>Name of Assignment</th><th>Completed</th><th>Avg Time</th><th>Avg Score</th><th>Highest</th><th>Lowest</th></tr>
+      <tr><td>iLEARN Educator Module 1 Exam</td><td>8 / 10</td><td>00:13</td><td>78</td><td>96</td><td class="flag-low">41</td></tr>
+      <tr><td>iLEARN Educator Module 2 Exam</td><td>8 / 10</td><td>00:08</td><td class="flag-watch">67</td><td>70</td><td>63</td></tr>
+    </table></div>
+    <div class="dash-note">Illustrative data, built to the deck's real field names.</div>
+  </div>
+
+  <div class="card check" id="check-u3">
+    <div class="card-tag">Read-the-dashboard check</div>
+    <p class="scenario">Which exam most needs a closer look, and what should you check next?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"Module 1's exam — the 41–96 spread is wide even though the average (78) looks fine. Open the by-learner view to see whether the low score is one learner's bad day or a real pattern, before assuming anything about the exam itself.",
+       fb:"This is the read the deck is pointing at: 'widest score gaps' sits right next to 'lowest averages' as a reason to look closer, and Module 1's average would tell you to move on if you stopped there. The by-learner step matters because a single 41 could mean a struggling learner, a rushed attempt, or something worth flagging to the learner directly — and you can't tell which from this screen alone."},
+      {t:"Module 2's exam, because its average score (67) is lower than Module 1's (78).",
+       fb:"Averages alone rank these the wrong way round. Module 2's scores cluster tightly between 63 and 70 — that reads as an exam pitched consistently, if a bit harder, across the whole class, not as a warning sign on its own. Module 1's wide spread is the more diagnostic pattern here, even though its average looks better."},
+      {t:"Neither needs attention — both pass rates look acceptable at a glance.",
+       fb:"This is exactly the average-only read the deck's 'widest score gaps' language is warning against. A glance at pass rates or averages won't surface a 41 sitting in an otherwise-strong class; that's the entire reason the highest/lowest fields are on this screen at all."},
+      {t:"Module 1, because you should immediately lower the passing threshold so the low score doesn't count against the learner.",
+       fb:"This jumps straight to a fix before diagnosing the cause. A single low score could reflect a genuine gap worth addressing directly with that learner, a technical hiccup, or a rushed attempt — each implies a different response, and none of them is 'change the threshold for everyone' as a first move. Check the by-learner view before changing a policy that affects the whole class."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 4 ---------------- */
+{ id:"u4", short:"Metacognition Progress", title:"Metacognition Progress", ord:"04",
+  render(){ return `
+  <div class="eyebrow">Unit 04 · Per module</div>
+  <h1>Knowing what you know, and what that looks like changing</h1>
+  <p class="dek">The metacognition wheel isn't a score — it's a map of awareness, and it's the one view you have to click into each module individually to see.</p>
+
+  <p>Metacognition Progress tracks where each learner sits on a four-stage wheel of competence and incompetence, conscious and unconscious. It matters because two learners can answer the same question wrong for very different reasons: one doesn't know the material and doesn't know that they don't — the more dangerous gap — while the other knows exactly where their weak spot is and is actively closing it. The wheel is how the dashboard tells those two apart.</p>
+
+  <div class="wheel-wrap">
+    <svg class="loop-svg" viewBox="0 0 260 260" role="img" aria-label="Metacognition wheel: four stages, unconscious incompetence, conscious incompetence, conscious competence, unconscious competence" style="max-width:230px;margin:0">
+      <g font-family="Consolas,monospace" font-size="9.5" text-anchor="middle">
+        <circle cx="130" cy="130" r="100" fill="none" stroke="#D8CFB8" stroke-width="26"/>
+        <path d="M 130 30 A 100 100 0 0 1 218 80" fill="none" stroke="#C97E7E" stroke-width="26"/>
+        <path d="M 218 80 A 100 100 0 0 1 218 180" fill="none" stroke="#E0B45C" stroke-width="26"/>
+        <path d="M 218 180 A 100 100 0 0 1 130 230" fill="none" stroke="#5C9B62" stroke-width="26"/>
+        <path d="M 130 230 A 100 100 0 0 1 42 80" fill="none" stroke="#9FCBA0" stroke-width="26"/>
+        <text x="185" y="55" fill="#4A2A2A">1</text>
+        <text x="238" y="130" fill="#5A4210">2</text>
+        <text x="185" y="212" fill="#1E3A22">3</text>
+        <text x="65" y="150" fill="#2A4A2D">4</text>
+      </g>
+    </svg>
+    <div class="wheel-defs">
+      <div class="qd"><b>1 · Unconscious Incompetence</b><q>"I don't know that I don't know how to do it."</q>Unaware of the skill gap, and may not recognise its importance yet.</div>
+      <div class="qd"><b>2 · Conscious Incompetence</b><q>"I know that I don't know how to do it yet."</q>Aware of the gap and actively working to close it.</div>
+      <div class="qd"><b>3 · Conscious Competence</b><q>"I can do it, but I have to concentrate."</q>Can perform correctly with deliberate focus.</div>
+      <div class="qd"><b>4 · Unconscious Competence</b><q>"I can do it without thinking about it."</q>The skill has become automatic.</div>
+    </div>
+  </div>
+
+  <p>Each module tracks this as Initial (first interaction), Improvement, and Current. A typical target: 67% initial conscious competence climbing to 100% by the end of learning, which is usually achievable unless the passing threshold sits below 100% — or unless certain question types (fill-in-the-blank or spreadsheet-style items, for instance) get marked incorrect for reasons that have nothing to do with understanding. That caveat matters: before reading a shortfall as "the learner hasn't learned this," it's worth checking whether the question format itself is the noise source. And because this view lives inside each module rather than at the class level, you have to click into Module 1, then Module 2, and so on individually — there's no single combined wheel across a whole class.</p>
+
+  <div class="card check" id="check-u4">
+    <div class="card-tag">Read-the-dashboard check</div>
+    <p class="scenario">A learner's Metacognition Progress for Module 3 shows: Initial — 50% conscious competence / 50% conscious incompetence. Current, after completing the module — 58% conscious competence / 42% conscious incompetence. What does this tell you, and what should you check next?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"The shift is far short of the roughly 33-point swing you'd expect toward full conscious competence. Before assuming the learner is behind, check whether particular question types in Module 3 are being marked incorrect regardless of understanding.",
+       fb:"This is the caveat built into the target itself: a shortfall this size could genuinely mean the learner hasn't closed the gap — or it could mean a fill-in-the-blank or Excel-style item is penalizing phrasing or formatting rather than knowledge. The dashboard can show you the shortfall; it can't tell you which of those it is. Checking the question types is the step that finds out before you act on the wrong cause."},
+      {t:"The learner clearly hasn't learned the material and needs to redo the entire module.",
+       fb:"This treats a measurement question as if it were already answered. An 8-point shift that's short of target is worth investigating, but 'redo the whole module' assumes the shortfall reflects a genuine content gap rather than, say, a mismarked question format — the exact possibility the deck flags as a known false signal on this view."},
+      {t:"This is normal — most learners land around 50/50 no matter what module they're in.",
+       fb:"Treating a below-target result as unremarkable skips past the very shortfall the Initial/Current tracking is designed to surface. If 50/50-and-barely-moving really were the typical pattern across your class, that itself would be worth investigating — not waved off as business as usual."},
+      {t:"Compare this learner's wheel to a classmate's wheel to see if it's really a problem.",
+       fb:"Peer comparison isn't the documented next step here, and it can mislead — two learners can each fall short of target for entirely different reasons. The deck points specifically at checking whether certain question types are producing the false signal, which is a more direct explanation to rule in or out first."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 5 ---------------- */
+{ id:"u5", short:"Class Competency", title:"Know Class's Competency Across Modules", ord:"05",
+  render(){ return `
+  <div class="eyebrow">Unit 05 · Across modules</div>
+  <h1>One bar can hide five modules</h1>
+  <p class="dek">How content was deployed changes what the chart shows you — but never what data actually exists.</p>
+
+  <p>"Know Class's Competency Across Modules" gives a class-wide, color-coded view of where competency sits, set as Learning: red for unconscious incompetence, orange for conscious incompetence, light green for unconscious competence, dark green for conscious competence — the same four stages from Unit 04's wheel, now aggregated across a whole class.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">Know Class's Competency Across Modules</div><div class="dash-sub">iLEARN Educator (single deployment) · for learning assignments</div></div>
+    <div class="dash-body">
+      <div class="stackbar"><span class="seg-ci" style="width:33%"></span><span class="seg-cc" style="width:67%"></span></div>
+      <div class="legend">
+        <span><i style="background:var(--red-seg)"></i>Unconscious Incompetence</span>
+        <span><i style="background:var(--orange-seg)"></i>Conscious Incompetence</span>
+        <span><i style="background:var(--lgreen-seg)"></i>Unconscious Competence</span>
+        <span><i style="background:var(--dgreen-seg)"></i>Conscious Competence</span>
+      </div>
+    </div>
+    <div class="dash-note">Illustrative data — one module, deployed singly, so it renders as one clean bar.</div>
+  </div>
+
+  <p>Deployment method changes what that chart can show. If a Curator deploys five modules as one bulk package rather than five single modules, the class competency chart collapses them into a single bar — "5 modules but only 1 bar in my graph" is the deck's own framing of the confusion this causes. The data hasn't disappeared, though. A separate table, <strong>"Learners' Performance – Details by Modules (Learning)</strong>, still breaks competency out by individual module even when the deployment itself was bulk — you just have to know to look there instead of at the chart.</p>
+
+  <div class="card check" id="check-u5">
+    <div class="card-tag">Decide-the-action check</div>
+    <p class="scenario">An educator deployed 5 modules in bulk and sees only one competency bar in the chart, aggregating all five. They ask you which module is dragging the average down. What do you tell them?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"The bulk-deployment chart won't show that by itself — open \"Learners' Performance – Details by Modules (Learning)\" instead. It still breaks competency out per individual module even when deployment was bulk.",
+       fb:"This is the exact workaround the deck documents for the exact confusion the educator is describing. The chart's one-bar view is a display limitation of bulk deployment, not a data limitation — the per-module numbers exist and are one table away."},
+      {t:"Redeploy the content as five single modules so the chart splits it out properly.",
+       fb:"This solves a display problem by disrupting learners already partway through the bulk package — new deployment, new assignment records, likely lost progress — when the same information the educator wants is already sitting in the details table. It's a much larger cost for no gain over just opening the right view."},
+      {t:"Tell them the aggregated bar is the only view available once content is deployed in bulk, and the per-module breakdown isn't retrievable that way.",
+       fb:"This is factually the wrong answer — the details-by-modules table exists precisely to recover that breakdown for bulk deployments. Telling an educator a real capability doesn't exist because you didn't know where to find it leaves them working with less information than the dashboard actually offers."},
+      {t:"Suggest asking learners directly which module they found hardest, since the chart can't tell you.",
+       fb:"This reaches for anecdote before checking whether the dashboard already has the answer — and in this case it does. Learner self-report is a reasonable supplement to data, not a replacement for a table that's one click away."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 6 ---------------- */
+{ id:"u6", short:"Learner Feedback", title:"Know Learner's Feedback", ord:"06",
+  render(){ return `
+  <div class="eyebrow">Unit 06 · From survey</div>
+  <h1>Feedback that only exists if you asked for it</h1>
+  <p class="dek">This view has one precondition that's easy to forget, and forgetting it produces a screen that looks broken when it isn't.</p>
+
+  <p>"Know Learner's Feedback" surfaces learners' own responses to survey questions — content clarity, whether a lesson had the right amount of material, whether self-paced content prepared them adequately, and whatever else a questionnaire asks. Critically, this data <strong>only appears if the educator has assigned a questionnaire to that module.</strong> No questionnaire, no data — regardless of how long the module has been running or how many learners have completed it.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">Know Learner's Feedback — Module 1</div><div class="dash-sub">from survey</div></div>
+    <div class="dash-body"><table class="dash-table">
+      <tr><th>Learner</th><th>Content Type</th><th>Question</th><th>Answer</th></tr>
+      <tr><td>Learner A</td><td>MCQ</td><td>The self-study content presented are clear/easy to understand</td><td>"Agree"</td></tr>
+      <tr><td>Learner A</td><td>MCQ</td><td>This self-study lesson contains the right amount of content</td><td>"Disagree"</td></tr>
+      <tr><td>Learner A</td><td>MCQ</td><td>This self-paced lesson prepares me adequately</td><td>"Neutral"</td></tr>
+    </table></div>
+    <div class="dash-note">Illustrative data, genericized from the deck's example screenshot.</div>
+  </div>
+
+  <div class="card check" id="check-u6">
+    <div class="card-tag">Read-the-dashboard check</div>
+    <p class="scenario">You open "Know Learner's Feedback" for Module 2 and the table is empty, even though the module has been running for three weeks. What's the most likely explanation, and what do you do?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"No questionnaire was ever assigned to Module 2 — this view only populates from an assigned survey. Add one going forward if learner sentiment data for this module matters to you.",
+       fb:"This is the precondition the deck states directly, and it's the first thing to check whenever this screen is unexpectedly empty. Three weeks of running time is irrelevant if no instrument was ever attached to collect responses in the first place."},
+      {t:"The dashboard is broken — report a system fault.",
+       fb:"This skips past a documented, ordinary explanation in favor of assuming a bug. Before filing a fault report, it costs nothing to check whether a questionnaire was assigned at all — which, in this scenario, is exactly the answer."},
+      {t:"Learners simply haven't responded to the survey yet — give it more time.",
+       fb:"This assumes a survey exists and hasn't been answered, which is a different situation from no survey existing at all. The two look identical on an empty screen, but only one of them is fixed by waiting; the other requires an educator to go assign a questionnaire, which waiting won't do."},
+      {t:"Feedback data isn't available for modules that are still actively in progress.",
+       fb:"There's no such rule in how this view works — feedback populates from an assigned questionnaire regardless of whether the module is still open or already closed. Inventing a rule to explain a blank screen skips the one precondition that's actually documented."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 7 ---------------- */
+{ id:"u7", part:"Part 3 · Make instructional decisions", short:"Objectives to Intervene ★", title:"Decide Problematic Learning Objectives to Intervene", ord:"07",
+  render(){ return `
+  <div class="eyebrow">Unit 07 · Core applied skill</div>
+  <h1>The table can find the problem. It can't always tell you why.</h1>
+  <p class="dek">This is where completion, performance, and metacognition data converge into a decision — and where the dashboard's limits become as important as what it shows.</p>
+
+  <p>"Decide Problematic Learning Objectives to Intervene" rolls each learning objective up with its priority, content type, total attempts, average attempts and time per learner, and all four competence percentages from Unit 04's wheel. Read together, these numbers show which objectives learners are sailing through and which ones are consuming disproportionate attempts and time without the competence numbers to show for it — the deck's own framing is deciding which objectives are too challenging, or not challenging enough, for learners.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">Decide Problematic Learning Objectives to Intervene</div><div class="dash-sub">from learning assignments</div></div>
+    <div class="dash-body"><table class="dash-table">
+      <tr><th>Objective</th><th>Priority</th><th>Content Type</th><th>Total Attempts</th><th>Avg Attempt / Learner</th><th>Avg Time / Attempt</th><th>UC%</th><th>UI%</th><th>CC%</th><th>CI%</th></tr>
+      <tr><td>Q1</td><td>Core</td><td>MCQ</td><td>10</td><td>1</td><td>00:03</td><td>0%</td><td>0%</td><td class="flag-good">100%</td><td>0%</td></tr>
+      <tr><td>Q2</td><td>Core</td><td>FillBlank</td><td class="flag-watch">20</td><td class="flag-watch">2</td><td>00:03</td><td>0%</td><td>0%</td><td>50%</td><td class="flag-watch">50%</td></tr>
+      <tr><td>Q3</td><td>Core</td><td>MatchColumns</td><td>10</td><td>1</td><td>00:03</td><td>0%</td><td>0%</td><td class="flag-good">100%</td><td>0%</td></tr>
+    </table></div>
+    <div class="dash-note">Illustrative data, built to the deck's real field names. UC/UI/CC/CI = the four wheel stages from Unit 04.</div>
+  </div>
+
+  <div class="card check" id="check-u7">
+    <div class="card-tag">Decide-the-action check · judgment, not lookup</div>
+    <p class="scenario">Q2 sits at 50% Conscious Competent / 50% Conscious Incompetent, with double the average attempts of Q1 and Q3. Two educators disagree about what to do next. One wants to simplify the objective's content. The other wants to revise how the question is worded, since the fill-in-the-blank format may be tripping learners up on phrasing rather than understanding. Both are looking at the same table. Who's right?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0,1],
+    ambiguous:true,
+    opts:[
+      {t:"The content-focused educator has a real case. 50% conscious incompetence on a Core objective, sustained across double the attempts, is exactly the pattern this view exists to surface — that reads as a genuine content gap, and the table alone supports acting on it.",
+       fb:"A defensible call — and not the only one. Nothing in this table rules out a real content gap: Core priority, elevated attempts, a flat 50/50 competence split. If you stop reading here, simplifying the objective's content is a reasonable, evidence-backed move. The other educator's read, on question wording, is built from the same numbers and is equally defensible — see that option for why. The dashboard can tell you Q2 is a problem; it can't always tell you which kind, and that judgment is genuinely yours to make with context the table doesn't carry."},
+      {t:"The wording-focused educator also has a real case. Q2 is the only fill-in-the-blank item among the three, and a question format that penalizes phrasing rather than understanding can produce numbers identical to a genuine content gap.",
+       fb:"A defensible call — and not the only one. Unit 04 already flagged that certain question formats can generate a false shortfall signal, and fill-in-the-blank is a classic case: a learner who understands the material but phrases the answer differently than the answer key expects will show up here exactly as if they didn't understand it at all. That's a real, documented failure mode — but so is a genuine content gap, which is what the other educator is reading. The percentages alone can't distinguish 'doesn't know it' from 'phrased it differently than expected,' and this table won't resolve that for you. Which read is right depends on things the dashboard doesn't show — how the answer key is configured, what other objectives with the same content look like, what you already know about this cohort."},
+      {t:"Neither is right — with only 20 total attempts, the sample is too small to act on at all.",
+       fb:"There's a real point buried in here about sample size, but 'wait for more data' isn't a substitute for reading what's already in front of you. This view is built specifically as early decision-support — the whole reason it exists is to let educators act on exactly this kind of signal before a much larger, harder-to-fix pattern accumulates. Treating every early signal as too small to act on defeats the view's purpose."},
+      {t:"Split the difference — leave the objective as-is for now and revisit it next term.",
+       fb:"This is the least defensible of the four responses, because it acts on neither read even though the data justifies acting on one of them now. \"Revisit next term\" means the next cohort through this content experiences the same friction in the meantime, for no benefit over choosing either educator's proposal and testing it."}
+    ]
+  }
+},
+
+/* ---------------- UNIT 8 ---------------- */
+{ id:"u8", short:"Questions to Revise", title:"Decide Quiz/Exam Questions to Revise", ord:"08",
+  render(){ return `
+  <div class="eyebrow">Unit 08 · Per question</div>
+  <h1>One bad question is not one bad module</h1>
+  <p class="dek">The last view zooms in past the objective, down to the individual question — and that zoom level is the whole point of this unit.</p>
+
+  <p>"Decide Quiz/Exam Questions to Revise" gives average score and average time per question, plus the same four competence percentages, but at question granularity rather than objective granularity. The deck's framing: by focusing on questions that were frequently answered incorrectly, educators can pinpoint specific knowledge gaps and revise teaching materials accordingly — or, just as often, pinpoint a flawed question rather than a flawed learner.</p>
+
+  <div class="dash">
+    <div class="dash-head"><div class="dash-title">Decide Quiz/Exam Questions to Revise — Module 1</div><div class="dash-sub">as a class</div></div>
+    <div class="dash-body"><table class="dash-table">
+      <tr><th>Question</th><th>Avg Score</th><th>Avg Time</th><th>CC%</th><th>UC%</th><th>CI%</th><th>UI%</th></tr>
+      <tr><td>Q1</td><td class="flag-good">100</td><td>00:02</td><td>100%</td><td>0%</td><td>0%</td><td>0%</td></tr>
+      <tr><td>Q2</td><td class="flag-low">0</td><td>00:02</td><td>0%</td><td>0%</td><td>0%</td><td class="flag-low">100%</td></tr>
+      <tr><td>Q3</td><td class="flag-good">100</td><td>00:08</td><td>100%</td><td>0%</td><td>0%</td><td>0%</td></tr>
+    </table></div>
+    <div class="dash-note">Illustrative data, built to the deck's real field names.</div>
+  </div>
+
+  <div class="card check" id="check-u8">
+    <div class="card-tag">Read-the-dashboard check</div>
+    <p class="scenario">Q2 scored 0% average with 100% Unconscious Incompetence — every learner got it wrong, and got it wrong without appearing to register that they didn't know it. What does that combination point toward, and how does this view differ from Unit 07's objective-level table?</p>
+    <div class="opts" role="group" aria-label="Answer options"></div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="done-note">✓ Unit complete. Explore the other options if you want to see their consequences.</div>
+  </div>
+  `;},
+  check:{
+    good:[0],
+    opts:[
+      {t:"A uniform 100% miss, with no learner registering awareness of the gap, points toward the question itself — wording, a mismatched answer key, an ambiguous prompt — rather than a genuine content gap, since a real gap usually shows some spread rather than a flat wall. This view isolates the single question; Unit 07's table would only tell you the objective it belongs to is a problem, not which item inside it.",
+       fb:"That uniformity is the tell. A genuine content gap across a class of real learners tends to produce some spread — a few who get it, most who don't, varying degrees of confidence. A flat 0% with 100% Unconscious Incompetence looks more like everyone independently arrived at the same wrong reading of the question, which is the signature of a flawed item rather than a universally unlearned concept. And critically, this is a capability Unit 07's table doesn't have: it would flag the parent objective as a problem, but you'd still need this question-level view to find out it's specifically Q2, not the objective's other two questions."},
+      {t:"It means every learner in the class needs to redo the whole module.",
+       fb:"This generalizes one flawed-looking question into a verdict on the entire module, which the other two questions in this same table directly contradict — both scored 100%. Whatever is wrong with Q2 doesn't appear to be a module-wide problem."},
+      {t:"It's the same information as the objective-level table in Unit 07, just viewed at a different zoom level.",
+       fb:"These two views genuinely aren't interchangeable. Unit 07's table would tell you an objective is underperforming without telling you which question inside it is responsible — it could be one question dragging the whole objective down, or all of them contributing evenly. This question-level view is what lets you isolate Q2 specifically rather than revise the whole objective on a guess."},
+      {t:"A 0% average always means the exam is too hard for this cohort.",
+       fb:"This over-generalizes from a single question to a judgment about the entire exam's difficulty. Q1 and Q3 in this same exam scored 100% — the exam as a whole isn't showing a difficulty problem; one specific question is showing an anomaly worth its own look."}
+    ]
+  }
+}
+];
+
+/* ============================================================
+   STORAGE — localStorage with graceful in-memory fallback
+   ============================================================ */
+const SKEY="ilearn_educator_m4_v1";
+let memStore=null, storageOK=true;
+function loadState(){
+  try{ const raw=localStorage.getItem(SKEY); return raw?JSON.parse(raw):defaultState(); }
+  catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block";
+    if(!memStore) memStore=defaultState(); return memStore; }
+}
+function saveState(s){
+  if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
+  memStore=s;
+}
+function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}}; }
+let state=loadState();
+
+/* ============================================================
+   RENDERING & NAVIGATION (hash router)
+   ============================================================ */
+const mainEl=document.getElementById("main");
+const mapList=document.getElementById("mapList");
+
+function unitById(id){ return UNITS.find(u=>u.id===id); }
+function currentId(){ const h=location.hash.replace("#",""); return unitById(h)?h:"start"; }
+
+function renderMap(){
+  mapList.innerHTML="";
+  UNITS.forEach(u=>{
+    if(u.part){
+      const ph=document.createElement("li");
+      ph.className="part-head";
+      ph.textContent=u.part;
+      mapList.appendChild(ph);
+    }
+    const li=document.createElement("li");
+    const a=document.createElement("a");
+    a.href="#"+u.id;
+    if(u.id===currentId()) a.setAttribute("aria-current","page");
+    const dot=document.createElement("span");
+    dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
+    const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
+    const lab=document.createElement("span"); lab.textContent=u.short;
+    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+  });
+  const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
+  const total=UNITS.length-1;
+  document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
+  document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete";
+  const ll=document.getElementById("learnerLine");
+  ll.innerHTML = state.name
+    ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
+    : `<button id="resetAll">reset all progress</button>`;
+  const rb=document.getElementById("resetAll");
+  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress?")){ state=defaultState(); saveState(state); renderAll(); } };
+}
+
+function renderUnit(){
+  const u=unitById(currentId());
+  state.visited[u.id]=true; saveState(state);
+  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
+  if(u.check) wireCheck(u);
+  if(u.id==="start") wireStart();
+  window.scrollTo({top:0});
+  renderMap();
+}
+
+function pagerHtml(u){
+  const i=UNITS.indexOf(u);
+  const prev=i>0?UNITS[i-1]:null, next=i<UNITS.length-1?UNITS[i+1]:null;
+  return `<div class="pager">
+    <span>${prev?`<a href="#${prev.id}">← ${prev.short}</a>`:""}</span>
+    <span>${next?`<a href="#${next.id}">${next.short} →</a>`:""}</span>
+  </div>`;
+}
+
+/* ---------- Scenario checks (branching feedback) ---------- */
+function wireCheck(u){
+  const box=document.getElementById("check-"+u.id);
+  const optsEl=box.querySelector(".opts");
+  const fbEl=box.querySelector(".fb");
+  const doneEl=box.querySelector(".done-note");
+  const goodSet=new Set(u.check.good);
+
+  if(u.check.ambiguous){
+    const flag=document.createElement("div");
+    flag.className="ambig-flag";
+    flag.innerHTML="<strong>No single right answer here.</strong> Two of the four options below are both defensible given only what's on this screen — the feedback will tell you which, and why the dashboard alone can't settle it.";
+    box.querySelector(".scenario").insertAdjacentElement("afterend", flag);
+  }
+
+  // Shuffle deterministically per unit so option order isn't a tell (fixed seed by unit id)
+  const order=u.check.opts.map((o,idx)=>idx);
+  seededShuffle(order, u.id);
+  order.forEach(origIdx=>{
+    const o=u.check.opts[origIdx];
+    const b=document.createElement("button");
+    b.type="button"; b.innerHTML=escapeHtml(o.t);
+    b.addEventListener("click",()=>{
+      optsEl.querySelectorAll("button").forEach(x=>x.classList.remove("sel-good","sel-redirect"));
+      const good=goodSet.has(origIdx);
+      b.classList.add(good?"sel-good":"sel-redirect");
+      fbEl.className="fb show "+(good?"good":"redirect");
+      const head=good?(u.check.ambiguous?"A defensible call":"This is the move"):"Consider the consequence";
+      fbEl.innerHTML=`<div class="fb-head">${head}</div>${o.fb}`+
+        (good&&!u.check.ambiguous?"":`<div class="again"><button type="button">Choose again →</button></div>`);
+      const again=fbEl.querySelector(".again button");
+      if(again) again.addEventListener("click",()=>{ fbEl.className="fb"; fbEl.innerHTML=""; });
+      state.answers[u.id]=origIdx;
+      if(good){ state.done[u.id]=true; doneEl.classList.add("show"); }
+      saveState(state); renderMap();
+      fbEl.scrollIntoView({behavior:"smooth",block:"nearest"});
+    });
+    optsEl.appendChild(b);
+  });
+  if(state.done[u.id]) doneEl.classList.add("show");
+}
+
+/* ---------- Landing ---------- */
+function wireStart(){
+  const inp=document.getElementById("nameIn");
+  inp.value=state.name||"";
+  document.getElementById("nameSave").addEventListener("click",()=>{
+    state.name=inp.value.trim(); saveState(state); renderMap();
+  });
+}
+
+/* ---------- utils ---------- */
+function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function seededShuffle(arr,seedStr){
+  let seed=0; for(const c of seedStr) seed=(seed*31+c.charCodeAt(0))>>>0;
+  for(let i=arr.length-1;i>0;i--){
+    seed=(seed*1103515245+12345)>>>0;
+    const j=seed%(i+1); [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+/* ---------- boot ---------- */
+document.getElementById("mapToggle").addEventListener("click",e=>{
+  const nav=document.getElementById("mapNav");
+  nav.classList.toggle("open");
+  e.target.setAttribute("aria-expanded",nav.classList.contains("open"));
+});
+window.addEventListener("hashchange",renderUnit);
+function renderAll(){ renderMap(); renderUnit(); }
+renderAll();
+</script>
+
+</body>
+</html>
