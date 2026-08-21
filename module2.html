@@ -57,13 +57,20 @@ main{padding:34px 40px 90px;max-width:820px}
 .dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
 .dot.done{border-color:var(--brass-dark);background:var(--brass)}
 .map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.map .time-badge{font-family:var(--mono);font-size:.64rem;color:var(--ink-soft);margin-left:auto;padding-left:8px;white-space:nowrap;align-self:flex-start;margin-top:1px}
 .progress-wrap{margin:22px 0 4px}
 .progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
 .progress-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:6px;letter-spacing:.08em}
+.total-time{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:4px;letter-spacing:.04em}
 .learner-line{margin-top:20px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
 .learner-line button{background:none;border:none;color:var(--brass-dark);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
 .storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
+
+/* ---------- Time estimates ---------- */
+.time-meta{display:flex;gap:16px;flex-wrap:wrap;margin:2px 0 24px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft)}
+.time-meta span{white-space:nowrap}
+.time-meta b{color:var(--brass-dark);font-weight:600}
 
 /* ---------- Content typography ---------- */
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
@@ -183,6 +190,7 @@ section.unit.active{display:block}
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
       <div class="progress-label" id="progLabel">0 / 8 complete</div>
+      <div class="total-time" id="totalTime"></div>
     </div>
     <div class="learner-line" id="learnerLine"></div>
     <div class="storage-note" id="storageNote">Browser storage unavailable — progress will not persist after this session. Run the file locally in Edge/Chrome for saved progress.</div>
@@ -273,7 +281,7 @@ function figPair(id1,id2){ return `<div class="fig-pair">${fig(id1)}${fig(id2)}<
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Module 2 — Assign Content", ord:"—",
+{ id:"start", short:"Orientation", title:"Module 2 — Assign Content", ord:"—", time:{read:2,do:2},
   render(){ return `
   <div class="eyebrow">iLEARN Educator · Module 2</div>
   <h1>Configuring the Assign Content screen</h1>
@@ -288,6 +296,10 @@ const UNITS = [
       <p style="margin:0;font-size:.9rem">Seven scenario checks drawn from real assignment situations, each with branching feedback — the point is not the right button but the consequence of each setting.</p></div>
     <div class="card"><div class="card-tag">What you will produce</div>
       <p style="margin:0;font-size:.9rem">A capstone: one real assignment you need to set up, walked through every configuration decision, saved here and exportable as a worksheet for your Curator or your own records.</p></div>
+    <div class="card"><div class="card-tag">Time — reading the material</div>
+      <p style="margin:0;font-size:.9rem">About 20 min to read straight through all seven units, no exercises.</p></div>
+    <div class="card"><div class="card-tag">Time — working through it</div>
+      <p style="margin:0;font-size:.9rem">About 35 min for the seven units with their scenario checks, plus 20–30 min for the capstone worksheet.</p></div>
   </div>
 
   <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — used only to label your capstone export):</label><br>
@@ -296,7 +308,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 1 ---------------- */
-{ id:"u1", short:"Content & Assignment Type", title:"Content & Assignment Type", ord:"01",
+{ id:"u1", short:"Content & Assignment Type", title:"Content & Assignment Type", ord:"01", time:{read:3,do:5},
   render(){ return `
   <div class="eyebrow">Unit 01 · Foundation</div>
   <h1>What you're assigning, and how it gets there</h1>
@@ -335,7 +347,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 2 ---------------- */
-{ id:"u2", short:"Active From & Due Date", title:"Active From & Due Date", ord:"02",
+{ id:"u2", short:"Active From & Due Date", title:"Active From & Due Date", ord:"02", time:{read:3,do:5},
   render(){ return `
   <div class="eyebrow">Unit 02 · Timing</div>
   <h1>Two dates, and a consequence each one locks in</h1>
@@ -373,7 +385,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 3 ---------------- */
-{ id:"u3", short:"Targeting, Progress & Refresh ★", title:"Assign To, Previous Progress & Refresh Knowledge", ord:"03",
+{ id:"u3", short:"Targeting, Progress & Refresh ★", title:"Assign To, Previous Progress & Refresh Knowledge", ord:"03", time:{read:3,do:6},
   render(){ return `
   <div class="eyebrow">Unit 03 · Judgment call</div>
   <h1>Who gets it, what their history counts for</h1>
@@ -408,7 +420,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 4 ---------------- */
-{ id:"u4", short:"Ordering & Deployment", title:"Ordering & Deployment Control", ord:"04",
+{ id:"u4", short:"Ordering & Deployment", title:"Ordering & Deployment Control", ord:"04", time:{read:3,do:5},
   render(){ return `
   <div class="eyebrow">Unit 04 · Sequencing</div>
   <h1>Four controls, and only some of them are yours</h1>
@@ -447,7 +459,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 5 ---------------- */
-{ id:"u5", short:"Interface Controls", title:"Interface Controls", ord:"05",
+{ id:"u5", short:"Interface Controls", title:"Interface Controls", ord:"05", time:{read:2,do:4},
   render(){ return `
   <div class="eyebrow">Unit 05 · Appearance</div>
   <h1>What the learner's screen shows besides the content</h1>
@@ -484,7 +496,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 6 ---------------- */
-{ id:"u6", short:"Exam & Questionnaire", title:"Exam & Questionnaire Settings", ord:"06",
+{ id:"u6", short:"Exam & Questionnaire", title:"Exam & Questionnaire Settings", ord:"06", time:{read:3,do:5},
   render(){ return `
   <div class="eyebrow">Unit 06 · Assessment</div>
   <h1>When it's scored, and when it's just asked</h1>
@@ -521,7 +533,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 7 ---------------- */
-{ id:"u7", short:"Practice Set & Tags", title:"Practice Set & Tag Structure", ord:"07",
+{ id:"u7", short:"Practice Set & Tags", title:"Practice Set & Tag Structure", ord:"07", time:{read:3,do:5},
   render(){ return `
   <div class="eyebrow">Unit 07 · Dependency</div>
   <h1>The one setting you can't configure alone</h1>
@@ -559,7 +571,7 @@ const UNITS = [
 },
 
 /* ---------------- CAPSTONE ---------------- */
-{ id:"cap", short:"Capstone ★", title:"Capstone — Configure a Real Assignment", ord:"08",
+{ id:"cap", short:"Capstone ★", title:"Capstone — Configure a Real Assignment", ord:"08", time:{read:3,do:25},
   render(){ return `
   <div class="eyebrow">Capstone · Applied output</div>
   <h1>Walk a real assignment through every setting</h1>
@@ -685,12 +697,16 @@ function renderMap(){
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
     const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    const time=document.createElement("span"); time.className="time-badge"; time.textContent="~"+u.time.do+" min";
+    a.append(dot,ord,lab,time); li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
   document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
   document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete";
+  const coreMin=UNITS.filter(u=>u.id!=="start"&&u.id!=="cap").reduce((s,u)=>s+u.time.do,0);
+  const capMin=(unitById("cap")||{time:{do:0}}).time.do;
+  document.getElementById("totalTime").textContent="Estimated time: ~"+coreMin+" min (7 units) + ~"+capMin+" min capstone";
   const ll=document.getElementById("learnerLine");
   ll.innerHTML = state.name
     ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
@@ -703,6 +719,12 @@ function renderUnit(){
   const u=unitById(currentId());
   state.visited[u.id]=true; saveState(state);
   mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
+  const dek=mainEl.querySelector(".dek");
+  if(dek && u.time){
+    const tm=document.createElement("div"); tm.className="time-meta";
+    tm.innerHTML=`<span>⏱ Reading: <b>~${u.time.read} min</b></span><span>Working through it: <b>~${u.time.do} min</b></span>`;
+    dek.insertAdjacentElement("afterend", tm);
+  }
   if(u.check) wireCheck(u);
   if(u.id==="start") wireStart();
   if(u.id==="cap") wireCapstone();
