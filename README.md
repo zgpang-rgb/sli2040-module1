@@ -63,6 +63,14 @@ original teaching content — **confirm exact labels and behaviour
 against the live iLEARN Editor console** before configuring a real
 class.
 
+Orientation carries three figures in sequence — the source deck's own
+Module 1 breakdown diagram, the Educator Home Page (where the whole
+flow starts, "+" button and all), and the full Create Class panel —
+so a learner sees the map, the entry point, and the destination before
+the module asks them to configure anything. Each unit below keeps to
+one or two closely-cropped figures of just the setting it covers, so
+the page stays scannable rather than turning into a screenshot gallery.
+
 ## What's explicitly deferred
 
 - **Full-fidelity screenshots for Second Owner, Shared Educators, and the Data Access definition** — the source PDF's interactive slides only captured their default (first) panel state, so those three definitions are still original teaching content rather than quoted source text. The Forum & Calendar and Discovery/Owner-fields figures are real screenshots; the clickable mock toggle panels remain stylised recreations for practice.
