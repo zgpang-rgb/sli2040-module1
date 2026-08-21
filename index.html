@@ -43,24 +43,30 @@ main{max-width:1180px;margin:0 auto;padding:40px 28px 90px}
 h1{font-family:var(--serif);font-size:2.1rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
 .dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif);max-width:70ch}
 
-/* ---------- Overall progress summary ---------- */
-.summary{position:relative;background:var(--paper);border:1px solid var(--line);padding:22px 26px;margin-bottom:34px;display:flex;align-items:center;gap:26px;flex-wrap:wrap}
-.summary::before,.summary::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
-.summary::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
-.summary::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
-.summary .ring-wrap{flex:0 0 auto;display:flex;align-items:center;justify-content:center}
-.summary .ring{width:74px;height:74px}
-.summary .ring-track{fill:none;stroke:var(--line);stroke-width:8}
-.summary .ring-fill{fill:none;stroke:var(--brass);stroke-width:8;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dasharray .4s ease}
-.summary .ring-label{font-family:var(--mono);font-size:.95rem;font-weight:700;fill:var(--navy-deep)}
-.summary .text{flex:1 1 260px;min-width:0}
-.summary .headline{font-family:var(--serif);font-size:1.28rem;font-weight:600;color:var(--navy-deep);margin-bottom:4px}
-.summary .sub{font-size:.86rem;color:var(--ink-soft)}
-.summary .bar-wrap{flex:1 1 220px;min-width:180px}
-.summary .bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
-.summary .bar-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
-.summary .bar-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:7px;letter-spacing:.06em;text-transform:uppercase}
-.storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
+/* ---------- Stat band ---------- */
+.stat-band{display:flex;background:var(--navy-deep);color:var(--ivory);margin-bottom:0}
+.stat-cell{flex:1 1 0;padding:22px 18px;text-align:center;border-left:1px solid rgba(244,239,227,.16)}
+.stat-cell:first-child{border-left:none}
+.stat-num{font-family:var(--serif);font-size:2.1rem;font-weight:600;color:var(--ivory);line-height:1.1}
+.stat-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-pale);margin-top:6px}
+
+/* ---------- Before-you-open-a-module card ---------- */
+.before-card{position:relative;background:var(--paper);border:1px solid var(--line);border-top:none;padding:24px 26px 26px;margin-bottom:34px}
+.before-card::before,.before-card::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
+.before-card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.before-card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.before-card .eyebrow{margin-bottom:10px}
+.before-copy{font-size:.9rem;color:var(--ink-soft);max-width:66ch;margin-bottom:18px}
+.before-fields{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+.field{flex:1 1 200px;min-width:160px;display:flex;flex-direction:column;gap:6px}
+.field label{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.field input{font-family:var(--sans);font-size:.92rem;color:var(--ink);background:var(--ivory);border:1px solid var(--line);padding:9px 11px;border-radius:2px}
+.field input:focus-visible{outline:2px solid var(--brass-dark);outline-offset:1px;border-color:var(--brass)}
+.before-save{flex:0 0 auto;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ivory);background:var(--navy-deep);border:1px solid var(--navy-deep);padding:10px 20px;cursor:pointer;transition:background .15s}
+.before-save:hover{background:var(--navy)}
+.before-save:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.before-status{font-size:.8rem;color:var(--ink-soft)}
+.before-status.is-set{color:var(--moss)}
 
 /* ---------- Module grid ---------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
@@ -91,7 +97,10 @@ footer p{max-width:70ch;margin-bottom:6px}
 @media (max-width:640px){
   main{padding:28px 18px 70px}
   h1{font-size:1.6rem}
-  .summary{flex-direction:column;align-items:flex-start}
+  .stat-band{flex-wrap:wrap}
+  .stat-cell{flex:1 1 50%;border-left:none;border-top:1px solid rgba(244,239,227,.16)}
+  .stat-cell:nth-child(-n+2){border-top:none}
+  .before-fields{flex-direction:column;align-items:stretch}
   .grid{grid-template-columns:1fr}
 }
 </style>
@@ -111,23 +120,28 @@ footer p{max-width:70ch;margin-bottom:6px}
   <h1>Module Hub</h1>
   <p class="dek">Eight self-contained modules covering the iLEARN Educator platform end to end. Jump to any module in any order — nothing here requires a login or a name, and each module tracks your progress locally on this device.</p>
 
-  <div class="summary" id="summary">
-    <div class="ring-wrap">
-      <svg class="ring" viewBox="0 0 80 80" role="img" aria-hidden="true">
-        <circle class="ring-track" cx="40" cy="40" r="34"></circle>
-        <circle class="ring-fill" id="ringFill" cx="40" cy="40" r="34" stroke-dasharray="0 214"></circle>
-        <text class="ring-label" id="ringLabel" x="40" y="45" text-anchor="middle">0/8</text>
-      </svg>
+  <div class="stat-band" id="statBand">
+    <div class="stat-cell"><div class="stat-num" id="statModules">–</div><div class="stat-label">Modules</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statSections">–</div><div class="stat-label">Sections in Total</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statChecks">–</div><div class="stat-label">Scenario Checks</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statCapstone">–</div><div class="stat-label">Capstone Stages</div></div>
+  </div>
+
+  <div class="before-card" id="beforeCard">
+    <div class="eyebrow">Before You Open a Module</div>
+    <p class="before-copy">Enter your name once and it carries into every module that asks for it (all except Module 0's orientation) — so you won't be asked again module to module. Cohort is remembered here on the hub for your own reference; it isn't stored inside the modules themselves.</p>
+    <div class="before-fields">
+      <div class="field">
+        <label for="hubName">Name or initials</label>
+        <input type="text" id="hubName" autocomplete="off" maxlength="80">
+      </div>
+      <div class="field">
+        <label for="hubCohort">Cohort</label>
+        <input type="text" id="hubCohort" autocomplete="off" maxlength="80" placeholder="e.g. Intake 12">
+      </div>
+      <button class="before-save" id="hubSaveBtn" type="button">Save</button>
     </div>
-    <div class="text">
-      <div class="headline" id="summaryHeadline">0 of 8 modules complete</div>
-      <div class="sub" id="summaryDetail">Not started yet — pick any module below to begin.</div>
-    </div>
-    <div class="bar-wrap">
-      <div class="bar"><div class="bar-fill" id="barFill"></div></div>
-      <div class="bar-label" id="barLabel">0% of the package complete</div>
-    </div>
-    <div class="storage-note" id="storageNote">Browser storage is unavailable in this context — progress badges below cannot be read. Open this hub from a regular file or web location, not inside a restricted preview.</div>
+    <div class="before-status" id="hubStatus">Not set. You can still open the modules; each will ask for your name separately.</div>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -152,29 +166,90 @@ footer p{max-width:70ch;margin-bottom:6px}
 const MODULES = [
   { n:0, file:"modules/module-0.html", title:"Getting Started",
     desc:"An orientation walkthrough of the SLP itself, the Educator dashboard, and how to navigate back to anything you've learned.",
-    storeType:"flat", key:"ilearn-slp-m0-progress", total:7 },
+    storeType:"flat", key:"ilearn-slp-m0-progress", total:7, units:8, checks:0, capstoneStages:0 },
   { n:1, file:"modules/module-1.html", title:"Create Class",
     desc:"The three configuration decisions you make when you create a class, and why getting them right up front saves a support ticket later.",
-    storeType:"nested", key:"ilearn_editor_m1_v1", total:4 },
+    storeType:"nested", key:"ilearn_editor_m1_v1", total:4, units:5, checks:4, capstoneStages:0 },
   { n:2, file:"modules/module-2.html", title:"Assign Content",
     desc:"Assigning Learning, Exam, and Practice Set content in iLEARN — scenario-driven, ending in a real assignment you configure end to end.",
-    storeType:"nested", key:"imls_ilearn_m2_v1", total:8 },
+    storeType:"nested", key:"imls_ilearn_m2_v1", total:8, units:9, checks:7, capstoneStages:7 },
   { n:3, file:"modules/module-3.html", title:"Add & Manage Learners",
     desc:"Getting learners into a class, reading their status, and retiring or removing them correctly.",
-    storeType:"nested", key:"imls_sli2040_m3_v1", total:4 },
+    storeType:"nested", key:"imls_sli2040_m3_v1", total:4, units:5, checks:3, capstoneStages:0 },
   { n:4, file:"modules/module-4.html", title:"Analytics Dashboard",
     desc:"Reading class- and learner-level analytics, and turning what the dashboard shows into an actual instructional decision.",
-    storeType:"nested", key:"ilearn_educator_m4_v1", total:8 },
+    storeType:"nested", key:"ilearn_educator_m4_v1", total:8, units:9, checks:8, capstoneStages:0 },
   { n:5, file:"modules/module-5.html", title:"Review",
     desc:"The judgment call at the centre of Accept for Review vs. Return for Rework — and what to do when a submission needs more than a verdict.",
-    storeType:"nested", key:"imls_sli2040_m5_v1", total:7 },
+    storeType:"nested", key:"imls_sli2040_m5_v1", total:7, units:8, checks:6, capstoneStages:4 },
   { n:6, file:"modules/module-6.html", title:"Gradebook & Competency Wheel",
     desc:"Reading scored performance in the gradebook and mastery on the competency wheel, ending in a capstone on your own class.",
-    storeType:"nested", key:"imls_ilearn_m6_v1", total:6 },
+    storeType:"nested", key:"imls_ilearn_m6_v1", total:6, units:7, checks:5, capstoneStages:5 },
   { n:7, file:"modules/module-7.html", title:"Integrated Practical",
     desc:"An end-to-end practical pulling together Modules 1–6, ending in a capstone on your own class.",
-    storeType:"nested", key:"imls_ilearn_m7_v1", total:6 }
+    storeType:"nested", key:"imls_ilearn_m7_v1", total:6, units:7, checks:5, capstoneStages:5 }
 ];
+
+/* ============================================================
+   SHARED NAME / COHORT
+   The hub pre-seeds each name-bearing module's own localStorage
+   key with the name, using that module's exact default state
+   shape, so the module never sees a malformed object. Module 0
+   has no name field in its schema and is intentionally excluded.
+   Cohort has no equivalent in any module — it's kept only in the
+   hub's own record, for display here.
+   ============================================================ */
+const HUB_KEY = "ilearn_hub_learner";
+
+const NAME_MODULE_DEFAULTS = {
+  "ilearn_editor_m1_v1":   () => ({ name:"", visited:{}, done:{}, answers:{} }),
+  "imls_ilearn_m2_v1":     () => ({ name:"", visited:{}, done:{}, answers:{}, cap:{ project:"", own:"", stages:{} } }),
+  "imls_sli2040_m3_v1":    () => ({ name:"", visited:{}, done:{}, answers:{} }),
+  "ilearn_educator_m4_v1": () => ({ name:"", visited:{}, done:{}, answers:{} }),
+  "imls_sli2040_m5_v1":    () => ({ name:"", visited:{}, done:{}, answers:{}, cap:{ stages:{} } }),
+  "imls_ilearn_m6_v1":     () => ({ name:"", visited:{}, done:{}, answers:{}, cap:{ stages:{} } }),
+  "imls_ilearn_m7_v1":     () => ({ name:"", visited:{}, done:{}, answers:{}, cap:{ stages:{} } })
+};
+
+function seedNameIntoModules(name){
+  if(!STORE_OK) return;
+  Object.keys(NAME_MODULE_DEFAULTS).forEach(skey => {
+    let raw;
+    try{ raw = localStorage.getItem(skey); }catch(e){ raw = null; }
+    let state;
+    if(raw){
+      try{
+        const parsed = JSON.parse(raw);
+        state = (parsed && typeof parsed === "object") ? parsed : NAME_MODULE_DEFAULTS[skey]();
+      }catch(e){
+        state = NAME_MODULE_DEFAULTS[skey]();
+      }
+    }else{
+      state = NAME_MODULE_DEFAULTS[skey]();
+    }
+    state.name = name;
+    try{ localStorage.setItem(skey, JSON.stringify(state)); }catch(e){ /* quota or blocked — skip */ }
+  });
+}
+
+function loadHubLearner(){
+  if(!STORE_OK) return null;
+  try{
+    const raw = localStorage.getItem(HUB_KEY);
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    if(!data || typeof data !== "object") return null;
+    return { name: data.name || "", cohort: data.cohort || "" };
+  }catch(e){ return null; }
+}
+
+function saveHubLearner(name, cohort){
+  if(!STORE_OK) return false;
+  try{
+    localStorage.setItem(HUB_KEY, JSON.stringify({ name, cohort }));
+    return true;
+  }catch(e){ return false; }
+}
 
 function storageAvailable(){
   try{
@@ -216,12 +291,10 @@ function badgeMarkup(status){
 
 function render(){
   const grid = document.getElementById("grid");
-  let completeCount = 0;
   let cardsHtml = "";
 
   MODULES.forEach(mod => {
     const prog = readModuleProgress(mod);
-    if(prog.status === "complete") completeCount++;
     cardsHtml += `
       <a class="mcard" href="${mod.file}">
         <div class="mc-top">
@@ -233,36 +306,64 @@ function render(){
       </a>`;
   });
   grid.innerHTML = cardsHtml;
+}
 
-  const total = MODULES.length;
-  const pct = total ? Math.round((completeCount/total)*100) : 0;
-  const circumference = 2 * Math.PI * 34;
-  const fillLen = circumference * (completeCount/total);
+function renderStats(){
+  const totals = MODULES.reduce((acc, m) => {
+    acc.units += m.units;
+    acc.checks += m.checks;
+    acc.capstoneStages += m.capstoneStages;
+    return acc;
+  }, { units:0, checks:0, capstoneStages:0 });
+  document.getElementById("statModules").textContent = MODULES.length;
+  document.getElementById("statSections").textContent = totals.units;
+  document.getElementById("statChecks").textContent = totals.checks;
+  document.getElementById("statCapstone").textContent = totals.capstoneStages;
+}
 
-  document.getElementById("ringFill").setAttribute("stroke-dasharray", `${fillLen} ${circumference}`);
-  document.getElementById("ringLabel").textContent = `${completeCount}/${total}`;
-  document.getElementById("summaryHeadline").textContent = `${completeCount} of ${total} modules complete`;
-  document.getElementById("barFill").style.width = pct + "%";
-  document.getElementById("barLabel").textContent = pct + "% of the package complete";
+function initBeforeCard(){
+  const nameInput = document.getElementById("hubName");
+  const cohortInput = document.getElementById("hubCohort");
+  const statusEl = document.getElementById("hubStatus");
+  const saveBtn = document.getElementById("hubSaveBtn");
 
-  let detail;
-  if(!STORE_OK){
-    detail = "Progress cannot be read in this context.";
-  }else if(completeCount === 0){
-    detail = "Not started yet — pick any module below to begin.";
-  }else if(completeCount === total){
-    detail = "All modules complete. Nice work.";
-  }else{
-    detail = "Pick up where you left off, or jump to any module below.";
+  function paintStatus(learner){
+    if(learner && (learner.name || learner.cohort)){
+      const parts = [];
+      if(learner.name) parts.push(`Saved as ${learner.name}`);
+      if(learner.cohort) parts.push(`Cohort ${learner.cohort}`);
+      statusEl.textContent = parts.join(" / ") + ".";
+      statusEl.classList.add("is-set");
+    }else{
+      statusEl.textContent = "Not set. You can still open the modules; each will ask for your name separately.";
+      statusEl.classList.remove("is-set");
+    }
   }
-  document.getElementById("summaryDetail").textContent = detail;
 
-  if(!STORE_OK){
-    document.getElementById("storageNote").style.display = "block";
+  const existing = loadHubLearner();
+  if(existing){
+    nameInput.value = existing.name;
+    cohortInput.value = existing.cohort;
   }
+  paintStatus(existing);
+
+  saveBtn.addEventListener("click", () => {
+    const name = nameInput.value.trim();
+    const cohort = cohortInput.value.trim();
+    const ok = saveHubLearner(name, cohort);
+    if(!ok){
+      statusEl.textContent = "Could not save — browser storage is unavailable here.";
+      statusEl.classList.remove("is-set");
+      return;
+    }
+    if(name){ seedNameIntoModules(name); }
+    paintStatus({ name, cohort });
+  });
 }
 
 render();
+renderStats();
+initBeforeCard();
 </script>
 </body>
 </html>
