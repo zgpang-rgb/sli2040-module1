@@ -76,6 +76,14 @@ h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color
 .time-chip .tc-total{color:var(--brass-dark);font-weight:600}
 .time-overall{font-family:var(--mono);font-size:.76rem;letter-spacing:.05em;color:var(--brass-dark);margin:-10px 0 22px}
 .card-time{display:block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase}
+
+/* ---------- Learning outcomes ---------- */
+.outcomes{margin:22px 0 26px}
+.outcomes ol{list-style:none;counter-reset:oc;display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.outcomes li{counter-increment:oc;display:flex;gap:14px;align-items:flex-start}
+.outcomes li::before{content:counter(oc);flex:0 0 24px;width:24px;height:24px;border:1px solid var(--brass);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.72rem;color:var(--brass-dark);margin-top:1px}
+.outcomes li span{font-size:.92rem;line-height:1.55}
+.outcomes li strong{color:var(--navy-deep)}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:70ch}
 p strong{color:var(--navy-deep)}
@@ -225,6 +233,16 @@ const UNITS = [
   <h1>Read the dashboard, then decide what to do about it</h1>
   <p class="dek">A self-paced module for Educator staff across Learning Science, Learning Technology, Learning System and Learning Educator sections who run classes in iLEARN Educator.</p>
   <div class="time-overall" id="timeOverall"></div>
+
+  <div class="card outcomes"><div class="card-tag">By the end of this module, you'll be able to</div>
+    <ol>
+      <li><span><strong>Diagnose completion gaps correctly.</strong> Read the Module Status and Learner Status views together to tell a genuine engagement problem (few learners have started) apart from a pacing problem (everyone finishes, but slowly) — and choose a reminder, a content redesign, or individual outreach accordingly.</span></li>
+      <li><span><strong>Spot the exam patterns an average hides.</strong> Use the highest/lowest score fields alongside the class average to catch a wide score spread, and know when to drop into the by-learner view before drawing any conclusion about an exam.</span></li>
+      <li><span><strong>Read the metacognition model without over- or under-reacting.</strong> Explain the four competence/incompetence stages and use the Initial → Current tracking to judge whether a shortfall is a real learning gap or a question-format artifact.</span></li>
+      <li><span><strong>Find class-wide competency data regardless of deployment method.</strong> Locate per-module competency figures even when bulk deployment collapses the chart into a single bar.</span></li>
+      <li><span><strong>Turn objective- and question-level tables into a defensible instructional call.</strong> Decide where to intervene — and recognize the cases where the data genuinely supports more than one reasonable action rather than a single "right" answer.</span></li>
+    </ol>
+  </div>
 
   <p>Module 4 gives educators three things: a way to see whether learners are actually moving through assigned content, a way to see how they're performing once they get there, and — the part that actually matters — a basis for deciding what to do next. Those are the deck's own three parts, and they're this module's three parts too:</p>
 
