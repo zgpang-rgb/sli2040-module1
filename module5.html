@@ -65,6 +65,7 @@ main{padding:34px 40px 90px;max-width:820px}
 .dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
 .dot.done{border-color:var(--brass-text);background:var(--brass)}
 .map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.map .mins{margin-left:auto;font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);white-space:nowrap;padding-top:1px}
 .progress-wrap{margin:22px 0 4px}
 .progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
@@ -75,6 +76,12 @@ main{padding:34px 40px 90px;max-width:820px}
 
 /* ---------- Content typography ---------- */
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-text);margin-bottom:8px}
+.time-badge{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
+.time-badge span{white-space:nowrap}
+.time-badge b{color:var(--heading);font-weight:600}
+.time-total{font-family:var(--mono);font-size:.85rem;color:var(--heading);display:flex;gap:22px;flex-wrap:wrap}
+.time-total b{display:block;font-size:1.15rem;color:var(--brass-text)}
+.time-total .lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:2px}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--heading);text-wrap:balance;margin-bottom:6px}
 .dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
@@ -231,7 +238,7 @@ const REVIEW_STAGES = [
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Module 5 — Review", ord:"—",
+{ id:"start", short:"Orientation", title:"Module 5 — Review", ord:"—", time:{dev:20,learn:3},
   render(){ return `
   <div class="eyebrow">SLI 2040 · iLEARN Editor — Educator Training</div>
   <h1>Accept for Review, or Return for Rework</h1>
@@ -240,6 +247,14 @@ const UNITS = [
   <p>Module 5 of the iLEARN Editor is called <strong>Review</strong>, and it holds two related features: <em class="term">Access Review Activities</em> — finding the work waiting for you — and <em class="term">Accept for Review or Return for Rework</em> — deciding what happens to it. The mechanics of each screen are simple enough to learn in minutes. What this module actually trains is the part the screens don't teach: the judgment behind the click, what pulls that judgment off course under real conditions, and where a review stops being a review at all and becomes something that needs a different kind of attention.</p>
 
   <p>The suggested path runs top to bottom in the module map, because each unit leans lightly on the one before it. But every unit is open from the start — if you already know the mechanics and want the judgment content, skip to Unit 03. Your progress is saved in this browser either way.</p>
+
+  <div class="card"><div class="card-tag">Module time estimate</div>
+    <div class="time-total">
+      <div><b>${formatMinutes(totalTime().dev)}</b><div class="lbl">To build the full module</div></div>
+      <div><b>${formatMinutes(totalTime().learn)}</b><div class="lbl">For a learner to complete it</div></div>
+    </div>
+    <p style="margin:10px 0 0;font-size:.82rem;color:var(--ink-soft)">Both estimates are per unit and add up across all seven units below — see each unit's page for its own breakdown.</p>
+  </div>
 
   <div class="land-grid">
     <div class="card"><div class="card-tag">What you will practise</div>
@@ -254,7 +269,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 1 ---------------- */
-{ id:"u1", short:"Before You Review", title:"Before You Review", ord:"01",
+{ id:"u1", short:"Before You Review", title:"Before You Review", ord:"01", time:{dev:45,learn:4},
   render(){ return `
   <div class="eyebrow">Unit 01 · Access Review Activities</div>
   <h1>Why a submission isn't in your queue yet</h1>
@@ -288,7 +303,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 2 ---------------- */
-{ id:"u2", short:"Accept or Return", title:"Accept or Return: the Core Call", ord:"02",
+{ id:"u2", short:"Accept or Return", title:"Accept or Return: the Core Call", ord:"02", time:{dev:60,learn:5},
   render(){ return `
   <div class="eyebrow">Unit 02 · Core mechanics</div>
   <h1>Two verdicts, two different requirements</h1>
@@ -337,7 +352,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 3 ---------------- */
-{ id:"u3", short:"Verdict Drift ★", title:"Verdict Drift", ord:"03",
+{ id:"u3", short:"Verdict Drift ★", title:"Verdict Drift", ord:"03", time:{dev:90,learn:7},
   render(){ return `
   <div class="eyebrow">Unit 03 · Core applied skill</div>
   <h1>The two pulls, and the no-clean-answer submission</h1>
@@ -373,7 +388,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 4 ---------------- */
-{ id:"u4", short:"Live-Response Drill", title:"Live-Response Drill", ord:"04",
+{ id:"u4", short:"Live-Response Drill", title:"Live-Response Drill", ord:"04", time:{dev:45,learn:4},
   render(){ return `
   <div class="eyebrow">Unit 04 · Applied drill</div>
   <h1>Same screen, four different next moves</h1>
@@ -405,7 +420,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 5 ---------------- */
-{ id:"u5", short:"The Referral Boundary", title:"The Referral Boundary", ord:"05",
+{ id:"u5", short:"The Referral Boundary", title:"The Referral Boundary", ord:"05", time:{dev:60,learn:5},
   render(){ return `
   <div class="eyebrow">Unit 05 · Boundary</div>
   <h1>When a review isn't a rubric decision anymore</h1>
@@ -439,7 +454,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 6 ---------------- */
-{ id:"u6", short:"Where Review Sits", title:"Where Review Sits", ord:"06",
+{ id:"u6", short:"Where Review Sits", title:"Where Review Sits", ord:"06", time:{dev:45,learn:4},
   render(){ return `
   <div class="eyebrow">Unit 06 · Institutional frame</div>
   <h1>Module 5 among the six iLEARN Editor modules</h1>
@@ -482,7 +497,7 @@ const UNITS = [
 },
 
 /* ---------------- REVIEW LOG (capstone) ---------------- */
-{ id:"cap", short:"Review Log ★", title:"Review Log — Your Own Decisions", ord:"07",
+{ id:"cap", short:"Review Log ★", title:"Review Log — Your Own Decisions", ord:"07", time:{dev:60,learn:12},
   render(){ return `
   <div class="eyebrow">Review Log · Applied output</div>
   <h1>Walk through four review decisions of your own</h1>
@@ -537,7 +552,9 @@ function renderMap(){
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
     const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    a.append(dot,ord,lab);
+    if(u.time){ const mins=document.createElement("span"); mins.className="mins"; mins.textContent="~"+u.time.learn+"m"; a.appendChild(mins); }
+    li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
@@ -554,7 +571,7 @@ function renderMap(){
 function renderUnit(){
   const u=unitById(currentId());
   state.visited[u.id]=true; saveState(state);
-  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
+  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${timeBadgeHtml(u)}${u.render()}${pagerHtml(u)}</section>`;
   if(u.check) wireCheck(u);
   if(u.id==="start") wireStart();
   if(u.id==="cap") wireCapstone();
@@ -675,6 +692,20 @@ function wireCapstone(){
     state.cap={stages:{}}; state.done["cap"]=false;
     saveState(state); renderUnit();
   });
+}
+
+/* ---------- time estimates ---------- */
+function formatMinutes(m){
+  if(m<60) return m+" min";
+  const h=Math.floor(m/60), rem=m%60;
+  return rem===0 ? h+(h===1?" hr":" hrs") : h+"h "+rem+"m";
+}
+function timeBadgeHtml(u){
+  if(!u.time) return "";
+  return `<div class="time-badge"><span>Est. time to build this unit: <b>${formatMinutes(u.time.dev)}</b></span><span>Est. time for a learner: <b>${formatMinutes(u.time.learn)}</b></span></div>`;
+}
+function totalTime(){
+  return UNITS.reduce((acc,u)=>{ if(u.time){ acc.dev+=u.time.dev; acc.learn+=u.time.learn; } return acc; },{dev:0,learn:0});
 }
 
 /* ---------- utils ---------- */
