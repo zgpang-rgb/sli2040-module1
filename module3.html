@@ -125,6 +125,10 @@ figure.doc-fig figcaption{font-family:var(--mono);font-size:.7rem;letter-spacing
 .qref td.dont{color:var(--rust)}
 
 /* ---------- Landing ---------- */
+.outcomes{list-style:none;margin:0}
+.outcomes li{position:relative;padding-left:20px;margin-bottom:9px;font-size:.92rem;line-height:1.5}
+.outcomes li:last-child{margin-bottom:0}
+.outcomes li::before{content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;background:var(--brass)}
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
 .pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px;flex-wrap:wrap}
@@ -204,6 +208,14 @@ const UNITS = [
   <p>iLEARN Educator's own course structure runs six modules — Create Class, Assign Content, <strong>Add &amp; Manage Learners</strong>, Analytics Dashboard, Review, and Gradebook &amp; Competency Wheel. This SLI 2040 module covers the third of those: once a class exists and content is assigned, how do learners actually get in, how do you know whether they're engaging, and what happens when a class or a learner is done.</p>
 
   ${moduleTimeStatHtml()}
+
+  <div class="card"><div class="card-tag">What you will be able to do</div>
+    <ul class="outcomes">
+      <li>Choose correctly between individually adding a learner and bulk CSV upload, based on the size and timing of your intake.</li>
+      <li>Read a class's Learners panel — Healthy, Inactive, Invited — and know when those numbers call for follow-up before a review date.</li>
+      <li>Explain the difference between retiring and deleting a learner or class, and weigh that trade-off on a case with no single clean answer.</li>
+    </ul>
+  </div>
 
   <div class="land-grid">
     <div class="card"><div class="card-tag">What you will practise</div>

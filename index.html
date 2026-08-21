@@ -133,6 +133,10 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 .save-flash.on{opacity:1}
 
 /* ---------- Landing ---------- */
+.outcomes{list-style:none;margin:0}
+.outcomes li{position:relative;padding-left:20px;margin-bottom:9px;font-size:.92rem;line-height:1.5}
+.outcomes li:last-child{margin-bottom:0}
+.outcomes li::before{content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;background:var(--brass)}
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
 .provisional{background:var(--rust-bg);border:1px solid var(--rust);padding:12px 16px;font-size:.84rem;margin:18px 0;border-radius:2px}
@@ -224,6 +228,15 @@ const UNITS = [
   <p class="dek">A self-paced module for Learning Science, Learning Technology and Innovation staff. It practises what it preaches: you direct the pace, the scenarios come from real school friction, and your capstone is your own live project.</p>
   ${timeMetaHtml(this)}
   ${moduleTimeStatHtml()}
+
+  <div class="card"><div class="card-tag">What you will be able to do</div>
+    <ul class="outcomes">
+      <li>Identify which of IMLS's three sections — Learning Science, Learning Technology, Innovation Lab — leads at a given moment in a school request, and why the sequencing matters.</li>
+      <li>Produce a calibrated Watch Area read on a technology request instead of defaulting to procurement or blanket deferral.</li>
+      <li>Run the six-stage short-cycle loop on a live problem in the correct order, from problem immersion through validated scale.</li>
+      <li>Spot when a trial plan is missing its validation metrics and correct it before execution, since measurement can't be retrofitted after a trial runs.</li>
+    </ul>
+  </div>
 
   <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>On the name:</strong> MLS stands for the Military Learning System (MLS) — the ecosystem of training schools, trainers, learning technologies and analytics this institute serves. IMLS is its steward; the framework in this module is how that stewardship is practised.</p>
 
