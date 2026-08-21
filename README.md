@@ -38,6 +38,8 @@ The module is self-paced: all 8 units are reachable from the sidebar map in any 
 
 Every unit, each of the three parts, and the module as a whole show an estimated time — split into time to read the explainer and time to work through the check, since those are different kinds of effort. The whole module runs about 30 minutes at a typical pace. Estimates are derived from word counts and option counts, not measured usage, so treat them as a planning guide rather than a promise.
 
+Each unit also has a collapsed "View source screenshot" panel beneath its mock dashboard, showing the actual iLEARN Educator screenshot from the source deck (`M4_iLEARN_Educator_SLP.pdf`) for that view, embedded inline as base64 so the file stays single-file and self-contained. Collapsed by default to keep each unit readable; expands on click. The two screenshots that originally showed a real learner's full name (Learner Status and Learner Feedback) have had that name redacted and replaced with "Learner A," matching the mock data used elsewhere in the unit.
+
 ### What's explicitly deferred
 
 - Content from the other iLEARN Educator modules visible in the source deck's own navigation (Module 1: Create Class, Module 2: Assign Content, Module 3: Add & Manage Learners, Module 5: Review, Module 6: Gradebook & Competency Wheel) — out of scope for this module.
