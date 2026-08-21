@@ -55,6 +55,11 @@ main{padding:34px 40px 90px;max-width:820px}
 .learner-line{margin-top:20px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
 .learner-line button{background:none;border:none;color:var(--brass-dark);cursor:pointer;font-size:.78rem;text-decoration:underline;padding:0}
 .storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none}
+.time-total{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:4px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.map-time{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);margin-left:auto;padding-top:1px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.map-time.actual{color:var(--brass-dark)}
+.eyebrow-time{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.mod-time{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);margin:-14px 0 22px;letter-spacing:.04em}
 
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
@@ -135,6 +140,7 @@ section.unit.active{display:block}
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
       <div class="progress-label" id="progLabel">0 / 5 complete</div>
+      <div class="time-total" id="timeTotal"></div>
     </div>
     <div class="learner-line" id="learnerLine"></div>
     <div class="storage-note" id="storageNote">Browser storage unavailable — progress will not persist after this session. Run the file locally for saved progress.</div>
@@ -158,11 +164,13 @@ const PROVISIONAL = `<strong>Working draft.</strong> The stance labels and frame
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Module 1 — Conversational Stances", ord:"—",
+{ id:"start", short:"Orientation", title:"Module 1 — Conversational Stances", ord:"—", estMin:2,
   render(){ return `
   <div class="eyebrow">Educator Internal Training</div>
   <h1>Which stance to take, and how to hold it</h1>
   <p class="dek">A self-paced module for staff who supervise, develop, or partner with others. It practises what it teaches: you'll find more questions here than answers.</p>
+
+  <p class="mod-time">${modTimeLine()}</p>
 
   <div class="provisional">${PROVISIONAL} Every unit repeats this notice where the framework is used.</div>
 
@@ -183,9 +191,9 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 1 ---------------- */
-{ id:"u1", short:"The Two Stances", title:"The Two Stances", ord:"01",
+{ id:"u1", short:"The Two Stances", title:"The Two Stances", ord:"01", estMin:5,
   render(){ return `
-  <div class="eyebrow">Unit 01 · Foundation</div>
+  <div class="eyebrow">Unit 01 · Foundation <span class="eyebrow-time">· ${unitTimeLine("u1")}</span></div>
   <h1>Who owns the agenda, who owns the answer</h1>
   <p class="dek">Two stances, defined by three questions — not by mood, style, or how much you like the person in front of you.</p>
 
@@ -220,9 +228,9 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 2 ---------------- */
-{ id:"u2", short:"The Diagnostic", title:"Choosing the Stance", ord:"02",
+{ id:"u2", short:"The Diagnostic", title:"Choosing the Stance", ord:"02", estMin:6,
   render(){ return `
-  <div class="eyebrow">Unit 02 · Judgment</div>
+  <div class="eyebrow">Unit 02 · Judgment <span class="eyebrow-time">· ${unitTimeLine("u2")}</span></div>
   <h1>Four questions before you open your mouth</h1>
   <p class="dek">The diagnostic doesn't hand you an answer. It narrows the defensible range.</p>
 
@@ -256,9 +264,9 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 3 ---------------- */
-{ id:"u3", short:"Stance Drift", title:"Stance Drift", ord:"03",
+{ id:"u3", short:"Stance Drift", title:"Stance Drift", ord:"03", estMin:6,
   render(){ return `
-  <div class="eyebrow">Unit 03 · Core applied skill</div>
+  <div class="eyebrow">Unit 03 · Core applied skill <span class="eyebrow-time">· ${unitTimeLine("u3")}</span></div>
   <h1>Noticing the pull, and what to do about it</h1>
   <p class="dek">This is the skill the module exists to build. Everything before it was preparation for this moment, live, mid-sentence.</p>
 
@@ -295,9 +303,9 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 4 ---------------- */
-{ id:"u4", short:"The Referral Boundary", title:"The Referral Boundary", ord:"04",
+{ id:"u4", short:"The Referral Boundary", title:"The Referral Boundary", ord:"04", estMin:6,
   render(){ return `
-  <div class="eyebrow">Unit 04 · Limits</div>
+  <div class="eyebrow">Unit 04 · Limits <span class="eyebrow-time">· ${unitTimeLine("u4")}</span></div>
   <h1>When this isn't a stance question anymore</h1>
   <p class="dek">Telling and Asking are both tools for a developmental conversation. Some conversations aren't that.</p>
 
@@ -332,9 +340,9 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 5 ---------------- */
-{ id:"u5", short:"Under Pressure ★", title:"Stance Drift Under Pressure", ord:"05",
+{ id:"u5", short:"Under Pressure ★", title:"Stance Drift Under Pressure", ord:"05", estMin:5,
   render(){ return `
-  <div class="eyebrow">Unit 05 · Applied synthesis</div>
+  <div class="eyebrow">Unit 05 · Applied synthesis <span class="eyebrow-time">· ${unitTimeLine("u5")}</span></div>
   <h1>Holding the stance when everything pulls at once</h1>
   <p class="dek">Rank, the clock, and drift, all in one exchange — because that's how it actually happens.</p>
 
@@ -381,8 +389,49 @@ function saveState(s){
   if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
   memStore=s;
 }
-function defaultState(){ return {name:"", visited:{}, done:{}, picks:{}}; }
+function defaultState(){ return {name:"", visited:{}, done:{}, picks:{}, time:{}}; }
 let state=loadState();
+if(!state.time) state.time={};
+
+/* ============================================================
+   TIME DWELLER — estimated duration (static, per unit) plus
+   live dwell-time tracking (actual seconds spent, persisted).
+   ============================================================ */
+function totalEstMin(){ return UNITS.filter(u=>u.id!=="start").reduce((sum,u)=>sum+(u.estMin||0),0); }
+function totalSpentSec(){ return Object.values(state.time).reduce((sum,s)=>sum+(s||0),0); }
+function fmtMin(sec){ const m=Math.round(sec/60); return m<1 ? "<1 min" : (m+" min"); }
+function modTimeLine(){
+  const est="~"+totalEstMin()+" min across "+(UNITS.length-1)+" units, self-paced — stop anytime.";
+  const spent=totalSpentSec();
+  return spent>0 ? est+" You've spent about "+fmtMin(spent)+" so far." : est;
+}
+function unitTimeLine(id){
+  const spent=state.time[id]||0;
+  const u=unitById(id);
+  if(spent>=20) return `<span title="Time you've spent on this unit">spent ${fmtMin(spent)}</span>`;
+  return `~${u.estMin} min`;
+}
+
+let dwellUnit=null, dwellStart=null;
+function dwellFlush(){
+  if(dwellUnit==null||dwellStart==null) return;
+  const elapsed=(performance.now()-dwellStart)/1000;
+  if(elapsed>0.5){
+    state.time[dwellUnit]=(state.time[dwellUnit]||0)+elapsed;
+    saveState(state);
+  }
+  dwellStart=null;
+}
+function dwellStartFor(id){
+  dwellUnit=id; dwellStart=performance.now();
+}
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){ dwellFlush(); }
+  else if(dwellUnit){ dwellStart=performance.now(); }
+});
+window.addEventListener("pagehide", dwellFlush);
+window.addEventListener("beforeunload", dwellFlush);
+setInterval(()=>{ if(!document.hidden){ dwellFlush(); dwellStartFor(dwellUnit); } }, 20000);
 
 /* ============================================================
    RENDERING & NAVIGATION (hash router)
@@ -404,21 +453,30 @@ function renderMap(){
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
     const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    const time=document.createElement("span");
+    const spent=state.time[u.id]||0;
+    if(spent>=20){ time.className="map-time actual"; time.textContent=fmtMin(spent); }
+    else{ time.className="map-time"; time.textContent="~"+u.estMin+"m"; }
+    a.append(dot,ord,lab,time); li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
   document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
   document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete";
+  const spentTotal=totalSpentSec();
+  document.getElementById("timeTotal").textContent = spentTotal>0
+    ? "Time spent: "+fmtMin(spentTotal)+" / ~"+totalEstMin()+" min"
+    : "Estimated: ~"+totalEstMin()+" min total";
   const ll=document.getElementById("learnerLine");
   ll.innerHTML = state.name
     ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
     : `<button id="resetAll">reset all progress</button>`;
   const rb=document.getElementById("resetAll");
-  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress?")){ state=defaultState(); saveState(state); renderAll(); } };
+  if(rb) rb.onclick=()=>{ if(confirm("Reset all progress?")){ dwellStart=null; state=defaultState(); saveState(state); renderAll(); } };
 }
 
 function renderUnit(){
+  dwellFlush();
   const u=unitById(currentId());
   state.visited[u.id]=true; saveState(state);
   mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
@@ -426,6 +484,7 @@ function renderUnit(){
   if(u.id==="start") wireStart();
   window.scrollTo({top:0});
   renderMap();
+  dwellStartFor(u.id);
 }
 
 function pagerHtml(u){
