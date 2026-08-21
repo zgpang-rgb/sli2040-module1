@@ -29,6 +29,8 @@ An interactive walkthrough of **iLEARN Educator Module 7**, built from the sourc
 
 Each unit pairs a short explainer with one scenario-based interactive check with branching feedback — four have a single defensible best move, one (Unit 5) is deliberately a toss-up between two reasonable sequences. Navigation is self-paced (a module map lets you jump to any unit), and progress persists in the browser via `localStorage` with a graceful in-memory fallback if storage is unavailable.
 
+Every unit, and the module overview, shows two estimated-time figures: **Learner** (time to read the unit and work its scenario check, at a normal pace) and **Build** (time it took to research, screenshot, write, and test that unit's content). The module map sidebar shows learner time per unit; the landing page has a full table with totals — **~48 min–1 hr 4 min** learner time and **~14.5 hrs** build time for the whole module.
+
 Screenshots embedded in the module are the actual iLEARN Educator UI from the source deck, resized and inlined as base64 so the file stays single-file and works offline.
 
 ## What's explicitly deferred
