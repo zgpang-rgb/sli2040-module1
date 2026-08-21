@@ -40,6 +40,8 @@ Every unit, each of the three parts, and the module as a whole show an estimated
 
 Each unit also has a collapsed "View source screenshot" panel beneath its mock dashboard, showing the actual iLEARN Educator screenshot from the source deck (`M4_iLEARN_Educator_SLP.pdf`) for that view, embedded inline as base64 so the file stays single-file and self-contained. Collapsed by default to keep each unit readable; expands on click. The two screenshots that originally showed a real learner's full name (Learner Status and Learner Feedback) have had that name redacted and replaced with "Learner A," matching the mock data used elsewhere in the unit.
 
+The landing page opens with a stat-bar summary (parts, learning outcomes, designed duration, sections in total) and a "Before you begin" card for an optional name and class/cohort — both computed from and reused across the same data already driving the rest of the page, not separately maintained numbers.
+
 ### What's explicitly deferred
 
 - Content from the other iLEARN Educator modules visible in the source deck's own navigation (Module 1: Create Class, Module 2: Assign Content, Module 3: Add & Manage Learners, Module 5: Review, Module 6: Gradebook & Competency Wheel) — out of scope for this module.

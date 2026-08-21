@@ -35,6 +35,20 @@ header{background:var(--navy-deep);color:var(--ivory);padding:0}
 .hd-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:#9FB0C4;text-transform:uppercase}
 .hd-rule{height:3px;background:linear-gradient(90deg,var(--brass) 0 180px,rgba(169,135,59,.25) 180px)}
 
+/* ---------- Stat bar (landing only) ---------- */
+.stat-bar{background:var(--navy-deep);border-top:1px solid rgba(255,255,255,.08)}
+.stat-bar-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-cell{padding:22px 26px;border-left:1px solid rgba(255,255,255,.1)}
+.stat-cell:first-child{border-left:none}
+.stat-num{font-family:var(--serif);font-size:2rem;color:var(--brass-pale);line-height:1}
+.stat-label{margin-top:6px;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#9FB0C4}
+@media (max-width:640px){
+  .stat-bar-inner{grid-template-columns:repeat(2,1fr)}
+  .stat-cell:nth-child(3){border-left:none}
+  .stat-cell{border-top:1px solid rgba(255,255,255,.1)}
+  .stat-cell:first-child,.stat-cell:nth-child(2){border-top:none}
+}
+
 /* ---------- Shell ---------- */
 .shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:288px 1fr;gap:0;min-height:calc(100vh - 90px)}
 .shell>*{min-width:0}
@@ -84,6 +98,15 @@ h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color
 .outcomes li::before{content:counter(oc);flex:0 0 24px;width:24px;height:24px;border:1px solid var(--brass);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.72rem;color:var(--brass-dark);margin-top:1px}
 .outcomes li span{font-size:.92rem;line-height:1.55}
 .outcomes li strong{color:var(--navy-deep)}
+
+/* ---------- Before-you-begin card ---------- */
+.begin-fields{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}
+.begin-field{display:flex;flex-direction:column;gap:6px}
+.begin-field label{font-size:.82rem;color:var(--ink-soft)}
+.begin-actions{display:flex;align-items:center;gap:12px;margin-top:16px}
+.begin-note{margin-top:10px;font-size:.8rem;color:var(--ink-soft)}
+.save-flash{font-family:var(--mono);font-size:.72rem;color:var(--moss);opacity:0;transition:opacity .3s}
+.save-flash.on{opacity:1}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:70ch}
 p strong{color:var(--navy-deep)}
@@ -203,6 +226,10 @@ input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
   <div class="hd-rule"></div>
 </header>
 
+<div class="stat-bar" id="statBar" style="display:none">
+  <div class="stat-bar-inner" id="statBarInner"></div>
+</div>
+
 <div class="shell">
 
 <!-- ================= SIDEBAR / MODULE MAP ================= -->
@@ -275,8 +302,17 @@ const UNITS = [
 
   <p>The suggested path runs Part 1 → 2 → 3 because later units lean on habits the earlier ones build — reading a table for what it actually says before reaching for an action. But every unit stands alone; jump to whatever your class needs today. Progress is saved in this browser. Each unit lists two time estimates: how long the explainer takes to read, and how long the check tends to take to work through — actual pace will vary.</p>
 
-  <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — shown next to your saved progress only):</label><br>
-  <input type="text" id="nameIn" placeholder="e.g. Ms. Tan" style="margin-top:6px;width:100%;max-width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
+  <div class="card"><div class="card-tag">Before you begin</div>
+    <p style="margin:0 0 4px;font-size:.9rem">Both fields are optional. They're shown next to your saved progress in this browser only — nothing is sent anywhere.</p>
+    <div class="begin-fields">
+      <div class="begin-field"><label for="nameIn">Name or initials</label>
+        <input type="text" id="nameIn" placeholder="e.g. Ms. Tan" style="width:220px"></div>
+      <div class="begin-field"><label for="cohortIn">Class / cohort</label>
+        <input type="text" id="cohortIn" placeholder="e.g. Intake 12" style="width:220px"></div>
+    </div>
+    <div class="begin-actions"><button class="btn ghost" id="nameSave">Save</button><span class="save-flash" id="beginFlash">saved</span></div>
+    <p class="begin-note" id="beginNote"></p>
+  </div>
   `;}
 },
 
@@ -719,7 +755,7 @@ function saveState(s){
   if(storageOK){ try{ localStorage.setItem(SKEY,JSON.stringify(s)); return; }catch(e){ storageOK=false; document.getElementById("storageNote").style.display="block"; } }
   memStore=s;
 }
-function defaultState(){ return {name:"", visited:{}, done:{}, answers:{}}; }
+function defaultState(){ return {name:"", cohort:"", visited:{}, done:{}, answers:{}}; }
 let state=loadState();
 
 /* ============================================================
@@ -775,8 +811,9 @@ function renderMap(){
   document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
   document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete · "+fmtMin(moduleTotal())+" total";
   const ll=document.getElementById("learnerLine");
-  ll.innerHTML = state.name
-    ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
+  const who=[state.name,state.cohort].filter(Boolean).map(escapeHtml).join(" · ");
+  ll.innerHTML = who
+    ? `Learner: <strong>${who}</strong> · <button id="resetAll">reset all progress</button>`
     : `<button id="resetAll">reset all progress</button>`;
   const rb=document.getElementById("resetAll");
   if(rb) rb.onclick=()=>{ if(confirm("Reset all progress?")){ state=defaultState(); saveState(state); renderAll(); } };
@@ -787,6 +824,7 @@ function renderUnit(){
   state.visited[u.id]=true; saveState(state);
   mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
   if(u.check) wireCheck(u);
+  const statBar=document.getElementById("statBar");
   if(u.id==="start"){
     wireStart();
     const ov=document.getElementById("timeOverall");
@@ -795,9 +833,19 @@ function renderUnit(){
       const el=document.getElementById("p"+(i+1)+"Time");
       if(el) el.textContent="Estimated time: "+fmtMin(idsTotal(g.ids));
     });
-  } else if(u.time){
-    const chip=document.getElementById("timeChip");
-    if(chip) chip.innerHTML=`<span class="tc-item">${fmtMin(u.time.read)} to read</span><span class="tc-sep">·</span><span class="tc-item">${fmtMin(u.time.do)} to work through the check</span><span class="tc-sep">·</span><span class="tc-item tc-total">${fmtMin(unitTotal(u))} total</span>`;
+    statBar.style.display="block";
+    document.getElementById("statBarInner").innerHTML=[
+      [partGroups().length,"Parts"],
+      [document.querySelectorAll(".outcomes li").length,"Learning outcomes"],
+      [fmtMin(moduleTotal()),"Designed duration"],
+      [UNITS.length-1,"Sections in total"]
+    ].map(([num,label])=>`<div class="stat-cell"><div class="stat-num">${num}</div><div class="stat-label">${label}</div></div>`).join("");
+  } else {
+    statBar.style.display="none";
+    if(u.time){
+      const chip=document.getElementById("timeChip");
+      if(chip) chip.innerHTML=`<span class="tc-item">${fmtMin(u.time.read)} to read</span><span class="tc-sep">·</span><span class="tc-item">${fmtMin(u.time.do)} to work through the check</span><span class="tc-sep">·</span><span class="tc-item tc-total">${fmtMin(unitTotal(u))} total</span>`;
+    }
   }
   window.scrollTo({top:0});
   renderMap();
@@ -857,9 +905,21 @@ function wireCheck(u){
 /* ---------- Landing ---------- */
 function wireStart(){
   const inp=document.getElementById("nameIn");
+  const cohortInp=document.getElementById("cohortIn");
   inp.value=state.name||"";
+  cohortInp.value=state.cohort||"";
+  const flash=document.getElementById("beginFlash");
+  const note=document.getElementById("beginNote");
+  let flashT=null;
+  function updateNote(){
+    const who=[state.name,state.cohort].filter(Boolean).join(" · ");
+    note.textContent = who ? "Saved as: "+who : "Not set. You can still open the module; progress is saved either way.";
+  }
+  updateNote();
   document.getElementById("nameSave").addEventListener("click",()=>{
-    state.name=inp.value.trim(); saveState(state); renderMap();
+    state.name=inp.value.trim(); state.cohort=cohortInp.value.trim();
+    saveState(state); renderMap(); updateNote();
+    flash.classList.add("on"); clearTimeout(flashT); flashT=setTimeout(()=>flash.classList.remove("on"),1200);
   });
 }
 
