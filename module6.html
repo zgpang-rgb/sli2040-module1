@@ -46,6 +46,8 @@ main{padding:34px 40px 90px;max-width:820px}
 .map ol{list-style:none}
 .map li{margin-bottom:2px}
 .map a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:3px;font-size:.86rem;line-height:1.35;border-left:2px solid transparent}
+.map a .map-label{flex:1 1 auto;min-width:0}
+.map .est-min{font-family:var(--mono);font-size:.64rem;color:var(--ink-soft);flex:0 0 auto;white-space:nowrap;margin-top:3px}
 .map a:hover{background:var(--paper)}
 .map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
 .dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
@@ -75,6 +77,8 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 .card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
 .card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
 .card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
+.est-chip{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:10px}
+.est-chip .est-total{color:var(--brass-dark);font-weight:600}
 
 /* ---------- Scenario check ---------- */
 .check .scenario{font-family:var(--serif);font-size:1.02rem;line-height:1.6;color:var(--navy-deep);padding-left:14px;border-left:3px solid var(--brass);margin-bottom:18px}
@@ -108,7 +112,8 @@ em.term{font-style:normal;border-bottom:1.5px solid var(--brass-pale);padding-bo
 
 /* ---------- Capstone ---------- */
 .stage{margin-bottom:26px}
-.stage-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.stage-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.stage-head .est-chip{margin:0 0 0 auto;font-size:.68rem}
 .stage-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--brass-dark);border:1px solid var(--brass);padding:2px 8px;border-radius:2px;white-space:nowrap}
 .stage-head h3{margin:0}
 .stage .guide{font-size:.86rem;color:var(--ink-soft);margin-bottom:8px;max-width:70ch}
@@ -126,6 +131,8 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 .save-flash.on{opacity:1}
 
 /* ---------- Landing ---------- */
+.module-time{font-family:var(--mono);font-size:.8rem;letter-spacing:.03em;color:var(--ink-soft);margin:20px 0;padding:12px 16px;border:1px solid var(--line);border-radius:2px;background:var(--ivory-dim)}
+.module-time .est-total{color:var(--brass-dark);font-weight:600}
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
 .pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
@@ -208,24 +215,33 @@ const img_finalWheel="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwwAAAFVCAIA
 
 const CAP_STAGES = [
   {id:"course", n:"Step 1", t:"Name the class",
-   guide:"Which of your own classes or courses will you set this up for? One sentence is enough — what it trains, and who's in it."},
+   guide:"Which of your own classes or courses will you set this up for? One sentence is enough — what it trains, and who's in it.",
+   readMin:1, doMin:4},
   {id:"framework", n:"Step 2", t:"Choose the Competency Framework",
-   guide:"Which framework fits this class's actual components, and why not the nearest-sounding alternative? Name the framework and the reason."},
+   guide:"Which framework fits this class's actual components, and why not the nearest-sounding alternative? Name the framework and the reason.",
+   readMin:1, doMin:6},
   {id:"visibility", n:"Step 3", t:"Set your visibility policy",
-   guide:"Hidden, Visible, or Visible After — and for which competencies? State the policy and the operational reason behind it (moderation, a fixed release date, real-time self-tracking)."},
+   guide:"Hidden, Visible, or Visible After — and for which competencies? State the policy and the operational reason behind it (moderation, a fixed release date, real-time self-tracking).",
+   readMin:1, doMin:6},
   {id:"grading", n:"Step 4", t:"Manual entry vs. tagged assignments",
-   guide:"Which competencies in this class have no online exam and will need manual grade entry? Which will instead be fed automatically by tagging assignments? List both."},
+   guide:"Which competencies in this class have no online exam and will need manual grade entry? Which will instead be fed automatically by tagging assignments? List both.",
+   readMin:1, doMin:7},
   {id:"wheel", n:"Step 5", t:"Pick the wheel, and what you'll watch",
-   guide:"Which Competency Wheel will learners see, and which slice are you most likely to need to watch closely for this cohort — and why?"}
+   guide:"Which Competency Wheel will learners see, and which slice are you most likely to need to watch closely for this cohort — and why?",
+   readMin:1, doMin:7}
 ];
+
+const capEst = CAP_STAGES.reduce((a,s)=>({read:a.read+s.readMin, do:a.do+s.doMin}), {read:0, do:0});
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Module 6 — Gradebook & Competency Wheel", ord:"—",
+{ id:"start", short:"Orientation", title:"Module 6 — Gradebook & Competency Wheel", ord:"—", est:{read:2, do:1},
   render(){ return `
   <div class="eyebrow">iLEARN Educator · Educator-section internal training</div>
   <h1>Running the Gradebook and Competency Wheel in iLEARN Educator</h1>
   <p class="dek">A self-paced module for Learning Science, Learning Technology, Learning System and Learning Educator staff who set up, grade, or supervise iLEARN Educator classes. It follows the platform's own logic: you direct the pace, the checks come from real gradebook decisions, and your capstone is your own class.</p>
+
+  <div class="module-time">⏱ Estimated time for this module: <span class="est-total">~${totalEst().read} min</span> reading the material, <span class="est-total">~${totalEst().do} min</span> hands-on (scenario checks + capstone) — <span class="est-total">~${totalEst().read+totalEst().do} min</span> total, capstone included. Every unit and capstone step below shows its own read/do estimate.</div>
 
   <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>Scope note:</strong> iLEARN Educator has six modules end to end — Create Class, Assign Content, Add &amp; Manage Learners, Analytics Dashboard, Review, and this one, Gradebook &amp; Competency Wheel. This training covers <strong>Module 6 only</strong>: the gradebook's competency wheel, and the four features that drive it — adding goals, tagging competencies to assignments, visibility options, and manual entry of grades.</p>
 
@@ -246,7 +262,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 1 — FRAMEWORKS & GOALS ---------------- */
-{ id:"u1", short:"Frameworks & Goals", title:"Frameworks & Goals", ord:"01",
+{ id:"u1", short:"Frameworks & Goals", title:"Frameworks & Goals", ord:"01", est:{read:4, do:4},
   render(){ return `
   <div class="eyebrow">Unit 01 · Foundation</div>
   <h1>Picking the Competency Framework a class actually needs</h1>
@@ -288,7 +304,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 2 — VISIBILITY OPTIONS (tossup) ---------------- */
-{ id:"u2", short:"Visibility Options", title:"Visibility Options", ord:"02",
+{ id:"u2", short:"Visibility Options", title:"Visibility Options", ord:"02", est:{read:3, do:5},
   render(){ return `
   <div class="eyebrow">Unit 02 · Judgment call</div>
   <h1>Deciding when a grade should become visible</h1>
@@ -328,7 +344,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 3 — MANUAL ENTRY OF GRADES ---------------- */
-{ id:"u3", short:"Manual Entry of Grades", title:"Manual Entry of Grades", ord:"03",
+{ id:"u3", short:"Manual Entry of Grades", title:"Manual Entry of Grades", ord:"03", est:{read:3, do:4},
   render(){ return `
   <div class="eyebrow">Unit 03 · Data entry, done deliberately</div>
   <h1>Grading what the platform can't grade itself</h1>
@@ -373,7 +389,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 4 — TAG COMPETENCIES TO ASSIGNMENTS ---------------- */
-{ id:"u4", short:"Tag Competencies to Assignments", title:"Tag Competencies to Assignments", ord:"04",
+{ id:"u4", short:"Tag Competencies to Assignments", title:"Tag Competencies to Assignments", ord:"04", est:{read:3, do:4},
   render(){ return `
   <div class="eyebrow">Unit 04 · The automatic path</div>
   <h1>Making an assignment feed the right branch</h1>
@@ -409,7 +425,7 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 5 — THE COMPETENCY WHEEL ---------------- */
-{ id:"u5", short:"The Competency Wheel ★", title:"The Competency Wheel", ord:"05",
+{ id:"u5", short:"The Competency Wheel ★", title:"The Competency Wheel", ord:"05", est:{read:4, do:5},
   render(){ return `
   <div class="eyebrow">Unit 05 · Core applied skill</div>
   <h1>Reading the wheel, not just picking it</h1>
@@ -474,7 +490,7 @@ const UNITS = [
 },
 
 /* ---------------- CAPSTONE ---------------- */
-{ id:"cap", short:"Capstone ★", title:"Capstone — Set Up Your Class", ord:"06",
+{ id:"cap", short:"Capstone ★", title:"Capstone — Set Up Your Class", ord:"06", est:capEst,
   render(){ return `
   <div class="eyebrow">Capstone · Applied output</div>
   <h1>Walk one of your own classes through the whole setup</h1>
@@ -528,8 +544,9 @@ function renderMap(){
     const dot=document.createElement("span");
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
-    const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    const lab=document.createElement("span"); lab.className="map-label"; lab.textContent=u.short;
+    const mins=document.createElement("span"); mins.className="est-min"; mins.textContent=(u.est.read+u.est.do)+"m";
+    a.append(dot,ord,lab,mins); li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
@@ -543,10 +560,18 @@ function renderMap(){
   if(rb) rb.onclick=()=>{ if(confirm("Reset all progress and capstone entries?")){ state=defaultState(); saveState(state); renderAll(); } };
 }
 
+function estChipHtml(est){
+  if(!est) return "";
+  return `<div class="est-chip">⏱ <span class="est-total">~${est.read+est.do} min</span> — ~${est.read} min to read · ~${est.do} min to do</div>`;
+}
+function totalEst(){
+  return UNITS.filter(u=>u.id!=="start").reduce((a,u)=>({read:a.read+u.est.read, do:a.do+u.est.do}), {read:0, do:0});
+}
+
 function renderUnit(){
   const u=unitById(currentId());
   state.visited[u.id]=true; saveState(state);
-  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
+  mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${estChipHtml(u.id!=="start"?u.est:null)}${u.render()}${pagerHtml(u)}</section>`;
   if(u.check) wireCheck(u);
   if(u.id==="start") wireStart();
   if(u.id==="cap") wireCapstone();
@@ -616,7 +641,7 @@ function wireCapstone(){
 
   CAP_STAGES.forEach(st=>{
     const d=document.createElement("div"); d.className="stage card";
-    d.innerHTML=`<div class="stage-head"><span class="stage-num">${st.n}</span><h3>${st.t}</h3></div>
+    d.innerHTML=`<div class="stage-head"><span class="stage-num">${st.n}</span><h3>${st.t}</h3>${estChipHtml({read:st.readMin, do:st.doMin})}</div>
       <p class="guide">${st.guide}</p>
       <textarea id="cap-${st.id}" aria-label="${st.t}"></textarea>`;
     stagesEl.appendChild(d);
