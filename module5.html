@@ -48,6 +48,15 @@ header{background:var(--navy-deep);color:var(--on-navy);padding:0}
 .hd-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:#9FB0C4;text-transform:uppercase}
 .hd-rule{height:3px;background:linear-gradient(90deg,var(--brass) 0 180px,rgba(169,135,59,.25) 180px)}
 
+/* ---------- Stat bar ---------- */
+.stat-bar{background:var(--navy-deep)}
+.stat-bar .sb-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.stat-bar .sb-tile{padding:22px 28px;border-left:1px solid rgba(159,176,196,.22)}
+.stat-bar .sb-tile:first-child{border-left:none}
+.stat-bar .sb-num{font-family:var(--serif);font-size:2rem;font-weight:600;color:#C7D4E4;line-height:1}
+.stat-bar .sb-lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#9FB0C4;margin-top:8px}
+@media (max-width:640px){.stat-bar .sb-inner{grid-template-columns:1fr 1fr}.stat-bar .sb-tile:nth-child(2){border-left:1px solid rgba(159,176,196,.22)}.stat-bar .sb-tile:nth-child(3){border-left:none;border-top:1px solid rgba(159,176,196,.22);grid-column:1 / -1}}
+
 /* ---------- Shell ---------- */
 .shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:288px 1fr;gap:0;min-height:calc(100vh - 90px)}
 nav.map{background:var(--ivory-dim);border-right:1px solid var(--line);padding:26px 20px 40px}
@@ -204,6 +213,10 @@ section.unit.active{display:block}
   <div class="hd-rule"></div>
 </header>
 
+<div class="stat-bar">
+  <div class="sb-inner" id="statBar"></div>
+</div>
+
 <div class="shell">
 
 <!-- ================= SIDEBAR / MODULE MAP ================= -->
@@ -235,6 +248,8 @@ section.unit.active{display:block}
    Return for Rework; the prerequisite gate; the rubric/feedback
    requirement split; the learner-facing 100% behaviour.
    ============================================================ */
+
+const OUTCOME_COUNT = 5;
 
 const REVIEW_STAGES = [
   {id:"case1", n:"Log 1", t:"A review decision you actually made (or are about to)",
@@ -736,6 +751,13 @@ function timeBadgeHtml(u){
 function totalTime(){
   return UNITS.reduce((acc,u)=>{ if(u.time){ acc.dev+=u.time.dev; acc.learn+=u.time.learn; } return acc; },{dev:0,learn:0});
 }
+function renderStatBar(){
+  const sections=UNITS.length-1;
+  document.getElementById("statBar").innerHTML=`
+    <div class="sb-tile"><div class="sb-num">${OUTCOME_COUNT}</div><div class="sb-lbl">Learning outcomes</div></div>
+    <div class="sb-tile"><div class="sb-num">${formatMinutes(totalTime().learn)}</div><div class="sb-lbl">Learner time</div></div>
+    <div class="sb-tile"><div class="sb-num">${sections}</div><div class="sb-lbl">Sections in total</div></div>`;
+}
 
 /* ---------- utils ---------- */
 function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
@@ -754,7 +776,7 @@ document.getElementById("mapToggle").addEventListener("click",e=>{
   e.target.setAttribute("aria-expanded",nav.classList.contains("open"));
 });
 window.addEventListener("hashchange",renderUnit);
-function renderAll(){ renderMap(); renderUnit(); }
+function renderAll(){ renderStatBar(); renderMap(); renderUnit(); }
 renderAll();
 </script>
 </body>
