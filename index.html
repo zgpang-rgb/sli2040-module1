@@ -44,6 +44,8 @@ main{padding:34px 40px 90px;max-width:820px}
 .map ol{list-style:none}
 .map li{margin-bottom:2px}
 .map a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:3px;font-size:.86rem;line-height:1.35;border-left:2px solid transparent}
+.map .lab-wrap{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.map .lab-time{font-family:var(--mono);font-size:.64rem;letter-spacing:.03em;color:var(--ink-soft)}
 .map a:hover{background:var(--paper)}
 .map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
 .dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
@@ -62,6 +64,14 @@ main{padding:34px 40px 90px;max-width:820px}
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
 .dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+.time-tag{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft);margin:-8px 0 20px}
+.time-tag span{display:inline-flex;align-items:center;gap:5px}
+.time-tag b{color:var(--brass-dark);font-weight:600}
+.time-tag .build{opacity:.75}
+.time-summary{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.time-summary .card{margin:0}
+.time-summary .num{font-family:var(--serif);font-size:1.7rem;color:var(--navy-deep);margin-bottom:2px}
+.time-summary .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:68ch}
 p strong{color:var(--navy-deep)}
@@ -160,7 +170,7 @@ input[type=text]:focus-visible{outline:2px solid var(--brass);outline-offset:1px
   nav.map.open .map-body{display:block}
   .map-toggle{display:inline-block;background:none;border:1px solid var(--ink-soft);font:inherit;font-size:.8rem;padding:6px 12px;cursor:pointer;border-radius:2px;margin-bottom:4px}
   main{padding:26px 20px 70px}
-  .land-grid,.role-grid,.figure-row{grid-template-columns:1fr}
+  .land-grid,.role-grid,.figure-row,.time-summary{grid-template-columns:1fr}
   h1{font-size:1.6rem}
 }
 </style>
@@ -230,11 +240,16 @@ const IMG = {
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Orientation", ord:"—",
+{ id:"start", short:"Orientation", title:"Orientation", ord:"—", learnerTime:"~2–3 min", buildTime:"~1–2 hrs",
   render(){ return `
   <div class="eyebrow">iLEARN Editor · Create Class</div>
   <h1>Setting up a class the right way, the first time</h1>
   <p class="dek">A self-paced walkthrough of the three configuration decisions you make when you create a class — and why getting them right up front saves a support ticket later.</p>
+
+  <div class="time-summary">
+    <div class="card"><div class="num">~25–30 min</div><div class="lbl">Total learner time, all 5 units</div></div>
+    <div class="card"><div class="num">~15–20 hrs</div><div class="lbl">Total build time (production estimate)</div></div>
+  </div>
 
   <p>When an educator creates a class in iLEARN Editor, three decisions get made almost immediately: whether the class opens with a forum and a calendar; whether learners can find each other and whether educators sharing the class can see learners' personal data; and who owns the class well enough to administer it. None of these is complicated in isolation — a toggle here, a role picker there — but they interact, and they interact differently depending on the class in front of you. A setting that's obviously right for a large asynchronous cohort is often obviously wrong for a three-day rotating refresher course.</p>
 
@@ -260,11 +275,13 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 1 — FORUM & CALENDAR ---------------- */
-{ id:"u1", short:"Forum & Calendar", title:"Forum & Calendar", ord:"01",
+{ id:"u1", short:"Forum & Calendar", title:"Forum & Calendar", ord:"01", learnerTime:"~5–7 min", buildTime:"~3–4 hrs",
   render(){ return `
   <div class="eyebrow">Feature 01 · Communication</div>
   <h1>Forum and Calendar</h1>
   <p class="dek">Two opt-in class spaces — and the cost of switching either one on by default.</p>
+
+  <div class="time-tag"><span>⏱ <b>Learner:</b> ~5–7 min</span><span class="build">🛠 <b>Build:</b> ~3–4 hrs</span></div>
 
   <p>Forum and Calendar are both optional additions bundled into class creation, and they toggle independently of each other. <strong>Forum</strong> gives learners a threaded space to talk to one another about the material — questions, case discussion, peer troubleshooting. <strong>Calendar</strong> surfaces the class's own dates — sessions, deadlines, milestones — inside iLEARN itself, rather than leaving learners to track them in a separate timetable or email thread. You can run a class with a calendar and no forum, a forum and no calendar, both, or neither; there's no dependency between them.</p>
 
@@ -312,11 +329,13 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 2 — DISCOVERY & DATA ACCESS ---------------- */
-{ id:"u2", short:"Discovery & Data Access", title:"Learner Discovery & Shared-Educator Data Access", ord:"02",
+{ id:"u2", short:"Discovery & Data Access", title:"Learner Discovery & Shared-Educator Data Access", ord:"02", learnerTime:"~6–8 min", buildTime:"~4–5 hrs",
   render(){ return `
   <div class="eyebrow">Feature 02 · Visibility &amp; Privacy</div>
   <h1>Learner discovery and shared-educator data access</h1>
   <p class="dek">Two separate toggles grouped under one feature — and the one scenario in this module without a clean answer.</p>
+
+  <div class="time-tag"><span>⏱ <b>Learner:</b> ~6–8 min</span><span class="build">🛠 <b>Build:</b> ~4–5 hrs</span></div>
 
   <p>This feature bundles two settings that both widen who can see something about a learner, which is why they're presented together — but they trade off differently, so it's worth holding them apart in your head. <strong>Allow Shared Educators Access to Learner's Personal Data</strong> is the privacy-critical one: when a class has more than one instructor, it governs whether an educator who isn't the class owner can see learners' personal data — things like prior scores, contact details, or other information beyond what's needed simply to teach a session.</p>
 
@@ -367,11 +386,13 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 3 — OWNER ROLES ---------------- */
-{ id:"u3", short:"Owner Roles", title:"Current Owner, Second Owner & Shared Educators", ord:"03",
+{ id:"u3", short:"Owner Roles", title:"Current Owner, Second Owner & Shared Educators", ord:"03", learnerTime:"~7–9 min", buildTime:"~4–5 hrs",
   render(){ return `
   <div class="eyebrow">Feature 03 · Access &amp; Administration</div>
   <h1>Current owner, second owner, and shared educators</h1>
   <p class="dek">Three tiers of access to a class — and the difference between "can see this" and "can run this."</p>
+
+  <div class="time-tag"><span>⏱ <b>Learner:</b> ~7–9 min</span><span class="build">🛠 <b>Build:</b> ~4–5 hrs</span></div>
 
   <p>A class in iLEARN Editor carries three tiers of access. In the platform's own words, <em>"The Current Owner is the person who created the class and has full control over it. They can also appoint a Second Owner."</em> Concretely, the <strong>Current Owner</strong> can change ownership of the class, add content, add learners, add Shared Educators, and view hidden learners' personal data — that last item is the direct link back to the data-access setting in the previous unit: owner status is itself a standing form of access to that data. The <strong>Second Owner</strong> is a designated backup with that same administrative reach, meant specifically for continuity: leave, illness, a course rotation, anything that would otherwise leave a class with nobody able to act on it. A <strong>Shared Educator</strong> is added for a bounded reason — co-teaching a segment, reviewing progress, running one topic — and sees what that reason requires, but does not carry standing administrative authority: a Shared Educator can't, for instance, transfer ownership of the class or delete it.</p>
 
@@ -421,11 +442,13 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 4 — RECAP & DRILL ---------------- */
-{ id:"u4", short:"Recap & Drill", title:"Putting the Three Decisions Together", ord:"04",
+{ id:"u4", short:"Recap & Drill", title:"Putting the Three Decisions Together", ord:"04", learnerTime:"~4–5 min", buildTime:"~2–3 hrs",
   render(){ return `
   <div class="eyebrow">Recap · Applied check</div>
   <h1>Putting the three decisions together</h1>
   <p class="dek">One more scenario — this time touching all three settings at once.</p>
+
+  <div class="time-tag"><span>⏱ <b>Learner:</b> ~4–5 min</span><span class="build">🛠 <b>Build:</b> ~2–3 hrs</span></div>
 
   <p>In practice, you don't make these three decisions in isolation the way this module has, one unit at a time — you set all three in the same class-creation flow. The habit worth carrying out of here is the question that separated the right call from the over-provisioned one in every scenario above: <em>who needs this, and for how long?</em> Spaces (forum, calendar), visibility and privacy (discovery, data access), and access tier (owner, second owner, shared educator) are three different settings, but that one question tests all of them the same way.</p>
 
@@ -489,8 +512,14 @@ function renderMap(){
     const dot=document.createElement("span");
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
+    const labWrap=document.createElement("span"); labWrap.className="lab-wrap";
     const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    labWrap.appendChild(lab);
+    if(u.learnerTime){
+      const time=document.createElement("span"); time.className="lab-time"; time.textContent="⏱ "+u.learnerTime;
+      labWrap.appendChild(time);
+    }
+    a.append(dot,ord,labWrap); li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;

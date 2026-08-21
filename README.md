@@ -28,13 +28,25 @@ sessions, and a note in the sidebar says so.
 
 ## What's in v1
 
-Four units, self-paced and non-linear (jump to any unit from the sidebar
-at any time):
+Five units, self-paced and non-linear (jump to any unit from the sidebar
+at any time). Learner time is shown per unit in the app itself (sidebar
+and unit header); build time is a production estimate for whoever
+maintains this module, not learner-facing:
 
-1. **Orientation** — what the three Create Class decisions are and why they interact.
-2. **Forum & Calendar** — the two opt-in class-space toggles, a mock settings panel, and a scenario check.
-3. **Learner Discovery & Shared-Educator Data Access** — the two visibility/privacy toggles, plus a scenario with **no single right answer** (a co-teaching, minors-in-class data-access judgment call) — the feedback explicitly says so, rather than forcing a lookup-table answer.
-4. **Current Owner, Second Owner & Shared Educators** — the three-tier ownership/access model, a scenario check, and a closing quick-decision drill that combines all three features in one setup.
+| Unit | Learner time | Build time |
+|---|---|---|
+| 1. Orientation — what the three Create Class decisions are and why they interact | ~2–3 min | ~1–2 hrs |
+| 2. Forum & Calendar — the two opt-in class-space toggles, a mock settings panel, and a scenario check | ~5–7 min | ~3–4 hrs |
+| 3. Learner Discovery & Shared-Educator Data Access — the two visibility/privacy toggles, plus a scenario with **no single right answer** (a co-teaching, minors-in-class data-access judgment call) — the feedback explicitly says so, rather than forcing a lookup-table answer | ~6–8 min | ~4–5 hrs |
+| 4. Current Owner, Second Owner & Shared Educators — the three-tier ownership/access model and a scenario check | ~7–9 min | ~4–5 hrs |
+| 5. Recap & Drill — a closing quick-decision drill that combines all three features in one setup | ~4–5 min | ~2–3 hrs |
+| **Total** | **~25–30 min** | **~15–20 hrs** |
+
+Build-time estimates cover writing the explainer prose, scenario/drill
+content and branching feedback, and wiring each unit's interactive
+elements — not the one-off work of extracting and redacting the source
+screenshots, which was closer to another 2–3 hrs on top of the table
+above.
 
 Content is sourced from the uploaded `M1_iLEARN_Educator_SLP` pptx and
 PDF, which name the three Create Class features. The PDF export
