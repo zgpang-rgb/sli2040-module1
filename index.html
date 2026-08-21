@@ -50,6 +50,8 @@ main{padding:34px 40px 90px;max-width:820px}
 .dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
 .dot.done{border-color:var(--brass-dark);background:var(--brass)}
 .map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.map .lab{flex:1}
+.map .time-chip{flex:0 0 auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;color:var(--ink-soft);margin-top:3px;white-space:nowrap}
 .progress-wrap{margin:22px 0 4px}
 .progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
@@ -64,7 +66,17 @@ main{padding:34px 40px 90px;max-width:820px}
 /* ---------- Content typography ---------- */
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
-.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:14px;font-style:italic;font-family:var(--serif)}
+.time-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.time-meta span{text-transform:uppercase}
+.time-meta b{color:var(--navy);font-weight:600;text-transform:none}
+
+/* ---------- Time-totals stat tile (landing page) ---------- */
+.time-stat{display:flex;gap:0;border:1px solid var(--line);background:var(--paper);margin:22px 0}
+.time-stat .ts-cell{flex:1;padding:16px 20px;text-align:center}
+.time-stat .ts-cell + .ts-cell{border-left:1px solid var(--line)}
+.time-stat .ts-num{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--navy-deep);line-height:1.1}
+.time-stat .ts-lab{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dark);margin-top:5px}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:68ch}
 p strong{color:var(--navy-deep)}
@@ -205,10 +217,13 @@ const LOOP_STAGES = [
 const UNITS = [
 /* ---------------- LANDING ---------------- */
 { id:"start", short:"Orientation", title:"Module 1 — The Operating Philosophy", ord:"—",
+  time:{build:25, learnMin:2, learnMax:3},
   render(){ return `
   <div class="eyebrow">SLI 2040 · Learning Science — Technology — Innovation</div>
   <h1>How IMLS turns learning problems into validated practice</h1>
   <p class="dek">A self-paced module for Learning Science, Learning Technology and Innovation staff. It practises what it preaches: you direct the pace, the scenarios come from real school friction, and your capstone is your own live project.</p>
+  ${timeMetaHtml(this)}
+  ${moduleTimeStatHtml()}
 
   <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>On the name:</strong> MLS stands for the Military Learning System (MLS) — the ecosystem of training schools, trainers, learning technologies and analytics this institute serves. IMLS is its steward; the framework in this module is how that stewardship is practised.</p>
 
@@ -230,10 +245,12 @@ const UNITS = [
 
 /* ---------------- UNIT 1 ---------------- */
 { id:"u1", short:"The Three Sections", title:"The Three Sections", ord:"01",
+  time:{build:50, learnMin:4, learnMax:6},
   render(){ return `
   <div class="eyebrow">Unit 01 · Structure</div>
   <h1>Architect, materials engineer, construction crew</h1>
   <p class="dek">Three sections, one building — and why the order of first moves matters more than the org chart.</p>
+  ${timeMetaHtml(this)}
 
   <p>IMLS holds three sections that only make sense together. <strong>Learning Science is the architect.</strong> Before anything is built, someone must decide what the building is for: what has to be learned, by whom, under what conditions, and — critically — what evidence would show the learning happened. The architect's drawings are not decoration; they are the specification every later decision answers to. A Learning Science officer who cannot state the learning problem in one sentence has not finished drawing.</p>
 
@@ -268,10 +285,12 @@ const UNITS = [
 
 /* ---------------- UNIT 2 ---------------- */
 { id:"u2", short:"Watch Areas", title:"Watch Areas", ord:"02",
+  time:{build:45, learnMin:4, learnMax:6},
   render(){ return `
   <div class="eyebrow">Unit 02 · Scanning</div>
   <h1>What IMLS watches, and why watching is a discipline</h1>
   <p class="dek">A Watch Area is not a shopping list. It is calibrated judgment kept warm, so the institute is never surprised by its own field.</p>
+  ${timeMetaHtml(this)}
 
   <p>Each section maintains Watch Areas — named territories it scans continuously. For <strong>Learning Science</strong> the watch list is: <em class="term">Workplace Learning</em>, <em class="term">Learning Evaluation</em>, <em class="term">Scenario-based learning</em>, <em class="term">Problem Solving</em>, and <em class="term">Andragogy-based design</em>. For <strong>Learning Technology</strong> it is: <em class="term">AI</em> and <em class="term">Immersive Technology</em> — VR, AR, MR and Digital Twins. These are not arbitrary. Each one sits where the military training mission is most likely to be changed by movement in the outside world: adults learning in the flow of work, evidence of whether training worked, realistic problems replacing abstract drills, and the two technology currents moving fast enough to reshape what is buildable year to year.</p>
 
@@ -304,10 +323,12 @@ const UNITS = [
 
 /* ---------------- UNIT 3 ---------------- */
 { id:"u3", short:"The Operating Loop", title:"The Operating Loop", ord:"03",
+  time:{build:55, learnMin:4, learnMax:6},
   render(){ return `
   <div class="eyebrow">Unit 03 · System</div>
   <h1>Plan → Run → Measure, and the two engines underneath</h1>
   <p class="dek">The loop is easy to recite and easy to break. It almost always breaks at the same joint.</p>
+  ${timeMetaHtml(this)}
 
   <svg class="loop-svg" viewBox="0 0 460 180" role="img" aria-label="Operating loop diagram: Plan, Run, Measure in a cycle, powered by the Discovery Engine and the Experimentation Engine">
     <defs><marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#A9873B"/></marker></defs>
@@ -355,10 +376,12 @@ const UNITS = [
 
 /* ---------------- UNIT 4 ---------------- */
 { id:"u4", short:"The Short-Cycle Loop ★", title:"The Short-Cycle Loop", ord:"04",
+  time:{build:70, learnMin:6, learnMax:8},
   render(){ return `
   <div class="eyebrow">Unit 04 · Core applied skill</div>
   <h1>Six stages from friction to validated scale</h1>
   <p class="dek">This is the skill the module exists to teach. Everything before it was preparation; the capstone will make you run it for real.</p>
+  ${timeMetaHtml(this)}
 
   <svg class="loop-svg" viewBox="0 0 460 240" role="img" aria-label="Short-cycle loop: problem immersion, smallest useful prototype, controlled trial, rapid feedback, iterate, scale after validation">
     <defs><marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#A9873B"/></marker></defs>
@@ -410,10 +433,12 @@ const UNITS = [
 
 /* ---------------- UNIT 5 ---------------- */
 { id:"u5", short:"Trial Implementation Plan", title:"Trial Implementation Plan", ord:"05",
+  time:{build:50, learnMin:4, learnMax:6},
   render(){ return `
   <div class="eyebrow">Unit 05 · Instrument</div>
   <h1>Five components that make a trial defensible</h1>
   <p class="dek">The plan is the short-cycle loop's paperwork — and the paperwork is where the philosophy either holds or quietly leaks.</p>
+  ${timeMetaHtml(this)}
 
   <p>Every controlled trial at IMLS travels on a Trial Implementation Plan with five named components. The <strong>trial concept</strong> states the problem (from immersion), the hypothesis, the school and cohort, and the bounded window — one paragraph a commander can read and repeat. <strong>Prototype solution development</strong> specifies the MVP: what it is, what it deliberately omits, and who builds it by when. <strong>User onboarding</strong> covers the people the trial actually depends on — the instructors and trainees who must use the prototype competently enough that the trial measures the idea, not their confusion with it. A prototype trialled on unbriefed users generates noise and calls it a result.</p>
 
@@ -446,10 +471,12 @@ const UNITS = [
 
 /* ---------------- UNIT 6 ---------------- */
 { id:"u6", short:"SLI 2040 Framing", title:"SLI 2040 Framing", ord:"06",
+  time:{build:45, learnMin:4, learnMax:6},
   render(){ return `
   <div class="eyebrow">Unit 06 · Institutional frame</div>
   <h1>Where this module sits in SLI 2040</h1>
   <p class="dek">The three sections and the short-cycle loop are not IMLS habits — they are how the institute discharges its lines in a 15-year plan.</p>
+  ${timeMetaHtml(this)}
 
   <div class="provisional"><strong>Provisional text.</strong> This unit is drafted from the IMLS Strategy &amp; Plan (Mar 2026). The authoritative SLI 2040 framing document will replace this prose in v1.1 — institutional language will be aligned to it exactly. Treat the initiative structure below as current; treat the connective prose as a working draft.</div>
 
@@ -484,10 +511,12 @@ const UNITS = [
 
 /* ---------------- CAPSTONE ---------------- */
 { id:"cap", short:"Capstone ★", title:"Capstone — Your Project Through the Loop", ord:"07",
+  time:{build:60, learnMin:20, learnMax:30},
   render(){ return `
   <div class="eyebrow">Capstone · Applied output</div>
   <h1>Walk your live project through the short-cycle loop</h1>
   <p class="dek">Not a quiz — a working document. Pick one of your section's live projects and take it through all six stages. Your entries save automatically and export as a document for your section lead.</p>
+  ${timeMetaHtml(this)}
 
   <p>Choose the project. If your own current project isn't listed, name it — the loop doesn't care what the artefact is, only that the problem is real.</p>
 
@@ -548,8 +577,14 @@ function renderMap(){
     const dot=document.createElement("span");
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
-    const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    const lab=document.createElement("span"); lab.className="lab"; lab.textContent=u.short;
+    a.append(dot,ord,lab);
+    if(u.time){
+      const chip=document.createElement("span"); chip.className="time-chip";
+      chip.textContent=learnRangeLabel(u.time);
+      a.appendChild(chip);
+    }
+    li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
@@ -693,6 +728,31 @@ function wireCapstone(){
 }
 
 /* ---------- utils ---------- */
+/* ---------- Time estimates (build effort vs. learner completion) ---------- */
+function fmtMin(m){
+  if(m>=60){ const h=Math.floor(m/60), r=m%60; return r?`${h}h${r}m`:`${h}h`; }
+  return `${m}m`;
+}
+function learnRangeLabel(t){ return t.learnMin===t.learnMax ? `${t.learnMin} min` : `${t.learnMin}–${t.learnMax} min`; }
+function timeMetaHtml(u){
+  if(!u.time) return "";
+  return `<div class="time-meta"><span>Build <b>~${fmtMin(u.time.build)}</b></span><span>Learner <b>${learnRangeLabel(u.time)}</b></span></div>`;
+}
+function moduleTimeTotals(){
+  return UNITS.reduce((acc,u)=>{
+    if(!u.time) return acc;
+    acc.build+=u.time.build; acc.learnMin+=u.time.learnMin; acc.learnMax+=u.time.learnMax;
+    return acc;
+  },{build:0,learnMin:0,learnMax:0});
+}
+function moduleTimeStatHtml(){
+  const t=moduleTimeTotals();
+  return `<div class="time-stat">
+    <div class="ts-cell"><div class="ts-num">~${fmtMin(t.build)}</div><div class="ts-lab">Est. build time</div></div>
+    <div class="ts-cell"><div class="ts-num">${t.learnMin}–${t.learnMax}m</div><div class="ts-lab">Est. learner time</div></div>
+  </div>`;
+}
+
 function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
 function seededShuffle(arr,seedStr){
   let seed=0; for(const c of seedStr) seed=(seed*31+c.charCodeAt(0))>>>0;

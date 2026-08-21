@@ -51,6 +51,8 @@ main{padding:34px 40px 90px;max-width:820px}
 .dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
 .dot.done{border-color:var(--brass-dark);background:var(--brass)}
 .map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.map .lab{flex:1}
+.map .time-chip{flex:0 0 auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;color:var(--ink-soft);margin-top:3px;white-space:nowrap}
 .progress-wrap{margin:22px 0 4px}
 .progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
@@ -65,7 +67,17 @@ main{padding:34px 40px 90px;max-width:820px}
 /* ---------- Content typography ---------- */
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
-.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:14px;font-style:italic;font-family:var(--serif)}
+.time-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.time-meta span{text-transform:uppercase}
+.time-meta b{color:var(--navy);font-weight:600;text-transform:none}
+
+/* ---------- Time-totals stat tile (landing page) ---------- */
+.time-stat{display:flex;gap:0;border:1px solid var(--line);background:var(--paper);margin:22px 0}
+.time-stat .ts-cell{flex:1;padding:16px 20px;text-align:center}
+.time-stat .ts-cell + .ts-cell{border-left:1px solid var(--line)}
+.time-stat .ts-num{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--navy-deep);line-height:1.1}
+.time-stat .ts-lab{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dark);margin-top:5px}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:68ch}
 p strong{color:var(--navy-deep)}
@@ -182,12 +194,16 @@ section.unit.active{display:block}
 const UNITS = [
 /* ---------------- LANDING ---------------- */
 { id:"start", short:"Orientation", title:"Module 3 — Add & Manage Learners", ord:"—",
+  time:{build:25, learnMin:2, learnMax:3},
   render(){ return `
   <div class="eyebrow">SLI 2040 · iLEARN Educator</div>
   <h1>Add & Manage Learners in iLEARN Educator</h1>
   <p class="dek">A self-paced module for Educator staff who run classes in iLEARN — Learning Science, Learning Technology, Learning System and Learning Educator sections alike. It covers exactly one feature area, in depth: getting learners into a class, reading their status, and retiring or removing them correctly.</p>
+  ${timeMetaHtml(this)}
 
   <p>iLEARN Educator's own course structure runs six modules — Create Class, Assign Content, <strong>Add &amp; Manage Learners</strong>, Analytics Dashboard, Review, and Gradebook &amp; Competency Wheel. This SLI 2040 module covers the third of those: once a class exists and content is assigned, how do learners actually get in, how do you know whether they're engaging, and what happens when a class or a learner is done.</p>
+
+  ${moduleTimeStatHtml()}
 
   <div class="land-grid">
     <div class="card"><div class="card-tag">What you will practise</div>
@@ -211,10 +227,12 @@ const UNITS = [
 
 /* ---------------- UNIT 1 ---------------- */
 { id:"u1", short:"Methods of Adding Learners", title:"Methods of Adding Learners", ord:"01",
+  time:{build:45, learnMin:4, learnMax:6},
   render(){ return `
   <div class="eyebrow">Unit 01 · Getting learners in</div>
   <h1>Individually, or by bulk upload</h1>
   <p class="dek">Two doors into the same class. Both end at the Learners tab; picking the right one is about the size and shape of your intake, not preference.</p>
+  ${timeMetaHtml(this)}
 
   <p>Open a class and click the <strong>Learners</strong> tab. From there, iLEARN Educator gives you two ways to bring people in. <strong>Individually adding learners</strong> — the "+" icon on a brand-new class, or <strong>ADD LEARNER</strong> once the roster exists — opens a single-entry form: you search or key in one person, confirm, done. It is the right tool when you're adding one or two names, correcting an intake after the fact, or handling a late arrival who missed the original roster.</p>
 
@@ -250,10 +268,12 @@ const UNITS = [
 
 /* ---------------- UNIT 2 ---------------- */
 { id:"u2", short:"Learner Status", title:"Learner Status", ord:"02",
+  time:{build:40, learnMin:4, learnMax:5},
   render(){ return `
   <div class="eyebrow">Unit 02 · Reading engagement</div>
   <h1>Healthy, Inactive, Invited</h1>
   <p class="dek">Three words on a dashboard tile — and the only signal you get, at a glance, of whether a class is actually running or quietly stalled.</p>
+  ${timeMetaHtml(this)}
 
   <p>Every class's Learners panel carries three live counters. <strong>Healthy</strong> means the learner has been active in iLEARN and has attempted the course within the last 30 days — the system's working definition of "currently engaged," not a judgement about the person. <strong>Inactive</strong> means that 30-day window has lapsed with no attempt recorded; the account exists and was presumably reachable at some point, but iLEARN isn't seeing activity now. <strong>Invited</strong> means the person has been added to the class but hasn't yet accepted or logged in at all — they are, in effect, still standing at the door.</p>
 
@@ -293,10 +313,12 @@ const UNITS = [
 
 /* ---------------- UNIT 3 ---------------- */
 { id:"u3", short:"Retire vs. Delete", title:"Retire vs. Delete", ord:"03",
+  time:{build:60, learnMin:5, learnMax:7},
   render(){ return `
   <div class="eyebrow">Unit 03 · Core applied skill</div>
   <h1>Retire vs. remove — for learners and for classes</h1>
   <p class="dek">Two ways to close something out. One keeps the door unlocked; the other doesn't. The whole skill is knowing, in the moment, which you actually mean.</p>
+  ${timeMetaHtml(this)}
 
   <p>Both a learner within a class and a whole class carry the same pair of end-states. <strong>Retiring</strong> a learner — via <strong>Retire/unretire learners</strong> on the class's Learners panel — keeps their record and progress intact and tracked in iLEARN; they can still view course content under Past Tasks, and if they're later <strong>unretired</strong>, they resume exactly where they left off. Nothing is thrown away; the action is fully reversible. <strong>Removing (deleting)</strong> a learner takes them out of the class outright. <strong>Retiring a class</strong> works the same way at the class level: a retired class still shows on the Educator home page and its learners can still reach the content under Past Tasks. <strong>Deleting</strong> a class does not offer that safety net.</p>
 
@@ -341,10 +363,12 @@ const UNITS = [
 
 /* ---------------- UNIT 4 ---------------- */
 { id:"u4", short:"Quick Reference", title:"Quick Reference", ord:"04",
+  time:{build:20, learnMin:2, learnMax:3},
   render(){ return `
   <div class="eyebrow">Unit 04 · Summary</div>
   <h1>Do / don't, at a glance</h1>
   <p class="dek">Not a new topic — a condensed version of Units 01–03 for when you're mid-task and just need the rule, not the reasoning.</p>
+  ${timeMetaHtml(this)}
 
   <table class="qref">
     <tr><th>Situation</th><th>Do</th><th>Don't</th></tr>
@@ -397,8 +421,14 @@ function renderMap(){
     const dot=document.createElement("span");
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
-    const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    const lab=document.createElement("span"); lab.className="lab"; lab.textContent=u.short;
+    a.append(dot,ord,lab);
+    if(u.time){
+      const chip=document.createElement("span"); chip.className="time-chip";
+      chip.textContent=learnRangeLabel(u.time);
+      a.appendChild(chip);
+    }
+    li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
@@ -477,6 +507,31 @@ function wireStart(){
 }
 
 /* ---------- utils ---------- */
+/* ---------- Time estimates (build effort vs. learner completion) ---------- */
+function fmtMin(m){
+  if(m>=60){ const h=Math.floor(m/60), r=m%60; return r?`${h}h${r}m`:`${h}h`; }
+  return `${m}m`;
+}
+function learnRangeLabel(t){ return t.learnMin===t.learnMax ? `${t.learnMin} min` : `${t.learnMin}–${t.learnMax} min`; }
+function timeMetaHtml(u){
+  if(!u.time) return "";
+  return `<div class="time-meta"><span>Build <b>~${fmtMin(u.time.build)}</b></span><span>Learner <b>${learnRangeLabel(u.time)}</b></span></div>`;
+}
+function moduleTimeTotals(){
+  return UNITS.reduce((acc,u)=>{
+    if(!u.time) return acc;
+    acc.build+=u.time.build; acc.learnMin+=u.time.learnMin; acc.learnMax+=u.time.learnMax;
+    return acc;
+  },{build:0,learnMin:0,learnMax:0});
+}
+function moduleTimeStatHtml(){
+  const t=moduleTimeTotals();
+  return `<div class="time-stat">
+    <div class="ts-cell"><div class="ts-num">~${fmtMin(t.build)}</div><div class="ts-lab">Est. build time</div></div>
+    <div class="ts-cell"><div class="ts-num">${t.learnMin}–${t.learnMax}m</div><div class="ts-lab">Est. learner time</div></div>
+  </div>`;
+}
+
 function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
 function seededShuffle(arr,seedStr){
   let seed=0; for(const c of seedStr) seed=(seed*31+c.charCodeAt(0))>>>0;
