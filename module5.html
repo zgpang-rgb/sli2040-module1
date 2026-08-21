@@ -82,6 +82,10 @@ main{padding:34px 40px 90px;max-width:820px}
 .time-total{font-family:var(--mono);font-size:.85rem;color:var(--heading);display:flex;gap:22px;flex-wrap:wrap}
 .time-total b{display:block;font-size:1.15rem;color:var(--brass-text)}
 .time-total .lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:2px}
+.outcomes ul{list-style:none}
+.outcomes li{position:relative;padding-left:22px;margin-bottom:12px;font-size:.92rem;line-height:1.55}
+.outcomes li:last-child{margin-bottom:0}
+.outcomes li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border:1.5px solid var(--brass);transform:rotate(45deg)}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--heading);text-wrap:balance;margin-bottom:6px}
 .dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
@@ -247,6 +251,16 @@ const UNITS = [
   <p>Module 5 of the iLEARN Editor is called <strong>Review</strong>, and it holds two related features: <em class="term">Access Review Activities</em> — finding the work waiting for you — and <em class="term">Accept for Review or Return for Rework</em> — deciding what happens to it. The mechanics of each screen are simple enough to learn in minutes. What this module actually trains is the part the screens don't teach: the judgment behind the click, what pulls that judgment off course under real conditions, and where a review stops being a review at all and becomes something that needs a different kind of attention.</p>
 
   <p>The suggested path runs top to bottom in the module map, because each unit leans lightly on the one before it. But every unit is open from the start — if you already know the mechanics and want the judgment content, skip to Unit 03. Your progress is saved in this browser either way.</p>
+
+  <div class="card outcomes"><div class="card-tag">By the end of this module, you will be able to</div>
+    <ul>
+      <li>Diagnose why a submission isn't appearing in your Review queue by checking the two-gate prerequisite — assigned, then completed — before assuming a platform fault.</li>
+      <li>Choose correctly between Accept for Review and Return for Rework, applying the right requirement to each (rubric grading required vs. feedback required) rather than treating the two verdicts as interchangeable.</li>
+      <li>Recognise the two verdict-drift pulls — rubber-stamping marginal work and over-returning work that has genuinely passed — and name which one is acting on you before you click, including in situations where both verdicts are genuinely defensible.</li>
+      <li>Identify when a submission has crossed the referral boundary — a suspected integrity issue, a platform fault, or a learner support need — and route it to the right person instead of resolving it inside an ordinary review verdict.</li>
+      <li>Explain plainly to a learner why their progress isn't showing 100%, tying it back to how Review sits among the iLEARN Editor's six modules.</li>
+    </ul>
+  </div>
 
   <div class="card"><div class="card-tag">Module time estimate</div>
     <div class="time-total">
