@@ -248,7 +248,17 @@ const UNITS = [
 
   <p>Open a class and click the <strong>Learners</strong> tab. From there, iLEARN Educator gives you two ways to bring people in. <strong>Individually adding learners</strong> — the "+" icon on a brand-new class, or <strong>ADD LEARNER</strong> once the roster exists — opens a single-entry form: you search or key in one person, confirm, done. It is the right tool when you're adding one or two names, correcting an intake after the fact, or handling a late arrival who missed the original roster.</p>
 
+  <figure class="doc-fig">
+    <img src="assets/individual-upload.png" alt="Class panel with the ADD LEARNER button highlighted in red, captioned: to add learners to a class, click Learners tab and ADD LEARNER if it is a brand-new class" loading="lazy">
+    <figcaption>Individual add — the ADD LEARNER button on the Learners tab</figcaption>
+  </figure>
+
   <p><strong>Bulk adding learners</strong> — the upload icon next to it, or <strong>ADD LEARNERS WITH CSV</strong> — takes a prepared spreadsheet and enrols an entire cohort in one pass. This is the tool for a fresh course intake: twenty, forty, two hundred names at once. The trade-off is preparation: a bulk upload is only as good as the CSV feeding it, so a malformed file (wrong ID format, missing required columns) fails the whole batch rather than one row. Individually adding one learner needs no preparation at all, but doing that forty times is forty times the chance to mistype an ID, and forty times the clicks.</p>
+
+  <figure class="doc-fig">
+    <img src="assets/bulk-upload.png" alt="Class panel with the ADD LEARNERS WITH CSV button highlighted in red, captioned: if you need to add a large group of learners at a time, leverage the Bulk Upload function" loading="lazy">
+    <figcaption>Bulk add — the ADD LEARNERS WITH CSV button on the Learners tab</figcaption>
+  </figure>
 
   <figure class="doc-fig">
     <img src="assets/add-learners.png" alt="IML Development Branch class screen with the individual-add plus icon and the bulk-upload icon both circled in red" loading="lazy">
@@ -286,6 +296,11 @@ const UNITS = [
   <h1>Healthy, Inactive, Invited</h1>
   <p class="dek">Three words on a dashboard tile — and the only signal you get, at a glance, of whether a class is actually running or quietly stalled.</p>
   ${timeMetaHtml(this)}
+
+  <figure class="doc-fig">
+    <img src="assets/unit2-overview.png" alt="IML Development Branch class and Home Page screens with three callouts: Learner Status (Healthy, Inactive, Invited), Retiring vs. Removing Learners, and Retiring vs. Deleting Classes" loading="lazy">
+    <figcaption>The three things this unit and Unit 03 cover, in one view</figcaption>
+  </figure>
 
   <p>Every class's Learners panel carries three live counters. <strong>Healthy</strong> means the learner has been active in iLEARN and has attempted the course within the last 30 days — the system's working definition of "currently engaged," not a judgement about the person. <strong>Inactive</strong> means that 30-day window has lapsed with no attempt recorded; the account exists and was presumably reachable at some point, but iLEARN isn't seeing activity now. <strong>Invited</strong> means the person has been added to the class but hasn't yet accepted or logged in at all — they are, in effect, still standing at the door.</p>
 
