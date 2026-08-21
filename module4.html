@@ -55,6 +55,7 @@ main{padding:34px 40px 90px;max-width:860px}
 .dot.visited{border-color:var(--brass);background:linear-gradient(var(--brass) 0 0) left/50% 100% no-repeat}
 .dot.done{border-color:var(--brass-dark);background:var(--brass)}
 .map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.map .mtime{margin-left:auto;padding-left:8px;font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);white-space:nowrap;flex:0 0 auto}
 .progress-wrap{margin:22px 0 4px}
 .progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
@@ -67,6 +68,14 @@ main{padding:34px 40px 90px;max-width:860px}
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
 h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px}
 .dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+
+/* ---------- Time estimate chip ---------- */
+.time-chip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 22px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft)}
+.time-chip .tc-item{white-space:nowrap}
+.time-chip .tc-sep{color:var(--line)}
+.time-chip .tc-total{color:var(--brass-dark);font-weight:600}
+.time-overall{font-family:var(--mono);font-size:.76rem;letter-spacing:.05em;color:var(--brass-dark);margin:-10px 0 22px}
+.card-time{display:block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase}
 h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
 p{margin-bottom:14px;max-width:70ch}
 p strong{color:var(--navy-deep)}
@@ -210,28 +219,32 @@ input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
 
 const UNITS = [
 /* ---------------- LANDING ---------------- */
-{ id:"start", short:"Orientation", title:"Module 4 — Analytics Dashboard", ord:"—",
+{ id:"start", short:"Orientation", title:"Module 4 — Analytics Dashboard", ord:"—", time:{read:1,do:0},
   render(){ return `
   <div class="eyebrow">iLEARN Educator · Module 4 · Analytics Dashboard</div>
   <h1>Read the dashboard, then decide what to do about it</h1>
   <p class="dek">A self-paced module for Educator staff across Learning Science, Learning Technology, Learning System and Learning Educator sections who run classes in iLEARN Educator.</p>
+  <div class="time-overall" id="timeOverall"></div>
 
   <p>Module 4 gives educators three things: a way to see whether learners are actually moving through assigned content, a way to see how they're performing once they get there, and — the part that actually matters — a basis for deciding what to do next. Those are the deck's own three parts, and they're this module's three parts too:</p>
 
   <div class="land-grid">
     <div class="card"><div class="card-tag">Part 1</div>
-      <p style="margin:0;font-size:.9rem"><strong>Monitor completion</strong> — module-level and learner-level views of who has started, finished, and how long it took.</p></div>
+      <p style="margin:0;font-size:.9rem"><strong>Monitor completion</strong> — module-level and learner-level views of who has started, finished, and how long it took.</p>
+      <div class="card-time" id="p1Time"></div></div>
     <div class="card"><div class="card-tag">Part 2</div>
-      <p style="margin:0;font-size:.9rem"><strong>Monitor performance, competencies &amp; feedback</strong> — exam scores, the metacognition wheel, class-wide competency, and learner survey responses.</p></div>
+      <p style="margin:0;font-size:.9rem"><strong>Monitor performance, competencies &amp; feedback</strong> — exam scores, the metacognition wheel, class-wide competency, and learner survey responses.</p>
+      <div class="card-time" id="p2Time"></div></div>
   </div>
   <div class="land-grid">
     <div class="card"><div class="card-tag">Part 3</div>
-      <p style="margin:0;font-size:.9rem"><strong>Make instructional decisions</strong> — turning the objective-level and question-level tables into an actual next move.</p></div>
+      <p style="margin:0;font-size:.9rem"><strong>Make instructional decisions</strong> — turning the objective-level and question-level tables into an actual next move.</p>
+      <div class="card-time" id="p3Time"></div></div>
     <div class="card"><div class="card-tag">How this module checks you</div>
       <p style="margin:0;font-size:.9rem">Each unit shows a mock dashboard view built from the deck's real field names, then asks you to either read it correctly or decide the right action from it. One check has no single right answer — the dashboard genuinely can't settle it alone, and you'll be told so.</p></div>
   </div>
 
-  <p>The suggested path runs Part 1 → 2 → 3 because later units lean on habits the earlier ones build — reading a table for what it actually says before reaching for an action. But every unit stands alone; jump to whatever your class needs today. Progress is saved in this browser.</p>
+  <p>The suggested path runs Part 1 → 2 → 3 because later units lean on habits the earlier ones build — reading a table for what it actually says before reaching for an action. But every unit stands alone; jump to whatever your class needs today. Progress is saved in this browser. Each unit lists two time estimates: how long the explainer takes to read, and how long the check tends to take to work through — actual pace will vary.</p>
 
   <p><label for="nameIn" style="font-size:.88rem;color:var(--ink-soft)">Your name (optional — shown next to your saved progress only):</label><br>
   <input type="text" id="nameIn" placeholder="e.g. Ms. Tan" style="margin-top:6px;width:100%;max-width:260px"> <button class="btn ghost" id="nameSave" style="margin-left:8px">Save</button></p>
@@ -239,11 +252,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 1 ---------------- */
-{ id:"u1", part:"Part 1 · Monitor completion", short:"Module Status", title:"See Status of Modules Assigned", ord:"01",
+{ id:"u1", part:"Part 1 · Monitor completion", short:"Module Status", title:"See Status of Modules Assigned", ord:"01", time:{read:2,do:2},
   render(){ return `
   <div class="eyebrow">Unit 01 · As a class</div>
   <h1>Completion, or the lack of it</h1>
   <p class="dek">The first question any educator needs answered: is the class actually moving through what was assigned?</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>"See Status of Modules Assigned" is the class-wide view of completion. For each module you'll see how many learners have finished it and the average time those learners took to get through it. Used together, those two numbers tell two different stories: a low completed-learner count against a normal completion time usually means people haven't started or are behind schedule, not that the content is a problem for the people who did engage. A high completed-learner count against an unusually long completion time tells the opposite story — nobody is stuck, but the content may be taking longer than it should.</p>
 
@@ -284,11 +298,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 2 ---------------- */
-{ id:"u2", short:"Learner Status", title:"See Learner's Assignments Status", ord:"02",
+{ id:"u2", short:"Learner Status", title:"See Learner's Assignments Status", ord:"02", time:{read:1,do:2},
   render(){ return `
   <div class="eyebrow">Unit 02 · By learner</div>
   <h1>From "who's behind" to "who needs a call"</h1>
   <p class="dek">The class view tells you a module is behind. The learner view tells you who, specifically, and gives you a reason.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>Switching from the class view to the learner-level view for a given module surfaces two fields the class rollup can't show: each learner's average number of attempts per probe, and their last access date. Attempts tell you whether someone is working through content and struggling, or has barely touched it. Last access tells you whether "hasn't finished" means "actively working on it slowly" or "hasn't opened it in two weeks." Those are different problems needing different outreach — one a nudge, the other a conversation.</p>
 
@@ -329,11 +344,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 3 ---------------- */
-{ id:"u3", part:"Part 2 · Monitor performance, competencies & feedback", short:"Exam Performance", title:"Know Exam Performance", ord:"03",
+{ id:"u3", part:"Part 2 · Monitor performance, competencies & feedback", short:"Exam Performance", title:"Know Exam Performance", ord:"03", time:{read:1,do:2},
   render(){ return `
   <div class="eyebrow">Unit 03 · As a class</div>
   <h1>Average score is the least interesting number on this screen</h1>
   <p class="dek">Exam Level and Learner Level views exist for the same reason the completion views split in two: an average can hide exactly the thing you need to see.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>"Know Exam Performance" gives you total completed learners, average time taken, average score, and — the field most educators skip past — the highest and lowest score in the class. The deck's own framing is precise: this view helps identify exams or modules with the lowest averages, <em class="term">or the widest score gaps</em>. Those are two separate red flags. An exam can have a perfectly respectable average and still be hiding a learner who scored far below everyone else — a pattern the average alone will never surface.</p>
 
@@ -373,11 +389,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 4 ---------------- */
-{ id:"u4", short:"Metacognition Progress", title:"Metacognition Progress", ord:"04",
+{ id:"u4", short:"Metacognition Progress", title:"Metacognition Progress", ord:"04", time:{read:3,do:2},
   render(){ return `
   <div class="eyebrow">Unit 04 · Per module</div>
   <h1>Knowing what you know, and what that looks like changing</h1>
   <p class="dek">The metacognition wheel isn't a score — it's a map of awareness, and it's the one view you have to click into each module individually to see.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>Metacognition Progress tracks where each learner sits on a four-stage wheel of competence and incompetence, conscious and unconscious. It matters because two learners can answer the same question wrong for very different reasons: one doesn't know the material and doesn't know that they don't — the more dangerous gap — while the other knows exactly where their weak spot is and is actively closing it. The wheel is how the dashboard tells those two apart.</p>
 
@@ -429,11 +446,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 5 ---------------- */
-{ id:"u5", short:"Class Competency", title:"Know Class's Competency Across Modules", ord:"05",
+{ id:"u5", short:"Class Competency", title:"Know Class's Competency Across Modules", ord:"05", time:{read:2,do:2},
   render(){ return `
   <div class="eyebrow">Unit 05 · Across modules</div>
   <h1>One bar can hide five modules</h1>
   <p class="dek">How content was deployed changes what the chart shows you — but never what data actually exists.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>"Know Class's Competency Across Modules" gives a class-wide, color-coded view of where competency sits, set as Learning: red for unconscious incompetence, orange for conscious incompetence, light green for unconscious competence, dark green for conscious competence — the same four stages from Unit 04's wheel, now aggregated across a whole class.</p>
 
@@ -477,11 +495,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 6 ---------------- */
-{ id:"u6", short:"Learner Feedback", title:"Know Learner's Feedback", ord:"06",
+{ id:"u6", short:"Learner Feedback", title:"Know Learner's Feedback", ord:"06", time:{read:1,do:2},
   render(){ return `
   <div class="eyebrow">Unit 06 · From survey</div>
   <h1>Feedback that only exists if you asked for it</h1>
   <p class="dek">This view has one precondition that's easy to forget, and forgetting it produces a screen that looks broken when it isn't.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>"Know Learner's Feedback" surfaces learners' own responses to survey questions — content clarity, whether a lesson had the right amount of material, whether self-paced content prepared them adequately, and whatever else a questionnaire asks. Critically, this data <strong>only appears if the educator has assigned a questionnaire to that module.</strong> No questionnaire, no data — regardless of how long the module has been running or how many learners have completed it.</p>
 
@@ -520,11 +539,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 7 ---------------- */
-{ id:"u7", part:"Part 3 · Make instructional decisions", short:"Objectives to Intervene ★", title:"Decide Problematic Learning Objectives to Intervene", ord:"07",
+{ id:"u7", part:"Part 3 · Make instructional decisions", short:"Objectives to Intervene ★", title:"Decide Problematic Learning Objectives to Intervene", ord:"07", time:{read:1,do:4},
   render(){ return `
   <div class="eyebrow">Unit 07 · Core applied skill</div>
   <h1>The table can find the problem. It can't always tell you why.</h1>
   <p class="dek">This is where completion, performance, and metacognition data converge into a decision — and where the dashboard's limits become as important as what it shows.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>"Decide Problematic Learning Objectives to Intervene" rolls each learning objective up with its priority, content type, total attempts, average attempts and time per learner, and all four competence percentages from Unit 04's wheel. Read together, these numbers show which objectives learners are sailing through and which ones are consuming disproportionate attempts and time without the competence numbers to show for it — the deck's own framing is deciding which objectives are too challenging, or not challenging enough, for learners.</p>
 
@@ -564,11 +584,12 @@ const UNITS = [
 },
 
 /* ---------------- UNIT 8 ---------------- */
-{ id:"u8", short:"Questions to Revise", title:"Decide Quiz/Exam Questions to Revise", ord:"08",
+{ id:"u8", short:"Questions to Revise", title:"Decide Quiz/Exam Questions to Revise", ord:"08", time:{read:1,do:2},
   render(){ return `
   <div class="eyebrow">Unit 08 · Per question</div>
   <h1>One bad question is not one bad module</h1>
   <p class="dek">The last view zooms in past the objective, down to the individual question — and that zoom level is the whole point of this unit.</p>
+  <div class="time-chip" id="timeChip"></div>
 
   <p>"Decide Quiz/Exam Questions to Revise" gives average score and average time per question, plus the same four competence percentages, but at question granularity rather than objective granularity. The deck's framing: by focusing on questions that were frequently answered incorrectly, educators can pinpoint specific knowledge gaps and revise teaching materials accordingly — or, just as often, pinpoint a flawed question rather than a flawed learner.</p>
 
@@ -633,6 +654,21 @@ const mapList=document.getElementById("mapList");
 function unitById(id){ return UNITS.find(u=>u.id===id); }
 function currentId(){ const h=location.hash.replace("#",""); return unitById(h)?h:"start"; }
 
+/* ---------- Time estimates ---------- */
+function fmtMin(n){ return "~"+n+" min"; }
+function partGroups(){
+  const groups=[]; let cur=null;
+  UNITS.forEach(u=>{
+    if(u.id==="start") return;
+    if(u.part){ cur={label:u.part, ids:[]}; groups.push(cur); }
+    if(cur) cur.ids.push(u.id);
+  });
+  return groups;
+}
+function unitTotal(u){ return u.time ? u.time.read+u.time.do : 0; }
+function idsTotal(ids){ return ids.reduce((sum,id)=>sum+unitTotal(unitById(id)),0); }
+function moduleTotal(){ return idsTotal(UNITS.filter(u=>u.id!=="start").map(u=>u.id)); }
+
 function renderMap(){
   mapList.innerHTML="";
   UNITS.forEach(u=>{
@@ -650,12 +686,17 @@ function renderMap(){
     dot.className="dot"+(state.done[u.id]?" done":(state.visited[u.id]?" visited":""));
     const ord=document.createElement("span"); ord.className="ord"; ord.textContent=u.ord;
     const lab=document.createElement("span"); lab.textContent=u.short;
-    a.append(dot,ord,lab); li.appendChild(a); mapList.appendChild(li);
+    a.append(dot,ord,lab);
+    if(u.id!=="start"&&u.time){
+      const mtime=document.createElement("span"); mtime.className="mtime"; mtime.textContent=fmtMin(unitTotal(u));
+      a.append(mtime);
+    }
+    li.appendChild(a); mapList.appendChild(li);
   });
   const doneCount=UNITS.filter(u=>u.id!=="start"&&state.done[u.id]).length;
   const total=UNITS.length-1;
   document.getElementById("progFill").style.width=(doneCount/total*100)+"%";
-  document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete";
+  document.getElementById("progLabel").textContent=doneCount+" / "+total+" complete · "+fmtMin(moduleTotal())+" total";
   const ll=document.getElementById("learnerLine");
   ll.innerHTML = state.name
     ? `Learner: <strong>${escapeHtml(state.name)}</strong> · <button id="resetAll">reset all progress</button>`
@@ -669,7 +710,18 @@ function renderUnit(){
   state.visited[u.id]=true; saveState(state);
   mainEl.innerHTML=`<section class="unit active" aria-labelledby="unit-title">${u.render()}${pagerHtml(u)}</section>`;
   if(u.check) wireCheck(u);
-  if(u.id==="start") wireStart();
+  if(u.id==="start"){
+    wireStart();
+    const ov=document.getElementById("timeOverall");
+    if(ov) ov.textContent="Full module: "+fmtMin(moduleTotal())+" at a typical pace (reading the explainers plus working through all 8 checks).";
+    partGroups().forEach((g,i)=>{
+      const el=document.getElementById("p"+(i+1)+"Time");
+      if(el) el.textContent="Estimated time: "+fmtMin(idsTotal(g.ids));
+    });
+  } else if(u.time){
+    const chip=document.getElementById("timeChip");
+    if(chip) chip.innerHTML=`<span class="tc-item">${fmtMin(u.time.read)} to read</span><span class="tc-sep">·</span><span class="tc-item">${fmtMin(u.time.do)} to work through the check</span><span class="tc-sep">·</span><span class="tc-item tc-total">${fmtMin(unitTotal(u))} total</span>`;
+  }
   window.scrollTo({top:0});
   renderMap();
 }

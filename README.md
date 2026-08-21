@@ -36,6 +36,8 @@ One check (Unit 07, "Decide Problematic Learning Objectives to Intervene") is de
 
 The module is self-paced: all 8 units are reachable from the sidebar map in any order, a suggested Part 1 → 2 → 3 path is offered but not enforced, and progress (units visited/completed, answers chosen) persists in `localStorage` so a learner can leave and resume.
 
+Every unit, each of the three parts, and the module as a whole show an estimated time — split into time to read the explainer and time to work through the check, since those are different kinds of effort. The whole module runs about 30 minutes at a typical pace. Estimates are derived from word counts and option counts, not measured usage, so treat them as a planning guide rather than a promise.
+
 ### What's explicitly deferred
 
 - Content from the other iLEARN Educator modules visible in the source deck's own navigation (Module 1: Create Class, Module 2: Assign Content, Module 3: Add & Manage Learners, Module 5: Review, Module 6: Gradebook & Competency Wheel) — out of scope for this module.
