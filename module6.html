@@ -323,6 +323,36 @@ const UNITS = [
 
   <p>Every competency branch in the gradebook carries a <strong>Visibility</strong> setting: <em class="term">Hidden</em>, <em class="term">Visible</em>, or <em class="term">Visible After</em> a chosen date and time. It sits quietly next to the branch name, and it's easy to leave at whatever the framework defaulted to — but it controls something real: whether a learner opening <em>My Portfolio</em> sees a grade the moment it's saved, or not until you say so.</p>
 
+  <svg class="loop-svg" viewBox="0 0 480 150" role="img" aria-label="Three visibility settings compared: Hidden stays closed to the learner until switched by hand; Visible After stays closed then opens automatically at a chosen date; Visible is open to the learner immediately from the moment a grade is saved">
+    <line x1="160" y1="25" x2="160" y2="128" stroke="#D8CFB8" stroke-width="1"/>
+    <line x1="320" y1="25" x2="320" y2="128" stroke="#D8CFB8" stroke-width="1"/>
+    <text x="80" y="38" text-anchor="middle" font-family="Consolas,monospace" font-size="12" font-weight="bold" fill="#7E6425">Hidden</text>
+    <rect x="10" y="58" width="140" height="16" fill="#94502E"/>
+    <text x="80" y="94" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="#5A6470">stays closed until</text>
+    <text x="80" y="107" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="#5A6470">switched by hand</text>
+
+    <text x="240" y="38" text-anchor="middle" font-family="Consolas,monospace" font-size="12" font-weight="bold" fill="#7E6425">Visible After</text>
+    <rect x="170" y="58" width="70" height="16" fill="#94502E"/>
+    <rect x="240" y="58" width="70" height="16" fill="#40634C"/>
+    <line x1="240" y1="50" x2="240" y2="82" stroke="#7E6425" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <path d="M 240 47 L 244 52 L 236 52 Z" fill="#7E6425"/>
+    <text x="240" y="94" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="#5A6470">closed, then opens</text>
+    <text x="240" y="107" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="#5A6470">at your chosen date</text>
+
+    <text x="400" y="38" text-anchor="middle" font-family="Consolas,monospace" font-size="12" font-weight="bold" fill="#7E6425">Visible</text>
+    <rect x="330" y="58" width="140" height="16" fill="#40634C"/>
+    <text x="400" y="94" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="#5A6470">open immediately,</text>
+    <text x="400" y="107" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="#5A6470">from the moment saved</text>
+
+    <g font-family="Consolas,monospace" font-size="9" fill="#5A6470">
+      <rect x="10" y="122" width="10" height="10" fill="#94502E"/>
+      <text x="24" y="131">closed to the learner</text>
+      <rect x="170" y="122" width="10" height="10" fill="#40634C"/>
+      <text x="184" y="131">open to the learner</text>
+    </g>
+  </svg>
+  <div class="loop-cap">Same three settings, read as what the learner can see and when</div>
+
   <img class="shot" src="${img_visibility}" alt="Visibility dropdown on a competency branch, showing Hidden, Visible, and Visible After with a date and time picker">
   <div class="shot-cap">The Visibility control on a competency branch</div>
 
@@ -407,6 +437,37 @@ const UNITS = [
   <p class="dek">Manual entry is for what the system can't grade. Tagging is for what it already does — if you tell it where the score belongs.</p>
 
   <p>Where a competency <em>does</em> have an online exam, quiz, or graded assignment behind it, the platform can roll that score into the framework automatically — but only if the assignment is <strong>tagged</strong> to the right branch. Tagging happens on the same <em>Add Assignment</em> screen where goals are added: a <em>Competencies</em> panel with an <strong>Add Competencies</strong> button, next to panels for reminders and tags.</p>
+
+  <svg class="loop-svg" viewBox="0 0 480 230" role="img" aria-label="Diagram: an Add Assignment leads two ways. Tagged, it goes through the Competencies panel to a framework branch and the wheel updates. Left untagged, it dead-ends and the framework branch stays unchanged, with no error shown anywhere.">
+    <defs>
+      <marker id="arrHead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7E6425"/></marker>
+      <marker id="arrHeadMuted" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94502E"/></marker>
+    </defs>
+    <rect x="10" y="85" width="120" height="60" rx="3" fill="#1C3A5E"/>
+    <text x="70" y="111" text-anchor="middle" font-family="Consolas,monospace" font-size="10.5" fill="#F4EFE3">Add</text>
+    <text x="70" y="125" text-anchor="middle" font-family="Consolas,monospace" font-size="10.5" fill="#F4EFE3">Assignment</text>
+
+    <line x1="130" y1="98" x2="147" y2="50" stroke="#7E6425" stroke-width="1.5" marker-end="url(#arrHead)"/>
+    <rect x="150" y="15" width="160" height="60" rx="3" fill="#D9C795" stroke="#7E6425"/>
+    <text x="230" y="41" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#24303C">Competencies panel</text>
+    <text x="230" y="55" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#24303C">→ tag to branch</text>
+
+    <line x1="310" y1="45" x2="327" y2="45" stroke="#7E6425" stroke-width="1.5" marker-end="url(#arrHead)"/>
+    <rect x="330" y="15" width="140" height="60" rx="3" fill="#40634C"/>
+    <text x="400" y="41" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#F4EFE3">Navigation Practical</text>
+    <text x="400" y="55" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#F4EFE3">✓ wheel updates</text>
+
+    <line x1="130" y1="132" x2="147" y2="180" stroke="#94502E" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrHeadMuted)"/>
+    <rect x="150" y="155" width="160" height="60" rx="3" fill="#FCF9F0" stroke="#D8CFB8" stroke-dasharray="3,3"/>
+    <text x="230" y="181" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#5A6470">left untagged</text>
+    <text x="230" y="195" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#5A6470">(no branch chosen)</text>
+
+    <line x1="310" y1="185" x2="327" y2="185" stroke="#94502E" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrHeadMuted)"/>
+    <rect x="330" y="155" width="140" height="60" rx="3" fill="#F6EDE4" stroke="#94502E" stroke-dasharray="3,3"/>
+    <text x="400" y="181" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#94502E">framework branch</text>
+    <text x="400" y="195" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#94502E">— unchanged, no error</text>
+  </svg>
+  <div class="loop-cap">Same assignment, two outcomes — only the tag decides which</div>
 
   <p>An untagged assignment still runs, still gets a score, and still shows up in whatever the assignment list normally shows — it simply never reaches the framework. The wheel won't move, the branch grade won't update, and nothing in the interface flags this as an error, because from the platform's point of view nothing went wrong: you built an assignment and didn't ask it to report anywhere. The gap only becomes visible later, when someone checks the wheel and finds a branch that looks untouched despite real work having happened.</p>
 
