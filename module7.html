@@ -134,6 +134,9 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 /* ---------- Landing ---------- */
 .land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
 .land-grid .card{margin:0}
+.lo-list{list-style:decimal;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+.lo-list li{font-size:.92rem;line-height:1.55;max-width:66ch}
+.lo-list li strong{color:var(--navy-deep)}
 .time-table{width:100%;border-collapse:collapse;font-size:.86rem}
 .time-table th{text-align:left;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400;padding:0 10px 8px 0;border-bottom:1px solid var(--line)}
 .time-table td{padding:7px 10px 7px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
@@ -239,7 +242,16 @@ const UNITS = [
 
   <p style="font-size:.88rem;color:var(--ink-soft);border-left:3px solid var(--brass-pale);padding-left:12px"><strong>Scope note:</strong> the source deck for this module ("iLEARN Educator Learner Activity") is a single hands-on practical that exercises Modules 1 through 6 together across five Learner Activities — Create Class, Assign Content, Add &amp; Manage Learners, Review, and Gradebook — rather than teaching a new feature area. This module follows that structure: five units, one per Learner Activity, each pairing a short explainer with a scenario check drawn from the same platform, then a capstone that walks one of your own classes through all five.</p>
 
-  <p>By the end of this module you should be able to take a class from nothing — stand it up, open its Communicator channels, assign its three content types correctly, get its learners enrolled by the right method, and run the review-and-grade loop through to a defensible outcome — without treating any of the five as an isolated task.</p>
+  <div class="card"><div class="card-tag">Learning outcomes</div>
+    <p style="margin:0 0 10px;font-size:.9rem;color:var(--ink-soft)">By the end of this module, you will be able to:</p>
+    <ol class="lo-list">
+      <li><strong>Stand up a class and open it correctly</strong> — create the class shell, then use the Communicator's Forum and Calendar features for the persistent message and the dated commitment each is actually built for.</li>
+      <li><strong>Assign content by the type it needs</strong> — pick Learning, Exam, or Questionnaire for a content package, and lock down the four settings an Exam needs (remediation, exit, confidence markers, coach panel) before it behaves like a real graded attempt.</li>
+      <li><strong>Enroll learners by the right method</strong> — choose individual add versus CSV upload for a given intake, and treat the CSV path's irreversible-invitation checkbox as a real control, not boilerplate.</li>
+      <li><strong>Run the review-and-grade loop to a defensible outcome</strong> — use Return for Rework as a gate before rubric grading, not a substitute for it, so a fixable gap gets fixed before it becomes a final score.</li>
+      <li><strong>Make the framework-sequencing call and defend it</strong> — decide whether a Competency Framework goes on a class before or after learner enrollment, and explain the trade-off of whichever order you pick.</li>
+    </ol>
+  </div>
 
   <p>The suggested path runs top to bottom, because the units follow the order a class is actually built in: nothing to assign or grade exists until the class does. But every unit is open from the start. If you already run one part of this daily, skip to the unit you need or straight to the capstone and work backwards from what it asks.</p>
 
