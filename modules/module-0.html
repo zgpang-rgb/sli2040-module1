@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>iLEARN Educator SLP</title>
+<style>
+/* ============================================================
+   iLEARN Educator SLP — Module 0 self-learning package
+   Shell: IMLS navy / ivory / brass (house style).
+   Recreated product widgets: iLEARN's own red / green / blue / orange.
+   ============================================================ */
+:root{
+  --navy-deep:#10233C; --navy:#1C3A5E; --navy-soft:#2B4E77;
+  --ivory:#F4EFE3; --paper:#FCF9F0; --ivory-dim:#EAE3D2; --line:#D8CFB8;
+  --brass:#A9873B; --brass-dark:#7E6425; --brass-pale:#D9C795;
+  --ink:#24303C; --ink-soft:#5A6470;
+  --moss:#3E7A52; --moss-bg:#EAF3EC;
+  --rust:#94502E; --rust-bg:#F6EDE4;
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --sans:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:Consolas,"SF Mono","Courier New",monospace;
+  /* iLEARN product palette — used only inside recreated-UI widgets */
+  --il-bg:#FFFFFF; --il-panel:#F5F6F8; --il-border:#E3E6EA; --il-ink:#26313D; --il-ink-soft:#6B7684;
+  --il-red:#C81E3A; --il-red-dim:#F6E2E6;
+  --il-green:#2E9E5B; --il-blue:#2F6FED; --il-orange:#E08A2A; --il-purple:#7A5FD1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65}
+
+/* ---------- Header ---------- */
+header{background:var(--navy-deep);color:var(--ivory);padding:0}
+.hd-inner{max-width:1220px;margin:0 auto;padding:20px 28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.wordmark{font-family:var(--serif);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase}
+.wordmark b{color:var(--brass-pale);font-weight:600}
+.hd-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:#9FB0C4;text-transform:uppercase}
+.hd-rule{height:3px;background:linear-gradient(90deg,var(--brass) 0 180px,rgba(169,135,59,.25) 180px)}
+
+/* ---------- Shell ---------- */
+.shell{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:288px 1fr;gap:0;min-height:calc(100vh - 90px)}
+nav.map{background:var(--ivory-dim);border-right:1px solid var(--line);padding:26px 20px 40px}
+main{padding:34px 40px 90px;max-width:860px}
+
+/* ---------- Module map ---------- */
+.map h2{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.map .hint{font-size:.78rem;color:var(--ink-soft);margin-bottom:16px;line-height:1.45}
+.map ol{list-style:none}
+.map li{margin-bottom:2px}
+.map a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:3px;font-size:.86rem;line-height:1.35;border-left:2px solid transparent}
+.map a:hover{background:var(--paper)}
+.map a[aria-current="page"]{background:var(--paper);border-left-color:var(--brass)}
+.dot{flex:0 0 11px;width:11px;height:11px;border-radius:50%;border:1.6px solid var(--ink-soft);margin-top:4px;background:transparent}
+.dot.done{border-color:var(--brass-dark);background:var(--brass)}
+.map .ord{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:3px;flex:0 0 20px}
+.progress-wrap{margin:22px 0 4px}
+.progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--brass);width:0%;transition:width .4s ease}
+.progress-label{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:6px;letter-spacing:.08em}
+.storage-note{margin-top:12px;font-size:.72rem;color:var(--rust);display:none;line-height:1.4}
+
+/* ---------- Content typography ---------- */
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:8px}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;color:var(--navy-deep);margin-bottom:6px;text-wrap:balance}
+.dek{font-size:1.02rem;color:var(--ink-soft);margin-bottom:26px;font-style:italic;font-family:var(--serif)}
+h3{font-family:var(--serif);font-size:1.18rem;color:var(--navy);margin:26px 0 8px}
+p{margin-bottom:14px;max-width:68ch}
+p strong{color:var(--navy-deep)}
+ul.plain{margin:0 0 14px 1.1em}
+ul.plain li{margin-bottom:6px;max-width:64ch}
+
+/* ---------- Card ---------- */
+.card{position:relative;background:var(--paper);border:1px solid var(--line);padding:26px 28px;margin:26px 0}
+.card::before,.card::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--brass);border-style:solid}
+.card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.card .card-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dark);margin-bottom:12px}
+
+/* ---------- Checkpoint (end-of-section confirmation) ---------- */
+.checkpoint{display:flex;gap:14px;align-items:flex-start;background:var(--moss-bg);border:1px solid var(--moss);border-left-width:4px;padding:16px 18px;margin:26px 0;border-radius:2px}
+.checkpoint .badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--moss);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.checkpoint p{margin:0;font-size:.9rem;color:var(--ink)}
+.checkpoint .ck-head{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--moss);margin-bottom:3px;display:block}
+
+/* ---------- Teaching callouts (deck-style red-arrow annotations) ---------- */
+.callout{background:var(--navy-deep);border-radius:10px;padding:26px 22px 22px;margin:26px 0 16px;text-align:center}
+.callout-cap{color:#FBF7EC;font-weight:700;font-size:.84rem;letter-spacing:.005em;margin:0}
+.cal-arrow-v{width:20px;height:30px;color:#E5504B;display:block;margin:5px auto}
+.cal-arrow-h{width:40px;height:18px;color:#E5504B;flex:0 0 auto}
+.callout-mock{background:#fff;border-radius:6px;overflow:hidden;text-align:left;color:var(--il-ink);box-shadow:0 5px 16px rgba(0,0,0,.22)}
+.cal-tabgrid{display:grid;grid-template-columns:repeat(6,1fr)}
+.cal-tabgrid .cal-cell{padding:9px 8px;border-right:1px solid var(--il-border)}
+.cal-tabgrid .cal-cell:last-child{border-right:none}
+.cal-cell .cal-lbl{font-size:.62rem;color:var(--il-ink-soft);margin-bottom:4px}
+.cal-cell .cal-n{font-family:var(--mono);font-weight:700;font-size:1rem;margin-right:3px}
+.cal-taglabels{display:grid;grid-template-columns:repeat(6,1fr);margin-top:2px}
+.cal-taglabels .cal-tagcol{padding:0 4px}
+.cal-taglabels .cal-tagcol.stagger{margin-top:26px}
+.cal-taglabels .cal-tagcol .callout-cap{font-size:.72rem;line-height:1.3}
+
+/* ---------- Device frame for recreated UI ---------- */
+.device{background:var(--il-bg);border:1px solid var(--il-border);border-radius:8px;box-shadow:0 6px 18px rgba(16,35,60,.10);overflow:hidden;margin:22px 0;color:var(--il-ink);font-family:var(--sans)}
+.device-chrome{background:var(--il-panel);border-bottom:1px solid var(--il-border);padding:8px 14px;display:flex;align-items:center;gap:8px}
+.device-chrome .dotrow{display:flex;gap:5px}
+.device-chrome .dotrow span{width:8px;height:8px;border-radius:50%;background:#D3D8DE}
+.device-chrome .url{font-family:var(--mono);font-size:.68rem;color:var(--il-ink-soft);background:#fff;border:1px solid var(--il-border);border-radius:20px;padding:3px 12px;margin-left:6px}
+.device-body{padding:0}
+.try-caption{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:center;margin-top:8px}
+
+/* ---------- iLEARN Home Page recreation ---------- */
+.il-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--il-border)}
+.il-logo{font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--il-ink)}
+.il-logo span{color:var(--il-orange)}
+.il-avatar{width:26px;height:26px;border-radius:50%;background:var(--il-red);color:#fff;font-size:.68rem;display:flex;align-items:center;justify-content:center;font-family:var(--mono)}
+.il-heading{padding:14px 20px 4px;font-size:.92rem;color:var(--il-ink-soft);border-bottom:3px solid var(--il-red);display:inline-block;margin:14px 20px 0}
+.il-tilerow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;padding:14px 4px 20px}
+.il-tile{padding:10px 16px;cursor:pointer;border:none;background:none;text-align:left;font:inherit;border-radius:6px;transition:background .15s}
+.il-tile:hover{background:var(--il-panel)}
+.il-tile:focus-visible{outline:2px solid var(--il-blue);outline-offset:-2px}
+.il-tile .il-label{font-size:.78rem;color:var(--il-ink-soft);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.il-tile .il-nums{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.il-tile .il-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;line-height:1}
+.il-tile .il-num-cap{display:block;font-size:.64rem;color:var(--il-ink-soft);font-weight:400;margin-top:3px}
+.il-detail{margin:0 20px 18px;padding:12px 16px;background:var(--il-panel);border:1px dashed var(--il-border);border-radius:6px;font-size:.85rem;color:var(--il-ink);display:none}
+.il-detail.show{display:block}
+.il-detail b{color:var(--il-red)}
+
+/* ---------- Class tabs recreation ---------- */
+.il-classhead{padding:12px 20px;border-bottom:1px solid var(--il-border);display:flex;justify-content:space-between;align-items:center}
+.il-classhead .name{font-size:1rem;font-weight:600}
+.il-tabbar{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--il-border);padding:0 12px}
+.il-tab{font:inherit;font-size:.84rem;background:none;border:none;padding:12px 14px;cursor:pointer;color:var(--il-ink-soft);border-bottom:3px solid transparent;white-space:nowrap}
+.il-tab:hover{color:var(--il-ink)}
+.il-tab.active{color:var(--il-ink);border-bottom-color:var(--il-red);font-weight:600}
+.il-tab:focus-visible{outline:2px solid var(--il-blue);outline-offset:-2px}
+.il-tabpanel{padding:18px 20px 22px}
+.il-tabpanel .stats{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:10px}
+.il-tabpanel .stat{text-align:left}
+.il-tabpanel .stat .n{font-family:var(--mono);font-weight:700;font-size:1.35rem}
+.il-tabpanel .stat .c{display:block;font-size:.68rem;color:var(--il-ink-soft)}
+.il-tabpanel .note{font-size:.84rem;color:var(--il-ink-soft);margin-top:8px;max-width:56ch}
+
+/* ---------- Navigation panel recreation ---------- */
+.il-navpanel{max-width:420px;margin:22px auto 4px;font-size:.86rem}
+.il-navhead{display:flex;gap:4px;padding:12px 14px;background:var(--il-panel);border-bottom:1px solid var(--il-border)}
+.il-navhead button{font:inherit;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;font-weight:700;background:none;border:none;padding:4px 10px;cursor:pointer;color:var(--il-ink-soft);border-radius:4px}
+.il-navhead button.active{color:var(--il-red);background:var(--il-red-dim)}
+.il-navhead button:focus-visible{outline:2px solid var(--il-blue)}
+.il-navbody{padding:10px 6px 14px}
+.il-navtitle{font-size:.8rem;color:var(--il-ink-soft);padding:2px 10px 8px;border-bottom:1px solid var(--il-border);margin-bottom:6px}
+.il-node{display:flex;align-items:center;gap:6px;width:100%;text-align:left;font:inherit;background:none;border:none;padding:6px 10px;cursor:pointer;border-radius:4px;color:var(--il-ink)}
+.il-node:hover{background:var(--il-panel)}
+.il-node:focus-visible{outline:2px solid var(--il-blue);outline-offset:-2px}
+.il-node.leaf{color:var(--il-ink-soft);padding-left:26px}
+.il-node.leaf.reviewable{color:var(--il-blue)}
+.il-node .car{width:9px;flex:0 0 9px;font-size:.7rem;color:var(--il-ink-soft);transition:transform .15s}
+.il-node.bold{font-weight:600}
+.il-children{display:none;padding-left:8px}
+.il-children.open{display:block}
+.il-caret-open{transform:rotate(90deg)}
+.il-icon{width:13px;flex:0 0 13px;font-size:.72rem;text-align:center;color:var(--il-ink-soft)}
+.il-preview{margin:10px 14px 4px;padding:12px 14px;background:var(--moss-bg);border:1px solid var(--moss);border-left-width:3px;border-radius:4px;font-size:.83rem;display:none}
+.il-preview.show{display:block}
+.il-preview b{color:var(--moss)}
+
+/* ---------- Try-it-yourself stepper ---------- */
+.stepper-controls{display:flex;justify-content:space-between;align-items:center;margin:14px 0 4px;gap:10px}
+.stepper-controls .step-label{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);letter-spacing:.06em}
+.stepper-controls .btns{display:flex;gap:8px}
+.hl-ring{outline:3px solid var(--brass) !important;outline-offset:2px;box-shadow:0 0 0 5px rgba(169,135,59,.18)}
+
+/* ---------- Module overview tiles ---------- */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0}
+.mod-tile{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:0;cursor:pointer;text-align:left;font:inherit;overflow:hidden;transition:border-color .15s}
+.mod-tile:hover{border-color:var(--brass)}
+.mod-tile:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+.mod-tile .mt-head{display:flex;align-items:center;gap:10px;padding:14px 16px}
+.mod-tile .mt-num{font-family:var(--mono);font-size:.72rem;color:var(--brass-dark);border:1px solid var(--brass);border-radius:2px;padding:2px 6px}
+.mod-tile .mt-title{font-family:var(--serif);font-size:1rem;color:var(--navy-deep);font-weight:600}
+.mod-tile .mt-body{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.mod-tile.open .mt-body{max-height:140px}
+.mod-tile .mt-body p{padding:0 16px 14px;margin:0;font-size:.84rem;color:var(--ink-soft)}
+.mod-tile .mt-chev{margin-left:auto;font-size:.75rem;color:var(--ink-soft);transition:transform .2s}
+.mod-tile.open .mt-chev{transform:rotate(180deg)}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-block;background:var(--navy);color:var(--ivory);border:none;font:inherit;font-size:.86rem;letter-spacing:.03em;padding:9px 18px;cursor:pointer;border-radius:2px}
+.btn:hover{background:var(--navy-soft)}
+.btn.brass{background:var(--brass-dark)}
+.btn.brass:hover{background:var(--brass)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible{outline:2px solid var(--brass-dark);outline-offset:2px}
+
+/* ---------- Landing ---------- */
+.land-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.land-grid .card{margin:0}
+.pager{display:flex;justify-content:space-between;margin-top:44px;border-top:1px solid var(--line);padding-top:18px;gap:10px}
+.pager a{text-decoration:none;color:var(--navy);font-size:.88rem;border:1px solid var(--line);padding:10px 16px;border-radius:2px;cursor:pointer}
+.pager a:hover{border-color:var(--brass)}
+.pager .sp{visibility:hidden}
+section.unit{display:none;animation:fadein .35s ease}
+section.unit.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Edge arrow navigation ---------- */
+.edge-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:40;width:46px;height:46px;border-radius:50%;background:var(--navy-deep);color:var(--ivory);border:1px solid var(--brass-dark);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(16,35,60,.28);transition:background .15s,opacity .15s}
+.edge-nav:hover:not(:disabled){background:var(--navy-soft)}
+.edge-nav:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.edge-nav:disabled{opacity:.28;cursor:default;box-shadow:none}
+.edge-nav.prev{left:16px}
+.edge-nav.next{right:16px}
+@media (max-width:860px){.edge-nav{display:none}}
+
+/* ---------- Responsive ---------- */
+.map-toggle{display:none}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  nav.map{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+  nav.map .map-body{display:none}
+  nav.map.open .map-body{display:block}
+  .map-toggle{display:inline-block;background:none;border:1px solid var(--ink-soft);font:inherit;font-size:.8rem;padding:6px 12px;cursor:pointer;border-radius:2px;margin-bottom:4px;color:var(--ink)}
+  main{padding:26px 20px 70px}
+  .land-grid{grid-template-columns:1fr}
+  h1{font-size:1.6rem}
+  .il-tilerow{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="hub-crumb" style="background:var(--navy-deep,#10233C);color:var(--ivory,#F4EFE3);padding:8px 20px;font-family:var(--mono,Consolas,monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--brass-dark,#7E6425)">
+  <a href="../index.html" style="color:var(--brass-pale,#D9C795);text-decoration:none">&larr; Back to Hub</a>
+</div>
+
+<header>
+  <div class="hd-inner">
+    <div class="wordmark">IMLS · <b>iLEARN</b> Educator Self-Learning Package</div>
+    <div class="hd-meta">Module 0 · Getting Started · v1.0</div>
+  </div>
+  <div class="hd-rule"></div>
+</header>
+
+<div class="shell">
+
+<nav class="map" id="mapNav" aria-label="Module map">
+  <button class="map-toggle" id="mapToggle" aria-expanded="false">Module map ▾</button>
+  <div class="map-body">
+    <h2>Module map</h2>
+    <p class="hint">Suggested order below — every section is open. Click ahead or work top to bottom; your place and progress are remembered.</p>
+    <ol id="mapList"></ol>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-label" id="progLabel">0 / 8 complete</div>
+    </div>
+    <div class="storage-note" id="storageNote">Browser storage is unavailable in this preview — progress will not persist after this session, but everything below still works.</div>
+  </div>
+</nav>
+
+<main id="main"></main>
+
+</div>
+
+<button class="edge-nav prev" id="edgePrev" aria-label="Previous section">‹</button>
+<button class="edge-nav next" id="edgeNext" aria-label="Next section">›</button>
+
+<script>
+"use strict";
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+
+const SLP_MODULES = [
+  {n:"Module 1", t:"Create Class", d:"Set up a class shell — name it, choose its term, and it becomes the container everything else in the SLP hangs off."},
+  {n:"Module 2", t:"Assign Content", d:"Push learning, practice, exam and archived content to a class, and control when it goes live and who sees it."},
+  {n:"Module 3", t:"Add & Manage Learners", d:"Invite learners into a class, track invited / healthy / inactive / retired status, and manage rosters over time."},
+  {n:"Module 4", t:"Analytics Dashboard", d:"Read class- and learner-level analytics, and see which learners are flagged as at-risk before it becomes a problem."},
+  {n:"Module 5", t:"Review", d:"Work through the reviews queue — not-submitted, to-do and completed — for assignments and projects awaiting your feedback."},
+  {n:"Module 6", t:"Gradebook & Competency Wheel", d:"See scored performance in the gradebook, and view mastery visually on the competency wheel."}
+];
+
+const NAV_TREE = [
+  {t:"Introduction to Module 2", icon:"▶", leaf:true},
+  {t:"Content and Assignment Type options in iLEARN Educator", icon:"▶", children:[
+    {t:"Content Type", icon:"🌐", leaf:true},
+    {t:"Assignment Type", icon:"🌐", leaf:true}
+  ]},
+  {t:"Assignment Type: Learning | Features in iLEARN Educator", icon:"▶", children:[
+    {t:"Active From and Due Date", icon:"▶", leaf:true},
+    {t:"Refresh Knowledge", icon:"🌐", leaf:true},
+    {t:"Previous Progress", icon:"▶", leaf:true},
+    {t:"Assign To", icon:"▶", leaf:true, reviewable:true,
+     preview:"This is the topic the deck walks through: still unsure about “Assign To” after finishing the module? Click it here in the panel and the content reopens for review — no need to redo the whole module."},
+    {t:"Affecting Appearance of Assignments on Learner Home", icon:"▶", children:[
+      {t:"Assignment Group and Card Order", icon:"🌐", leaf:true},
+      {t:"Assign Order, Lock the Order of the Modules", icon:"🌐", leaf:true}
+    ]}
+  ]}
+];
+
+const ARROW_DOWN = `<svg class="cal-arrow-v" viewBox="0 0 20 34" aria-hidden="true"><path d="M10 0 L10 26 M2 18 L10 30 L18 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ARROW_UP = `<svg class="cal-arrow-v" viewBox="0 0 20 34" aria-hidden="true"><path d="M10 34 L10 8 M2 16 L10 4 L18 16" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ARROW_RIGHT = `<svg class="cal-arrow-h" viewBox="0 0 46 20" aria-hidden="true"><path d="M0 10 L34 10 M24 2 L38 10 L24 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const TRY_STEPS = [
+  {label:"Step 1 of 4", text:"Most SLP content is interactively clickable. Start by opening the side panel — click the <b>NAVIGATION</b> tab.", target:"nav-tab-navigation"},
+  {label:"Step 2 of 4", text:"Expand a section to see what's inside it — click the arrow beside <b>“Assignment Type: Learning”</b>.", target:"nav-node-assign-type-learning"},
+  {label:"Step 3 of 4", text:"Found the topic you're unsure about? Click <b>“Assign To”</b> — it's marked in blue because it can be reopened.", target:"nav-node-assign-to"},
+  {label:"Step 4 of 4", text:"The content reopens right there in the panel, so you can review it without leaving your place or restarting the module.", target:"nav-preview"}
+];
+
+const UNITS = [
+/* ---------------- LANDING ---------------- */
+{ id:"start", short:"Welcome", title:"Welcome", ord:"—",
+  render(){ return `
+  <div class="eyebrow">iLEARN Educator · Self-Learning Package</div>
+  <h1>Welcome to the iLEARN Educator SLP</h1>
+  <p class="dek">A short, click-through orientation before you use iLEARN Educator for real — no video required, everything here is live.</p>
+
+  <p>This package walks through the same three things every new educator needs on day one: <strong>what the SLP actually covers</strong>, <strong>how the Educator dashboard is laid out</strong>, and <strong>how to find your way back to anything you've already learned</strong>. Rather than just showing you screenshots, the dashboard and navigation panel below are rebuilt so you can click them the way you would in the live product.</p>
+
+  <div class="land-grid">
+    <div class="card"><div class="card-tag">What you'll do</div>
+      <p style="margin:0;font-size:.9rem">Click through a recreated Educator dashboard, a class page's tabs, and a live navigation-panel simulation — the same interactions the real SLP uses.</p></div>
+    <div class="card"><div class="card-tag">How long</div>
+      <p style="margin:0;font-size:.9rem">About 8 minutes. Eight short sections, each endpoint confirmed with a checkpoint before you move on.</p></div>
+  </div>
+
+  <p style="font-size:.88rem;color:var(--ink-soft)">Use the module map on the left to jump anywhere, or the <em>Next</em> button below each section to move in order.</p>
+  `;}
+},
+
+/* ---------------- 1: SLP OVERVIEW ---------------- */
+{ id:"overview", short:"SLP Overview", title:"Overview of the SLP", ord:"01",
+  render(){ return `
+  <div class="eyebrow">Section 01 · Orientation</div>
+  <h1>Overview of iLEARN Educator SLP</h1>
+  <p class="dek">Six modules, each covering one part of running a class in iLEARN. Click a tile to see what it covers.</p>
+
+  <div class="mod-grid" id="modGrid"></div>
+
+  <div class="checkpoint" id="ck-overview" style="display:none">
+    <div class="badge">✓</div>
+    <div><span class="ck-head">Checkpoint reached</span><p>You've opened all six modules of <strong>“Overview of iLEARN Educator SLP”</strong>. This section is complete.</p></div>
+  </div>
+  <p id="overviewHint" style="font-size:.82rem;color:var(--ink-soft)">Open all six tiles to complete this section.</p>
+  `;},
+  after(root){
+    const grid = root.querySelector("#modGrid");
+    grid.innerHTML = SLP_MODULES.map((m,i)=>`
+      <button class="mod-tile" data-i="${i}" aria-expanded="false">
+        <div class="mt-head">
+          <span class="mt-num">${m.n}</span>
+          <span class="mt-title">${m.t}</span>
+          <span class="mt-chev">▾</span>
+        </div>
+        <div class="mt-body"><p>${m.d}</p></div>
+      </button>`).join("");
+    const opened = new Set();
+    grid.querySelectorAll(".mod-tile").forEach(tile=>{
+      tile.addEventListener("click", ()=>{
+        const isOpen = tile.classList.toggle("open");
+        tile.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        if(isOpen){ opened.add(tile.dataset.i); }
+        if(opened.size === SLP_MODULES.length){
+          root.querySelector("#ck-overview").style.display = "flex";
+          root.querySelector("#overviewHint").style.display = "none";
+          markDone("overview");
+        }
+      });
+    });
+  }
+},
+
+/* ---------------- 2: DASHBOARD HOME ---------------- */
+{ id:"dash-home", short:"Dashboard: Home", title:"Educator Dashboard — Home Page", ord:"02",
+  render(){ return `
+  <div class="eyebrow">Section 02 · The Dashboard</div>
+  <h1>Overview of the Educator Dashboard</h1>
+  <p class="dek">Everything on the Home Page is a live count. Click a tile below to see what clicking it does in the real product.</p>
+
+  <div class="callout">
+    <p class="callout-cap">Educator Home Page</p>
+    ${ARROW_UP}
+    <div class="callout-mock">
+      <div class="cal-tabgrid" style="border-bottom:1px solid var(--il-border)">
+        <div class="cal-cell"><div class="cal-lbl">Classes</div><span class="cal-n" style="color:var(--il-green)">6</span><span class="cal-n" style="color:var(--il-blue)">2</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Learners</div><span class="cal-n" style="color:var(--il-green)">84</span><span class="cal-n" style="color:var(--il-red)">2</span><span class="cal-n" style="color:var(--il-blue)">0</span><span class="cal-n" style="color:var(--il-orange)">26</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Analytics</div><span class="cal-n" style="color:var(--il-red)">2</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Reviews</div><span class="cal-n" style="color:var(--il-blue)">1</span><span class="cal-n" style="color:var(--il-red)">36</span><span class="cal-n" style="color:var(--il-green)">99</span></div>
+        <div class="cal-cell" style="grid-column:span 2"><div class="cal-lbl">My Content</div><span class="cal-n" style="color:var(--il-green)">2</span></div>
+      </div>
+      <div style="padding:9px 14px;font-size:.74rem;color:var(--il-ink);display:flex;justify-content:space-between">
+        <span>IML Development Branch</span><span style="color:var(--il-ink-soft)">Inactive</span>
+      </div>
+    </div>
+    ${ARROW_DOWN}
+    <p class="callout-cap">Class</p>
+  </div>
+  <p class="try-caption">What each part of the Home Page is called</p>
+
+  <div class="device">
+    <div class="device-chrome"><div class="dotrow"><span></span><span></span><span></span></div><div class="url">ilearn.educator/home</div></div>
+    <div class="device-body">
+      <div class="il-topbar">
+        <div class="il-logo">i<span>LEARN</span></div>
+        <div class="il-avatar">J1</div>
+      </div>
+      <div class="il-heading">Home Page</div>
+      <div class="il-tilerow" id="homeTiles"></div>
+      <div class="il-detail" id="homeDetail"></div>
+    </div>
+  </div>
+  <p class="try-caption">Recreated Home Page — click any tile</p>
+
+  <div class="checkpoint" id="ck-dashhome" style="display:none">
+    <div class="badge">✓</div>
+    <div><span class="ck-head">Checkpoint reached</span><p>You've explored the Home Page tiles. Next up: what's inside a class.</p></div>
+  </div>
+  `;},
+  after(root){
+    const tiles = [
+      {label:"Classes", nums:[["6","Active",""],["2","Inactive",""]],
+       detail:"<b>Classes</b> — 6 active, 2 inactive. Clicking through opens your class list, where each row shows its owner, status, assignment count and learner count."},
+      {label:"Learners", info:true, nums:[["84","Healthy",var_c("moss")],["2","Inactive",var_c("rust")],["0","Invited",var_c("blue")],["26","Retired",var_c("orange")]],
+       detail:"<b>Learners</b> — a roster health check across every class you own: healthy, inactive, still-invited and retired learners, all in one glance."},
+      {label:"Analytics", nums:[["2","Risks",var_c("rust")]],
+       detail:"<b>Analytics</b> — flags learners at risk across your classes, so you can step in before a small gap becomes a failed module."},
+      {label:"Reviews", nums:[["1","Not Submitted",var_c("blue")],["36","To-Do",var_c("rust")],["99","Completed",var_c("moss")]],
+       detail:"<b>Reviews</b> — your marking queue: work still to be submitted by learners, work waiting on you, and what you've already completed."},
+      {label:"My Content", nums:[["2","Packages",var_c("moss")]],
+       detail:"<b>My Content</b> — the learning packages you own or have access to, ready to assign into any class."}
+    ];
+    const wrap = root.querySelector("#homeTiles");
+    wrap.innerHTML = tiles.map((tl,i)=>`
+      <button class="il-tile" data-i="${i}">
+        <div class="il-label">${tl.label}${tl.info?' <span title="Learner status legend">ⓘ</span>':''}</div>
+        <div class="il-nums">${tl.nums.map(n=>`<span class="il-num" style="color:${n[2]||'var(--il-ink)'}">${n[0]}<span class="il-num-cap">${n[1]}</span></span>`).join("")}</div>
+      </button>`).join("");
+    const detail = root.querySelector("#homeDetail");
+    const seen = new Set();
+    wrap.querySelectorAll(".il-tile").forEach(t=>{
+      t.addEventListener("click", ()=>{
+        detail.innerHTML = tiles[t.dataset.i].detail;
+        detail.classList.add("show");
+        seen.add(t.dataset.i);
+        if(seen.size === tiles.length){
+          root.querySelector("#ck-dashhome").style.display = "flex";
+          markDone("dash-home");
+        }
+      });
+    });
+    function var_c(name){
+      return {moss:"var(--il-green)", rust:"var(--il-red)", blue:"var(--il-blue)", orange:"var(--il-orange)"}[name];
+    }
+  }
+},
+
+/* ---------------- 3: CLASS TABS ---------------- */
+{ id:"dash-class", short:"Dashboard: Class", title:"Educator Dashboard — Inside a Class", ord:"03",
+  render(){ return `
+  <div class="eyebrow">Section 02 · The Dashboard</div>
+  <h1>Within each class: the tabs</h1>
+  <p class="dek">Open any class and it breaks into six tabs, each with its own counts. Click through all six.</p>
+
+  <div class="callout">
+    <p class="callout-cap">Within each class, these are the different tabs:</p>
+    <div class="callout-mock" style="margin-top:14px">
+      <div style="padding:7px 14px;font-size:.7rem;color:var(--il-ink-soft);border-bottom:1px solid var(--il-border)">Class: IML Development Branch</div>
+      <div class="cal-tabgrid">
+        <div class="cal-cell"><div class="cal-lbl">Assignments &amp; Projects</div><span class="cal-n" style="font-size:.8rem">0 0 0 0 0</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Learners</div><span class="cal-n" style="font-size:.8rem">0 0 0</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Analytics</div><span class="cal-n" style="font-size:.8rem;color:var(--il-red)">0</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Reviews</div><span class="cal-n" style="font-size:.8rem">0 0 0</span></div>
+        <div class="cal-cell"><div class="cal-lbl">My Content</div><span class="cal-n" style="font-size:.8rem;color:var(--il-green)">2 0</span></div>
+        <div class="cal-cell"><div class="cal-lbl">Goals &amp; Expectations</div><span class="cal-n" style="font-size:.8rem">0 0</span></div>
+      </div>
+    </div>
+    <div class="cal-taglabels">
+      <div class="cal-tagcol">${ARROW_DOWN}<p class="callout-cap">Assignments &amp; Projects</p></div>
+      <div class="cal-tagcol stagger">${ARROW_DOWN}<p class="callout-cap">Learners</p></div>
+      <div class="cal-tagcol">${ARROW_DOWN}<p class="callout-cap">Analytics</p></div>
+      <div class="cal-tagcol stagger">${ARROW_DOWN}<p class="callout-cap">Reviews</p></div>
+      <div class="cal-tagcol">${ARROW_DOWN}<p class="callout-cap">My Content</p></div>
+      <div class="cal-tagcol stagger">${ARROW_DOWN}<p class="callout-cap">Goals &amp; Expectations</p></div>
+    </div>
+  </div>
+  <p class="try-caption">What each tab is called</p>
+
+  <div class="device">
+    <div class="device-chrome"><div class="dotrow"><span></span><span></span><span></span></div><div class="url">ilearn.educator/class/iml-development-branch</div></div>
+    <div class="device-body">
+      <div class="il-classhead"><span class="name">Class: IML Development Branch</span></div>
+      <div class="il-tabbar" id="classTabs"></div>
+      <div class="il-tabpanel" id="classPanel"></div>
+    </div>
+  </div>
+  <p class="try-caption">Recreated class page — click a tab</p>
+
+  <div class="checkpoint" id="ck-dashclass" style="display:none">
+    <div class="badge">✓</div>
+    <div><span class="ck-head">Checkpoint reached</span><p>You've completed <strong>“Overview of iLEARN Educator Dashboard.”</strong> Next: how to navigate back to anything you've learned.</p></div>
+  </div>
+  `;},
+  after(root){
+    const tabs = [
+      {label:"Assignments & Projects", stats:[["0","Learning"],["0","Practice Set"],["0","Exams"],["0","Archived"],["0","Projects"]],
+       note:"Every piece of content you've pushed to this class, split by type — including anything archived rather than deleted."},
+      {label:"Learners", stats:[["0","Healthy"],["0","Inactive"],["0","Invited"]],
+       note:"This class's own roster health, same categories as the Home Page but scoped to just this class."},
+      {label:"Analytics", stats:[["0","Risks"]],
+       note:"At-risk learners within this class specifically."},
+      {label:"Reviews", stats:[["0","Waiting"],["0","To-Do"],["0","Completed"]],
+       note:"This class's marking queue."},
+      {label:"My Content", stats:[["2","Overall"],["0","In Class"]],
+       note:"Content packages available to you versus how many are actually assigned into this class."},
+      {label:"Goals & Expectations", stats:[["0","Frameworks"],["0","Wheels"]],
+       note:"The competency frameworks and wheels this class is being measured against."}
+    ];
+    const tabbar = root.querySelector("#classTabs");
+    const panel = root.querySelector("#classPanel");
+    tabbar.innerHTML = tabs.map((t,i)=>`<button class="il-tab${i===0?' active':''}" data-i="${i}">${t.label}</button>`).join("");
+    const seen = new Set();
+    function renderPanel(i){
+      const t = tabs[i];
+      panel.innerHTML = `<div class="stats">${t.stats.map(s=>`<div class="stat"><span class="n">${s[0]}</span><span class="c">${s[1]}</span></div>`).join("")}</div><p class="note">${t.note}</p>`;
+    }
+    renderPanel(0); seen.add("0");
+    tabbar.querySelectorAll(".il-tab").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        tabbar.querySelectorAll(".il-tab").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        renderPanel(btn.dataset.i);
+        seen.add(btn.dataset.i);
+        if(seen.size === tabs.length){
+          root.querySelector("#ck-dashclass").style.display = "flex";
+          markDone("dash-class");
+        }
+      });
+    });
+  }
+},
+
+/* ---------------- 4: NAV INTRO ---------------- */
+{ id:"nav-intro", short:"Navigation intro", title:"Navigation of the SLP", ord:"04",
+  render(){ return `
+  <div class="eyebrow">Section 03 · Finding Your Way Back</div>
+  <h1>What do I click?</h1>
+  <p class="dek">The SLP isn't meant to be read once and forgotten. It's built so you can jump straight back to any topic later.</p>
+
+  <p>Every module in the SLP opens with a panel on the right-hand side of your screen. It has two tabs — <strong>History</strong>, which shows what you've already been through, and <strong>Navigation</strong>, which shows the full topic tree for the module you're in, expandable section by section.</p>
+
+  <p>Anything in that tree that's still relevant to review — not just the section you're currently on — stays clickable. That's the whole trick: you never have to restart a module or scroll back through slides to find one topic again. The next section recreates that exact panel so you can try it.</p>
+
+  <div class="checkpoint" style="display:flex">
+    <div class="badge">→</div>
+    <div><span class="ck-head">Next</span><p>Try the navigation panel live in the following section.</p></div>
+  </div>
+  `;},
+  after(){ markDone("nav-intro"); }
+},
+
+/* ---------------- 5: NAV PANEL SIM ---------------- */
+{ id:"nav-panel", short:"Try the nav panel", title:"Module 2 Example: The Navigation Panel", ord:"05",
+  render(){ return `
+  <div class="eyebrow">Section 03 · Finding Your Way Back</div>
+  <h1>Still unsure about “Assign To”?</h1>
+  <p class="dek">This is the exact scenario the deck walks through — recreated below. Expand a section, then click a topic to review it.</p>
+
+  <div class="callout">
+    <p class="callout-cap">To aid learning and refresh of knowledge, you can head to the navigation panel on the right side of your screen:</p>
+    <div style="display:flex;align-items:flex-start;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:14px">
+      <div class="callout-mock" style="width:190px;padding:12px;flex:0 0 auto">
+        <div style="display:flex;gap:10px;font-size:.66rem;font-weight:700">
+          <span style="color:var(--il-ink-soft)">HISTORY</span>
+          <span style="color:var(--il-red);border:1.5px solid var(--il-red);border-radius:4px;padding:1px 6px">NAVIGATION</span>
+        </div>
+        <div style="margin-top:10px;font-size:.62rem;color:var(--il-ink-soft)">Current objective</div>
+        <div style="margin-top:14px;font-size:.62rem;color:var(--il-ink-soft)">Performance</div>
+        <div style="margin-top:10px;font-size:.62rem;color:var(--il-ink-soft)">Progress Projection</div>
+      </div>
+      <div style="align-self:center">${ARROW_RIGHT}</div>
+      <div class="callout-mock" style="width:300px;padding:12px;text-align:left;flex:0 0 auto">
+        <div style="font-size:.66rem;font-weight:700;margin-bottom:8px"><span style="color:var(--il-ink-soft)">HISTORY</span> <span style="color:var(--il-red)">| NAVIGATION</span></div>
+        <div style="font-size:.68rem;color:var(--il-ink);margin-bottom:8px;font-weight:600">Module 2: Assign Content</div>
+        <div style="font-size:.62rem;color:var(--il-ink-soft);line-height:1.9;border-top:1px solid var(--il-border);padding-top:6px">
+          Introduction to Module 2<br>
+          Content and Assignment Type options in iLEARN Educa…<br>
+          Assignment Type: Learning | Features in iLEARN Educator<br>
+          &nbsp;&nbsp;Active From and Due Date<br>
+          &nbsp;&nbsp;Refresh Knowledge<br>
+          &nbsp;&nbsp;Previous Progress<br>
+          &nbsp;&nbsp;<span style="border:1.5px solid var(--il-red);border-radius:4px;padding:0 5px;color:var(--il-red);font-weight:700">Assign To</span><br>
+          Affecting Appearance of Assignments on Learner Home…
+        </div>
+      </div>
+    </div>
+    ${ARROW_DOWN}
+    <p class="callout-cap" style="max-width:520px;margin:2px auto 0;line-height:1.6">Still unsure about the topic of &ldquo;Assign To&rdquo; after completing the module?<br>Click on &ldquo;Assign To&rdquo; to review the content again.</p>
+  </div>
+  <p class="try-caption">Module 2 example, from the deck</p>
+
+  <div class="il-navpanel device">
+    <div class="il-navhead">
+      <button id="nav-tab-history">History</button>
+      <button id="nav-tab-navigation" class="active">Navigation</button>
+    </div>
+    <div class="il-navbody">
+      <div class="il-navtitle">Module 2: Assign Content</div>
+      <div id="navTree"></div>
+    </div>
+    <div class="il-preview" id="nav-preview"></div>
+  </div>
+  <p class="try-caption">Recreated navigation panel — click the arrows to expand, click a blue topic to review it</p>
+
+  <div class="checkpoint" id="ck-navpanel" style="display:none">
+    <div class="badge">✓</div>
+    <div><span class="ck-head">Checkpoint reached</span><p>You reopened “Assign To” from the navigation panel — exactly how you'd revisit any topic in the live SLP.</p></div>
+  </div>
+  <p id="navHint" style="font-size:.82rem;color:var(--ink-soft)">Click “Assign To” (in blue, under “Assignment Type: Learning”) to complete this section.</p>
+  `;},
+  after(root){
+    const tree = root.querySelector("#navTree");
+    const preview = root.querySelector("#nav-preview");
+
+    function slug(t){ return t.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,""); }
+
+    function renderNode(node, depth){
+      const id = "nav-node-" + (node.t.toLowerCase().includes("assign to") ? "assign-to" : node.t.toLowerCase().includes("assignment type: learning") ? "assign-type-learning" : slug(node.t));
+      if(node.children){
+        return `<div>
+          <button class="il-node bold" data-toggle="${id}" id="${id}">
+            <span class="car">▸</span><span class="il-icon">${node.icon}</span><span>${node.t}</span>
+          </button>
+          <div class="il-children" id="${id}-kids">${node.children.map(c=>renderNode(c, depth+1)).join("")}</div>
+        </div>`;
+      }
+      const reviewCls = node.reviewable ? " reviewable" : "";
+      return `<button class="il-node leaf${reviewCls}" ${node.reviewable?`data-review="${id}" id="${id}"`:""}>
+        <span class="il-icon">${node.icon}</span><span>${node.t}</span>
+      </button>`;
+    }
+    tree.innerHTML = NAV_TREE.map(n=>renderNode(n,0)).join("");
+
+    tree.querySelectorAll("[data-toggle]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const kids = tree.querySelector("#"+btn.dataset.toggle+"-kids");
+        const open = kids.classList.toggle("open");
+        btn.querySelector(".car").classList.toggle("il-caret-open", open);
+      });
+    });
+
+    function findReviewable(nodes){
+      for(const n of nodes){ if(n.reviewable) return n; if(n.children){ const f = findReviewable(n.children); if(f) return f; } }
+    }
+    const assignTo = findReviewable(NAV_TREE);
+    tree.querySelectorAll("[data-review]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        preview.innerHTML = `<b>Reopened:</b> ${assignTo.preview}`;
+        preview.classList.add("show");
+        root.querySelector("#ck-navpanel").style.display = "flex";
+        root.querySelector("#navHint").style.display = "none";
+        markDone("nav-panel");
+      });
+    });
+
+    root.querySelector("#nav-tab-history").addEventListener("click", (e)=>{
+      root.querySelector("#nav-tab-navigation").classList.remove("active");
+      e.currentTarget.classList.add("active");
+      tree.innerHTML = `<p style="padding:8px 10px;font-size:.82rem;color:var(--il-ink-soft)">History shows every topic you've already opened this module, most recent first — empty for now since this is a preview.</p>`;
+    });
+    root.querySelector("#nav-tab-navigation").addEventListener("click", (e)=>{
+      root.querySelector("#nav-tab-history").classList.remove("active");
+      e.currentTarget.classList.add("active");
+      tree.innerHTML = NAV_TREE.map(n=>renderNode(n,0)).join("");
+      tree.querySelectorAll("[data-toggle]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const kids = tree.querySelector("#"+btn.dataset.toggle+"-kids");
+          const open = kids.classList.toggle("open");
+          btn.querySelector(".car").classList.toggle("il-caret-open", open);
+        });
+      });
+      tree.querySelectorAll("[data-review]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          preview.innerHTML = `<b>Reopened:</b> ${assignTo.preview}`;
+          preview.classList.add("show");
+          root.querySelector("#ck-navpanel").style.display = "flex";
+          root.querySelector("#navHint").style.display = "none";
+          markDone("nav-panel");
+        });
+      });
+    });
+  }
+},
+
+/* ---------------- 6: TRY IT YOURSELF (guided steps, replaces the demo video) ---------------- */
+{ id:"nav-try", short:"Guided walkthrough", title:"Navigation — Try It Yourself", ord:"06",
+  render(){ return `
+  <div class="eyebrow">Section 03 · Finding Your Way Back</div>
+  <h1>Walk through it step by step</h1>
+  <p class="dek">The original package shows this as a short demo video. Here, follow the four steps yourself on the same panel — click <em>Next</em> to advance, and the part of the panel you need lights up.</p>
+
+  <div class="card">
+    <div class="stepper-controls">
+      <span class="step-label" id="stepLabel">Step 1 of 4</span>
+      <div class="btns">
+        <button class="btn ghost" id="stepBack" disabled>Back</button>
+        <button class="btn brass" id="stepFwd">Next</button>
+      </div>
+    </div>
+    <p id="stepText" style="margin-top:10px"></p>
+  </div>
+
+  <div class="il-navpanel device">
+    <div class="il-navhead">
+      <button id="try-tab-history">History</button>
+      <button id="try-tab-navigation" class="active">Navigation</button>
+    </div>
+    <div class="il-navbody">
+      <div class="il-navtitle">Module 2: Assign Content</div>
+      <div id="tryTree"></div>
+    </div>
+    <div class="il-preview" id="try-preview"></div>
+  </div>
+  <p class="try-caption">Follow the highlighted control at each step</p>
+
+  <div class="checkpoint" id="ck-navtry" style="display:none">
+    <div class="badge">✓</div>
+    <div><span class="ck-head">Checkpoint reached</span><p>You've completed the guided walkthrough — you now know the full path from “I'm unsure” to “reviewing the content again.”</p></div>
+  </div>
+  `;},
+  after(root){
+    const tree = root.querySelector("#tryTree");
+    const preview = root.querySelector("#try-preview");
+    let step = 0;
+
+    function renderNode(node){
+      const id = "try-" + (node.t.toLowerCase().includes("assign to") ? "assign-to" : node.t.toLowerCase().includes("assignment type: learning") ? "assign-type-learning" : node.t.toLowerCase().replace(/[^a-z0-9]+/g,"-"));
+      if(node.children){
+        return `<div>
+          <button class="il-node bold" data-toggle="${id}" id="${id}">
+            <span class="car">▸</span><span class="il-icon">${node.icon}</span><span>${node.t}</span>
+          </button>
+          <div class="il-children" id="${id}-kids">${node.children.map(c=>renderNode(c)).join("")}</div>
+        </div>`;
+      }
+      const reviewCls = node.reviewable ? " reviewable" : "";
+      return `<button class="il-node leaf${reviewCls}" ${node.reviewable?`data-review="${id}" id="${id}"`:""}>
+        <span class="il-icon">${node.icon}</span><span>${node.t}</span>
+      </button>`;
+    }
+    tree.innerHTML = NAV_TREE.map(n=>renderNode(n)).join("");
+    function wireTree(){
+      tree.querySelectorAll("[data-toggle]").forEach(btn=>{
+        btn.onclick = ()=>{
+          const kids = tree.querySelector("#"+btn.dataset.toggle+"-kids");
+          const open = kids.classList.toggle("open");
+          btn.querySelector(".car").classList.toggle("il-caret-open", open);
+          if(btn.id === "try-assign-type-learning" && open) goStep(2);
+        };
+      });
+      tree.querySelectorAll("[data-review]").forEach(btn=>{
+        btn.onclick = ()=>{
+          preview.innerHTML = "<b>Reopened:</b> The “Assign To” content is shown again here, ready to review.";
+          preview.classList.add("show");
+          goStep(3);
+        };
+      });
+    }
+    wireTree();
+    root.querySelector("#try-tab-navigation").onclick = (e)=>{
+      root.querySelector("#try-tab-history").classList.remove("active");
+      e.currentTarget.classList.add("active");
+    };
+    root.querySelector("#try-tab-history").onclick = (e)=>{
+      root.querySelector("#try-tab-navigation").classList.remove("active");
+      e.currentTarget.classList.add("active");
+    };
+
+    function clearHighlights(){
+      root.querySelectorAll(".hl-ring").forEach(el=>el.classList.remove("hl-ring"));
+    }
+    function goStep(i){
+      step = Math.max(0, Math.min(TRY_STEPS.length-1, i));
+      clearHighlights();
+      const s = TRY_STEPS[step];
+      root.querySelector("#stepLabel").textContent = s.label;
+      root.querySelector("#stepText").innerHTML = s.text;
+      root.querySelector("#stepBack").disabled = step === 0;
+      root.querySelector("#stepFwd").textContent = step === TRY_STEPS.length-1 ? "Done" : "Next";
+      const targetEl = root.querySelector("#"+s.target);
+      if(targetEl){ targetEl.classList.add("hl-ring"); targetEl.scrollIntoView({block:"nearest", behavior:"smooth"}); }
+      if(step === TRY_STEPS.length-1){
+        root.querySelector("#ck-navtry").style.display = "flex";
+        markDone("nav-try");
+      }
+    }
+    root.querySelector("#stepFwd").addEventListener("click", ()=>{
+      if(step === TRY_STEPS.length-1) return;
+      goStep(step+1);
+    });
+    root.querySelector("#stepBack").addEventListener("click", ()=> goStep(step-1));
+    goStep(0);
+  }
+},
+
+/* ---------------- 7: WRAP-UP ---------------- */
+{ id:"wrap", short:"Wrap-up", title:"Package Complete", ord:"07",
+  render(){ return `
+  <div class="eyebrow">Wrap-up</div>
+  <h1>You've completed the iLEARN Educator SLP — Module 0</h1>
+  <p class="dek">A quick recap before you head into the live product.</p>
+
+  <ul class="plain">
+    <li><strong>Overview of the SLP</strong> — six modules covering the full run of a class: create it, assign content, manage learners, read analytics, review work, and track competency.</li>
+    <li><strong>The Educator Dashboard</strong> — the Home Page rolls every class up into five tiles; each class then breaks into six tabs with its own numbers.</li>
+    <li><strong>Navigation</strong> — the History/Navigation panel on the right of any module is how you get back to a topic without restarting.</li>
+  </ul>
+
+  <div class="checkpoint" style="display:flex">
+    <div class="badge">✓</div>
+    <div><span class="ck-head">All sections complete</span><p>You're ready to open iLEARN Educator itself. Module 1 picks up from here.</p></div>
+  </div>
+  `;},
+  after(){ markDone("wrap"); }
+}
+];
+
+/* ============================================================
+   APP
+   ============================================================ */
+
+let STORE_OK = true;
+try{
+  const k = "__ilearn_slp_test__";
+  localStorage.setItem(k,"1"); localStorage.removeItem(k);
+}catch(e){ STORE_OK = false; }
+
+const PROGRESS_KEY = "ilearn-slp-m0-progress";
+const LAST_KEY = "ilearn-slp-m0-last";
+
+function loadProgress(){
+  if(!STORE_OK) return {};
+  try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}"); }catch(e){ return {}; }
+}
+function saveProgress(p){
+  if(!STORE_OK) return;
+  try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); }catch(e){}
+}
+let progress = loadProgress();
+
+function markDone(id){
+  if(progress[id]) return;
+  progress[id] = true;
+  saveProgress(progress);
+  renderMap();
+}
+
+function renderMap(){
+  const list = document.getElementById("mapList");
+  list.innerHTML = UNITS.map(u=>`
+    <li><a href="#${u.id}" data-id="${u.id}" aria-current="${u.id===current?'page':'false'}">
+      <span class="dot ${progress[u.id]?'done':''}"></span>
+      <span class="ord">${u.ord}</span>
+      <span>${u.short}</span>
+    </a></li>`).join("");
+  list.querySelectorAll("a").forEach(a=>{
+    a.addEventListener("click", (e)=>{ e.preventDefault(); go(a.dataset.id); });
+  });
+  const doneCount = UNITS.filter(u=>progress[u.id]).length;
+  document.getElementById("progFill").style.width = (doneCount/UNITS.length*100)+"%";
+  document.getElementById("progLabel").textContent = doneCount+" / "+UNITS.length+" complete";
+}
+
+let current = UNITS[0].id;
+
+function go(id){
+  const unit = UNITS.find(u=>u.id===id);
+  if(!unit) return;
+  current = id;
+  if(STORE_OK){ try{ localStorage.setItem(LAST_KEY, id); }catch(e){} }
+  const main = document.getElementById("main");
+  const idx = UNITS.indexOf(unit);
+  const prev = UNITS[idx-1], next = UNITS[idx+1];
+  main.innerHTML = `<section class="unit active" id="unit-${id}">${unit.render()}
+    <div class="pager">
+      ${prev ? `<a href="#${prev.id}" data-id="${prev.id}">← ${prev.short}</a>` : `<span class="sp"></span>`}
+      ${next ? `<a href="#${next.id}" data-id="${next.id}">${next.short} →</a>` : `<span class="sp"></span>`}
+    </div>
+  </section>`;
+  main.querySelectorAll(".pager a").forEach(a=>{
+    a.addEventListener("click", (e)=>{ e.preventDefault(); go(a.dataset.id); window.scrollTo({top:0, behavior:"smooth"}); });
+  });
+  if(unit.after) unit.after(main);
+  renderMap();
+  document.getElementById("mapNav").classList.remove("open");
+
+  const edgePrev = document.getElementById("edgePrev");
+  const edgeNext = document.getElementById("edgeNext");
+  edgePrev.disabled = !prev;
+  edgeNext.disabled = !next;
+  edgePrev.setAttribute("aria-label", prev ? "Previous: "+prev.short : "Previous section");
+  edgeNext.setAttribute("aria-label", next ? "Next: "+next.short : "Next section");
+  edgePrev.onclick = prev ? ()=>{ go(prev.id); window.scrollTo({top:0, behavior:"smooth"}); } : null;
+  edgeNext.onclick = next ? ()=>{ go(next.id); window.scrollTo({top:0, behavior:"smooth"}); } : null;
+}
+
+document.getElementById("mapToggle").addEventListener("click", ()=>{
+  const nav = document.getElementById("mapNav");
+  const open = nav.classList.toggle("open");
+  document.getElementById("mapToggle").setAttribute("aria-expanded", open?"true":"false");
+});
+
+if(!STORE_OK){ document.getElementById("storageNote").style.display = "block"; }
+
+const startId = STORE_OK ? (localStorage.getItem(LAST_KEY) || UNITS[0].id) : UNITS[0].id;
+go(UNITS.find(u=>u.id===startId) ? startId : UNITS[0].id);
+</script>
+</body>
+</html>
