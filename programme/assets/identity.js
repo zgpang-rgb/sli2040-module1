@@ -1,18 +1,20 @@
 /* ==========================================================================
    Shared learner identity — name / cohort.
 
-   Two jobs, both carried over unchanged in behaviour from the generated
-   catalogue this site replaces:
+   The catalogue's own intake form has been removed, so on this site nothing
+   currently writes to `imls_identity` — but the read side stays wired, in
+   case a name is ever set some other way (a future intake, or an integration
+   that writes the key directly):
 
-   1. Store a name and cohort in this browser under `imls_identity`, and offer
-      an intake form for setting them (present on the catalogue page only).
-   2. Hand that identity to the modules through their launch URLs, and report
-      launch analytics when — and only when — the page is served behind the
-      IMLS collection server.
+   1. Read a name and cohort from `imls_identity`, if present, and hand it to
+      the modules through their launch URLs.
+   2. Report launch analytics when — and only when — the page is served
+      behind the IMLS collection server.
 
-   Everything here is optional to the page working. If localStorage is blocked
-   or absent, the intake reports that and every launch link stays exactly as it
-   is written in the HTML.
+   `initIntake()` is a no-op wherever there is no `#intake` form on the page,
+   which as of the removal is every page. Everything here is optional to the
+   page working: if localStorage is blocked or absent, every launch link
+   stays exactly as it is written in the HTML.
    ========================================================================== */
 
 (function () {

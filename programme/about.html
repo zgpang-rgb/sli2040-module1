@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About the Programme — Programme Catalogue</title>
-<meta name="description" content="How the four-module programme is structured, how progress and identity are handled, and what the registry record on each module page means.">
+<meta name="description" content="How the four-module programme is structured, what gets collected, and what the registry record on each module page means.">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -71,36 +71,6 @@
     </p>
   </div>
 
-  <h2 class="section">Name and cohort</h2>
-  <div class="prose">
-    <p>
-      The catalogue page offers a name and cohort field. Both are optional:
-      every module opens without them, and each module asks for a name itself if
-      it does not arrive with one.
-    </p>
-    <p>
-      What is saved is stored in the browser it was typed into, on that device,
-      and nowhere else. It is not an account, there is no password, and it does
-      not follow a learner to another machine. Clearing site data for this page
-      removes it.
-    </p>
-    <p>
-      When a module is opened from this site, a saved name and cohort are passed
-      to it in the link. This is deliberate: browser storage is per-origin, and
-      the modules are served from a different origin than this site, so the two
-      cannot see each other's storage — without this a learner would be asked
-      again on arrival. The receiving module strips those parameters from its
-      address bar the moment it reads them, so a learner who copies the URL out
-      of the bar into a group chat is not handing over their own name and cohort.
-    </p>
-    <div class="note">
-      <b>Dashboard links are never decorated.</b> Only the four "Open the module"
-      links carry a name and cohort. The
-      <a href="analytics.html">analytics dashboards</a> are an educator view and
-      are left exactly as written.
-    </div>
-  </div>
-
   <h2 class="section">What gets collected</h2>
   <div class="prose">
     <p>
@@ -139,10 +109,10 @@
   <div class="prose">
     <p>
       Seven static pages, no build step, no backend, no accounts. It works with
-      JavaScript switched off, including all eight launch links — search,
-      filtering and the name field are additions on top of a page that is already
-      complete without them. It can be hosted anywhere that serves static files,
-      or opened straight off disk.
+      JavaScript switched off, including all eight launch links — search and
+      filtering are additions on top of a page that is already complete without
+      them. It can be hosted anywhere that serves static files, or opened
+      straight off disk.
     </p>
   </div>
 

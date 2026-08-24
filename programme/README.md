@@ -12,18 +12,18 @@ no files, no storage keys, no links.
 
 ```
 programme/
-  index.html          Catalogue — stat band, name/cohort intake, outcome search,
-                      module filter, and the four module cards
+  index.html          Catalogue — stat band, outcome search, module filter,
+                      and the four module cards
   modules/
     a1.html           SLI 2040 & the Three-Section Framework
     a2.html           Training Leadership — The Five Sections
     a3.html           Research Methodologies
     a4.html           Workplace Developmental Conversations
   analytics.html      All four analytics dashboards, and what each module records
-  about.html          How the programme works, identity, collection, the registry
+  about.html          How the programme works, collection, the registry record
   assets/
     site.css          The whole visual system (light + dark + explicit override)
-    identity.js       Name/cohort store, link decoration, launch analytics
+    identity.js       Link decoration and launch analytics
     catalogue.js      Search / filter / expand, on index.html only
 ```
 
@@ -56,14 +56,17 @@ grep -oh 'https://script\.google\.com[^"]*' index.html modules/*.html analytics.
 
 ## Name and cohort
 
-Stored under the `imls_identity` key in the visitor's own browser. On every
-page, `identity.js` appends `imls_lid` / `imls_ln` / `imls_ch` to the
-`Open the module` links only — dashboards are an educator view and stay
+The catalogue's own intake form has been removed, so nothing on this site
+currently writes a name or cohort. `identity.js` still reads one from the
+`imls_identity` key in the visitor's own browser if present — set some other
+way, such as a future intake or an outside integration writing that key
+directly — and, on every page, appends it as `imls_lid` / `imls_ln` / `imls_ch`
+to the `Open the module` links only; dashboards are an educator view and stay
 undecorated. The original URL is stashed in `data-href` on first pass, so
-re-decorating after a save cannot double-append.
+re-decorating cannot double-append.
 
-Everything degrades: if `localStorage` is blocked the intake says so, the fields
-disable, and every link stays exactly as written in the HTML.
+Everything degrades: if `localStorage` is blocked or the key is absent, every
+link stays exactly as written in the HTML.
 
 `identity.js` also emits `learning_material_opened`, `module_selected` and
 `link_opened` through `window.IMLS`, which exists only when the site is served
@@ -81,7 +84,7 @@ python3 -m http.server 8000
 
 then open `http://localhost:8000/programme/`. Opening `index.html` straight off
 disk also works; some browsers restrict `localStorage` on `file://` pages, in
-which case the intake reports that and the links still work.
+which case links stay exactly as written in the HTML.
 
 ## Deploying
 

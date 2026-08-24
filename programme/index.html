@@ -54,28 +54,6 @@
     <div class="sumcell"><div class="n">27</div><div class="l">Sections in total</div></div>
   </div>
 
-  <form class="intake" id="intake" autocomplete="off">
-    <div class="eyebrow">Before you open a module</div>
-    <p class="intake-copy">
-      Enter your name once and it is carried into every module you open from this
-      page, so you are not asked again module to module. It is stored in this
-      browser only, on this device. Nothing here is required — every module opens
-      without it.
-    </p>
-    <div class="intake-fields">
-      <div class="field">
-        <label for="learnerName">Name or initials</label>
-        <input type="text" id="learnerName" name="learnerName" maxlength="80">
-      </div>
-      <div class="field">
-        <label for="learnerCohort">Cohort</label>
-        <input type="text" id="learnerCohort" name="learnerCohort" maxlength="80" placeholder="e.g. Intake 12">
-      </div>
-      <button class="solid" id="intakeSave" type="submit">Save</button>
-    </div>
-    <p class="intake-status" id="intakeStatus">Not set. You can still open any module — each will ask for your name when you get there.</p>
-  </form>
-
   <h2 class="section" id="modules">The four modules</h2>
   <p class="lede">
     Non-linear — open them in any order. Each card carries both links; the full
@@ -257,11 +235,10 @@
     <p class="fine">
       Module records are drawn from the materials registry. Integrity values on
       each module page are the first 16 characters of that module's SHA-256,
-      enough to tell two versions apart. A learner's name and cohort, if saved
-      here, are stored in that browser and carried into the modules they open.
-      When this site is served by the IMLS collection server that launch is also
-      recorded there; served as a plain static site it has no means of sending
-      anything and nothing leaves the browser.
+      enough to tell two versions apart. When this site is served by the IMLS
+      collection server, opening a module is recorded there; served as a plain
+      static site it has no means of sending anything and nothing leaves the
+      browser.
       <a href="about.html">More on how this works</a>.
     </p>
   </div>
