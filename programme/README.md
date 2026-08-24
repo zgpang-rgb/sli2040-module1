@@ -46,9 +46,9 @@ wrong and must survive any edit:
 | a4 | `.../AKfycbxL1m7NMz-jNi_GzPO1ok8aJ0ldJx6RsASF8JzP1oM38rqkJXfzetxglDpP2Ese2sDF/exec` | `.../AKfycbz7OGbHqOwBbmGPMTp0AxtDqyfSoc-JddQ4vmKhWoOEgo9Lem7HXjSaGKuMcof-qS40/exec?view=dashboard` |
 
 All prefixed `https://script.google.com/macros/s/`. Each module URL appears twice
-(catalogue card and detail page); each dashboard URL three times (card, detail
-page, analytics table). After changing any of them, check the set is still
-exactly eight distinct URLs:
+(catalogue card and detail page); each dashboard URL twice (detail page,
+analytics table) — catalogue cards link only to the module, not its dashboard.
+After changing any of them, check the set is still exactly eight distinct URLs:
 
 ```
 grep -oh 'https://script\.google\.com[^"]*' index.html modules/*.html analytics.html | sort -u
