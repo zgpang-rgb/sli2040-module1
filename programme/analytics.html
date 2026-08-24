@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Analytics — Programme Catalogue</title>
+<meta name="description" content="The four learning analytics dashboards for the programme, with what each module actually records and what its dashboard can therefore show.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="sitehead">
+  <div class="wrap sitehead-inner">
+    <a class="wordmark" href="index.html">SAFTI MI · <b>IMLS</b> — Institute for Military Learning Systems</a>
+    <div class="sitehead-meta">Learning Design · Analytics</div>
+  </div>
+  <div class="headrule"></div>
+</header>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a href="index.html">Catalogue</a>
+    <a href="index.html#modules">Modules</a>
+    <a href="analytics.html" aria-current="page">Analytics</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<main id="main">
+<div class="wrap">
+
+  <div class="classification">
+    <span><b>Official Closed</b> &middot; Learning Design</span>
+    <span>Educator view</span>
+  </div>
+
+  <header class="masthead">
+    <div class="eyebrow">Learning analytics &middot; Four dashboards</div>
+    <h1>Learning analytics</h1>
+    <p class="standfirst">
+      Every module in the programme has a live analytics view alongside it. They
+      are gathered here so an educator does not have to open four modules to
+      reach four dashboards. Each opens in a new tab.
+    </p>
+    <p class="standfirst">
+      A dashboard can only show what its module records, and the four modules do
+      not record the same things. The table below states that for each one, so a
+      reading is not made from a measure that was never collected.
+    </p>
+  </header>
+
+  <h2 class="section">The four dashboards</h2>
+  <p class="lede">
+    Three dashboards are the module's own deployment opened on its dashboard
+    view; a4's is a separate deployment.
+  </p>
+
+  <div class="tablewrap">
+    <table class="data">
+      <thead>
+        <tr>
+          <th scope="col">Module</th>
+          <th scope="col">What it records</th>
+          <th scope="col">Dashboard</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="aid-sm">a1</span><br>
+            <strong>SLI 2040 &amp; the Three-Section Framework</strong><br>
+            <a class="detaillink" href="modules/a1.html">Detail</a>
+          </td>
+          <td>
+            Absolute snapshots posted to <code>/api/events</code>, including
+            per-check first-attempt verdicts. This module also syncs to its own
+            Channel&nbsp;B server (<code>server.py</code>, port 8770).
+          </td>
+          <td>
+            <a class="ghostlink" href="https://script.google.com/macros/s/AKfycbzxVsLxauMdDgx15seb4mJnxlt-8NWvaIsJPgPFLWbvJ-ZuEnDua9Q1dKRLlH64k5vz/exec?page=dashboard" target="_blank" rel="noopener noreferrer">Open dashboard</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="aid-sm">a2</span><br>
+            <strong>Training Leadership &mdash; The Five Sections</strong><br>
+            <a class="detaillink" href="modules/a2.html">Detail</a>
+          </td>
+          <td>
+            Absolute snapshots posted to <code>/api/events</code>. Each check
+            locks once answered, so the single verdict it reports is genuinely a
+            first attempt.
+          </td>
+          <td>
+            <a class="ghostlink" href="https://script.google.com/macros/s/AKfycbzhk8xZhrklN-RXsjxsvxSGWxmoxmlpDKDWX6LK0G_66SNBlevBGfDi07nEeWdJZX0dLQ/exec?view=dashboard" target="_blank" rel="noopener noreferrer">Open dashboard</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="aid-sm">a3</span><br>
+            <strong>Research Methodologies</strong><br>
+            <a class="detaillink" href="modules/a3.html">Detail</a>
+          </td>
+          <td>
+            The module's own event log, folded into one row per check keeping the
+            earliest verdict — so first-attempt rate stays first-attempt.
+            Streaming also removes the effect of the 800-event
+            <code>localStorage</code> cap.
+          </td>
+          <td>
+            <a class="ghostlink" href="https://script.google.com/macros/s/AKfycbzjEdhhoHncx6Ed0iwSxfDKfwQxoK6qo_FXPi7jvLNIpcQkYo-FUHlSxqj4KhlJb7KPUA/exec?view=dashboard" target="_blank" rel="noopener noreferrer">Open dashboard</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="aid-sm">a4</span><br>
+            <strong>Workplace Developmental Conversations</strong><br>
+            <a class="detaillink" href="modules/a4.html">Detail</a>
+          </td>
+          <td>
+            Timings and unit completion only. This module records a stance and a
+            written justification, never a correct answer — so it sends no score,
+            and the server rejects item events from it.
+          </td>
+          <td>
+            <a class="ghostlink" href="https://script.google.com/macros/s/AKfycbz7OGbHqOwBbmGPMTp0AxtDqyfSoc-JddQ4vmKhWoOEgo9Lem7HXjSaGKuMcof-qS40/exec?view=dashboard" target="_blank" rel="noopener noreferrer">Open dashboard</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>a4 is on a separate deployment.</b> Its dashboard link points at a
+    different Apps Script deployment from the module itself — the two do not
+    share an address, unlike a1, a2 and a3. If a4's module URL is ever
+    redeployed, its dashboard URL does not follow, and the reverse is also true.
+  </div>
+
+  <h2 class="section">Reading these dashboards</h2>
+  <div class="prose">
+    <p>
+      Three points worth holding on to before a number here turns into a
+      decision about a cohort:
+    </p>
+    <ul>
+      <li>
+        <b>First-attempt means first attempt.</b> a1, a2 and a3 each arrive at a
+        single first-attempt verdict per check by a different route — per-check
+        verdicts in the snapshot, a check that locks on answer, and an event log
+        folded to its earliest verdict. A repeat attempt does not overwrite the
+        first in any of them.
+      </li>
+      <li>
+        <b>a4 has no score to show.</b> Asking its dashboard how a cohort
+        performed has no answer, by design. It can say who worked through what,
+        and how long it took.
+      </li>
+      <li>
+        <b>Collection depends on how the module was served.</b> Automatic
+        collection happens when a module is served by the collection server.
+        Opened as a standalone file, a module keeps working and stores to the
+        learner's own browser — a1 to <code>localStorage</code> only, a2 with a
+        learner-initiated CSV export, a3 with a CSV summary and a full JSON
+        record — and its dashboard sees nothing from that session.
+      </li>
+    </ul>
+  </div>
+
+  <nav class="pager" aria-label="Page">
+    <a href="modules/a4.html">&larr; a4 Workplace Developmental Conversations</a>
+    <span class="spacer"></span>
+    <a href="about.html">About this programme &rarr;</a>
+  </nav>
+
+</div>
+</main>
+
+<footer class="sitefoot">
+  <div class="wrap">
+    <div class="eyebrow">Colophon</div>
+    <dl>
+      <dt>Generated</dt><dd>18 Aug 2026 14:33 UTC</dd>
+      <dt>Registry</dt><dd>materials/manifest.yaml, manifest version 1</dd>
+      <dt>Modules registered</dt><dd>2026-08-10</dd>
+    </dl>
+    <p class="fine">
+      Dashboard links are the educator view and are never decorated with a
+      learner's name or cohort. <a href="about.html">More on how this works</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="assets/identity.js"></script>
+</body>
+</html>

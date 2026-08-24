@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About the Programme — Programme Catalogue</title>
+<meta name="description" content="How the four-module programme is structured, how progress and identity are handled, and what the registry record on each module page means.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="sitehead">
+  <div class="wrap sitehead-inner">
+    <a class="wordmark" href="index.html">SAFTI MI · <b>IMLS</b> — Institute for Military Learning Systems</a>
+    <div class="sitehead-meta">Learning Design · About</div>
+  </div>
+  <div class="headrule"></div>
+</header>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a href="index.html">Catalogue</a>
+    <a href="index.html#modules">Modules</a>
+    <a href="analytics.html">Analytics</a>
+    <a href="about.html" aria-current="page">About</a>
+  </div>
+</nav>
+
+<main id="main">
+<div class="wrap">
+
+  <div class="classification">
+    <span><b>Official Closed</b> &middot; Learning Design</span>
+    <span>Manifest version 1</span>
+  </div>
+
+  <header class="masthead">
+    <div class="eyebrow">About</div>
+    <h1>About this programme</h1>
+    <p class="standfirst">
+      Four self-directed e-lessons on humanising learning materials and analytics
+      for new knowledge acquisition, owned by IMLS Learning Design. This site is
+      the catalogue and launcher for them: it holds no learning content of its
+      own, and every module runs where it is deployed.
+    </p>
+  </header>
+
+  <h2 class="section">How the programme is put together</h2>
+  <div class="prose">
+    <p>
+      The four modules are non-linear. Nothing gates a later module behind an
+      earlier one, and there is no fixed order to work through them in — a
+      learner sent here for one topic can open that module and nothing else.
+      Between them they carry 25 learning outcomes across 27 sections, designed
+      to take 5 hours 45 minutes in total.
+    </p>
+    <p>
+      Each module ends in a capstone that puts the module's material against
+      something real from the learner's own school or project, rather than a
+      final quiz. a2's capstone produces an Official Closed brief; a4's produces
+      an eight-step worked plan for a conversation the learner actually has to
+      have.
+    </p>
+    <p>
+      The <a href="index.html#modules">catalogue</a> carries every module's
+      outcomes, and its search runs across all 25 of them at once — the quickest
+      way to find which module carries a topic when you know the topic but not
+      the module.
+    </p>
+  </div>
+
+  <h2 class="section">Name and cohort</h2>
+  <div class="prose">
+    <p>
+      The catalogue page offers a name and cohort field. Both are optional:
+      every module opens without them, and each module asks for a name itself if
+      it does not arrive with one.
+    </p>
+    <p>
+      What is saved is stored in the browser it was typed into, on that device,
+      and nowhere else. It is not an account, there is no password, and it does
+      not follow a learner to another machine. Clearing site data for this page
+      removes it.
+    </p>
+    <p>
+      When a module is opened from this site, a saved name and cohort are passed
+      to it in the link. This is deliberate: browser storage is per-origin, and
+      the modules are served from a different origin than this site, so the two
+      cannot see each other's storage — without this a learner would be asked
+      again on arrival. The receiving module strips those parameters from its
+      address bar the moment it reads them, so a learner who copies the URL out
+      of the bar into a group chat is not handing over their own name and cohort.
+    </p>
+    <div class="note">
+      <b>Dashboard links are never decorated.</b> Only the four "Open the module"
+      links carry a name and cohort. The
+      <a href="analytics.html">analytics dashboards</a> are an educator view and
+      are left exactly as written.
+    </div>
+  </div>
+
+  <h2 class="section">What gets collected</h2>
+  <div class="prose">
+    <p>
+      Collection belongs to the modules, not to this site. Each module collects
+      automatically when it is served by the IMLS collection server, and each
+      one's registry record states exactly what it sends — the
+      <a href="analytics.html">analytics page</a> puts all four side by side.
+      Opened as a standalone file instead, a module keeps working and stores to
+      the learner's own browser, and nothing reaches a dashboard.
+    </p>
+    <p>
+      This site behaves the same way. Served by the collection server, it reports
+      that a module was opened from here. Served as a plain static site — which
+      is how it is published — it has no means of sending anything, and nothing
+      leaves the browser.
+    </p>
+  </div>
+
+  <h2 class="section">The registry record</h2>
+  <div class="prose">
+    <p>
+      Every module page carries a registry record: its length, its collection
+      behaviour, its owner, the date it entered the registry, and an integrity
+      value. That record is drawn from the materials registry
+      (<code>materials/manifest.yaml</code>), which is the authority on what
+      version of a module is current.
+    </p>
+    <p>
+      The integrity value is the first 16 characters of that module's SHA-256 —
+      not a security control, just enough to tell two versions of the same module
+      apart when someone asks which one a cohort actually sat.
+    </p>
+  </div>
+
+  <h2 class="section">This site</h2>
+  <div class="prose">
+    <p>
+      Seven static pages, no build step, no backend, no accounts. It works with
+      JavaScript switched off, including all eight launch links — search,
+      filtering and the name field are additions on top of a page that is already
+      complete without them. It can be hosted anywhere that serves static files,
+      or opened straight off disk.
+    </p>
+  </div>
+
+  <nav class="pager" aria-label="Page">
+    <a href="analytics.html">&larr; Learning analytics</a>
+    <span class="spacer"></span>
+    <a href="index.html#modules">The four modules &rarr;</a>
+  </nav>
+
+</div>
+</main>
+
+<footer class="sitefoot">
+  <div class="wrap">
+    <div class="eyebrow">Colophon</div>
+    <dl>
+      <dt>Generated</dt><dd>18 Aug 2026 14:33 UTC</dd>
+      <dt>Registry</dt><dd>materials/manifest.yaml, manifest version 1</dd>
+      <dt>Modules registered</dt><dd>2026-08-10</dd>
+      <dt>Owner</dt><dd>IMLS Learning Design</dd>
+    </dl>
+  </div>
+</footer>
+
+<script src="assets/identity.js"></script>
+</body>
+</html>
