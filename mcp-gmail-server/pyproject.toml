@@ -1,0 +1,25 @@
+[project]
+name = "mcp-gmail-server"
+version = "0.1.0"
+description = "Remote MCP server exposing get_latest_email_from_sender, backed by the Gmail API."
+requires-python = "==3.14.*"
+dependencies = [
+    "fastmcp>=3.4.7",
+]
+
+# Cloudflare Python Workers run on Pyodide (WebAssembly), where `pywrangler sync`
+# installs prebuilt wheels only (`uv pip compile --no-build`). Two of FastMCP's
+# `server` extras have no wasm wheel and no reason to exist here:
+#
+#   watchfiles - Rust file-system watcher used by `fastmcp dev` for hot reload.
+#                A Worker has no filesystem to watch and no reloader.
+#   pyperclip  - clipboard helper for the local CLI. A Worker has no clipboard.
+#
+# Neither is imported on the request path: `mcp.http_app()` builds and serves
+# correctly with both absent (verified). A marker that can never be true is the
+# standard uv idiom for dropping a transitive dependency.
+[tool.uv]
+override-dependencies = [
+    "watchfiles; sys_platform == 'no-such-platform'",
+    "pyperclip; sys_platform == 'no-such-platform'",
+]

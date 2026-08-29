@@ -1,0 +1,7 @@
+.dev.vars
+.venv-workers/
+python_modules/
+pylock.toml
+node_modules/
+__pycache__/
+*.pyc

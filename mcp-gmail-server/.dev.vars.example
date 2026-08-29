@@ -1,0 +1,13 @@
+# Copy to .dev.vars for `pywrangler dev`. Never commit the filled-in copy.
+# In production these are Worker secrets, set with `pywrangler secret put <NAME>`.
+
+# Google OAuth client (Desktop app type) from console.cloud.google.com
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# Refresh token for the mailbox, scope https://www.googleapis.com/auth/gmail.readonly
+GMAIL_REFRESH_TOKEN=
+
+# Shared secret Claude must send as `Authorization: Bearer <token>`.
+# Generate with: python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+MCP_AUTH_TOKEN=
