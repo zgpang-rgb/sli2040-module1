@@ -1,0 +1,7 @@
+{
+  "name": "gmail-mcp",
+  "main": "src/entry.py",
+  "compatibility_date": "2026-06-10",
+  "compatibility_flags": ["python_workers", "python_workers_20260610"],
+  "observability": { "enabled": true }
+}
